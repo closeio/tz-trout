@@ -23,7 +23,7 @@ def tz_ids_for_tz_name(tz_name):
         u'America/Vancouver',
         u'America/Whitehorse',
         u'Canada/Pacific',
-         u'US/Pacific'
+        u'US/Pacific'
     ]
     >>> tz_trout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
     []
