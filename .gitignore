@@ -1,0 +1,23 @@
+venv
+*.py[co]
+
+# Packages
+*.egg
+*.egg-info
+eggs
+parts
+var
+sdist
+develop-eggs
+.installed.cfg
+
+# Installer logs
+build/
+pip-log.txt
+
+# Vim
+*.swp
+
+# Finder
+.DS_Store
+
