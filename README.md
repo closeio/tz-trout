@@ -42,3 +42,9 @@ a specific address or a phone number is in.
 ]
 ```
 
+```
+>>> tz_trout.local_time_for_address('US', state='CA')
+datetime.datetime(2013, 9, 16, 15, 49, 27, 34481, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
+>>> tz_trout.local_time_for_address('PL')
+datetime.datetime(2013, 9, 17, 0, 24, 23, 832261, tzinfo=<DstTzInfo 'Europe/Warsaw' CEST+2:00:00 DST>)
+```
