@@ -109,3 +109,13 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
     else:
         return pytz.country_timezones.get(country)
 
+def local_time_for_phone(phone):
+    ids = tz_ids_for_phone(phone)
+    if ids:
+        return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
+
+def local_time_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+    ids = tz_ids_for_address(country, state, city, zipcode, **kwargs)
+    if ids:
+        return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
+
