@@ -28,6 +28,8 @@ class TroutData():
     TD_STEP = { 'days': 40 }
 
     def __init__(self):
+
+        # load the data files, if they exist
         if os.path.exists(ZIP_TO_TZ_IDS_MAP_PATH):
             self.zip_to_tz_ids = json.loads(open(ZIP_TO_TZ_IDS_MAP_PATH, 'r').read())
         if os.path.exists(TZ_NAME_TO_TZ_IDS_MAP_PATH):
@@ -36,6 +38,9 @@ class TroutData():
             self.normalized_states  = json.loads(open(STATES_PATH, 'r').read())
 
     def _get_latest_non_dst_offset(self, tz):
+        """ Get the UTC offset for a given time zone identifier. Ignore the
+        DST offsets.
+        """
         dt = datetime.datetime.utcnow()
         while dt.year > self.RECENT_YEARS_START:
             try:
@@ -47,6 +52,9 @@ class TroutData():
             dt -= datetime.timedelta(**self.TD_STEP)
 
     def _experiences_dst(self, tz):
+        """ Check if the time zone identifier has experienced the DST in the
+        recent years.
+        """
         dt = datetime.datetime.utcnow()
         while dt.year > self.RECENT_YEARS_START:
             try:
@@ -59,6 +67,8 @@ class TroutData():
         return False
 
     def _get_latest_tz_names(self, tz):
+        """ Get the recent time zone names for a given time zone identifier.
+        """
         dt = datetime.datetime.utcnow()
         tz_names = []
         while dt.year > self.RECENT_YEARS_START:
@@ -72,6 +82,9 @@ class TroutData():
         return tz_names
 
     def _get_tz_identifiers_for_offset(self, country, offset):
+        """ Get all the possible time zone identifiers for a given UTC offset.
+        Ignore the DST offsets.
+        """
         identifiers = pytz.country_timezones.get(country)
         ids = []
         for id in identifiers:
@@ -82,6 +95,8 @@ class TroutData():
         return ids
 
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
+        """ Get all the possible identifiers for a given US zip code.
+        """
         if not isinstance(zipcode, ZipCode):
             zipcode = ZipCodeDatabase().get(zipcode)
             if zipcode:
@@ -99,12 +114,10 @@ class TroutData():
         return ret_ids
 
     def generate_zip_to_tz_id_map(self):
-        """ Generate the map of US zip codes to timezone identifiers, e.g.
-
-        >>> zip_tz_ids['94043']
-        ['America/Los_Angeles']
+        """ Generate the map of US zip codes to time zone identifiers. The
+        method finds all the possible time zone identifiers for each zip code
+        based on a UTC offset stored for that zip in pyzipcode.ZipCodeDatabase.
         """
-
         zcdb = ZipCodeDatabase()
         zip_tz_ids = {}
         zips = list(zcdb.find_zip())
@@ -120,14 +133,8 @@ class TroutData():
         file.close()
 
     def generate_tz_name_to_tz_id_map(self):
-        """ Generate the map of timezone names to timezone identifiers, e.g.
-
-        >>> tz_name_ids['PST']
-        ['America/Dawson', 'America/Los_Angeles', 'America/Santa_Isabel',
-         'America/Tijuana', 'America/Vancouver', 'America/Whitehorse',
-         'Canada/Pacific', 'Pacific/Pitcairn', 'US/Pacific']
+        """ Generate the map of timezone names to timezone identifiers.
         """
-
         tz_name_ids = {}
         tzs_len = len(pytz.common_timezones)
         for cnt, id in enumerate(pytz.common_timezones):
