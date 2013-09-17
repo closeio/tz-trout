@@ -143,11 +143,25 @@ def tz_ids_for_offset(offset_in_minutes):
     return valid_ids
 
 def local_time_for_phone(phone):
+    """ Get the local time for a given phone number, e.g.
+
+    >>> datetime.datetime.utcnow()
+    datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
+    >>> tz_trout.local_time_for_phone('+16503334444')
+    datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
+    """
     ids = tz_ids_for_phone(phone)
     if ids:
         return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
 
 def local_time_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+    """ Get the local time for a given address, e.g.
+
+    >>> datetime.datetime.utcnow()
+    datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
+    >>> tz_trout.local_time_for_address('US', state='California')
+    datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
+    """
     ids = tz_ids_for_address(country, state, city, zipcode, **kwargs)
     if ids:
         return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
