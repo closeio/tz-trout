@@ -12,6 +12,7 @@ from .utils import build_normalization_map
 basepath = os.path.dirname(os.path.abspath(__file__))
 ZIP_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/zip_to_tz_id.json')
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
+OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
 
 class TroutData():
@@ -34,6 +35,8 @@ class TroutData():
             self.zip_to_tz_ids = json.loads(open(ZIP_TO_TZ_IDS_MAP_PATH, 'r').read())
         if os.path.exists(TZ_NAME_TO_TZ_IDS_MAP_PATH):
             self.tz_name_to_tz_ids = json.loads(open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'r').read())
+        if os.path.exists(OFFSET_TO_TZ_IDS_MAP_PATH):
+            self.offset_to_tz_ids = json.loads(open(OFFSET_TO_TZ_IDS_MAP_PATH, 'r').read())
         if os.path.exists(STATES_PATH):
             self.normalized_states  = json.loads(open(STATES_PATH, 'r').read())
 
@@ -50,6 +53,22 @@ class TroutData():
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
                 pass
             dt -= datetime.timedelta(**self.TD_STEP)
+
+    def _get_latest_offsets(self, tz):
+        """ Get all the UTC offsets (in minutes) that a given time zone
+        experienced in the recent years.
+        """
+        dt = datetime.datetime.utcnow()
+        offsets = []
+        while dt.year > self.RECENT_YEARS_START:
+            try:
+                offset = int(tz.utcoffset(dt).total_seconds() / 60)
+                if offset not in offsets:
+                    offsets.append(offset)
+            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
+                pass
+            dt -= datetime.timedelta(**self.TD_STEP)
+        return offsets
 
     def _experiences_dst(self, tz):
         """ Check if the time zone identifier has experienced the DST in the
@@ -104,7 +123,11 @@ class TroutData():
             else:
                 return
 
+        # Find all the TZ identifiers with a non-DST offset of zipcode.timezone
         tz_ids = self._get_tz_identifiers_for_offset('US', datetime.timedelta(hours=zipcode.timezone))
+
+        # For each of the found identifiers, cross-reference the DST data from
+        # pytz and pyzipcode and only include the identifier if they match
         ret_ids = []
         for id in tz_ids:
             tz = pytz.timezone(id)
@@ -133,7 +156,7 @@ class TroutData():
         file.close()
 
     def generate_tz_name_to_tz_id_map(self):
-        """ Generate the map of timezone names to timezone identifiers.
+        """ Generate the map of timezone names to time zone identifiers.
         """
         tz_name_ids = {}
         tzs_len = len(pytz.common_timezones)
@@ -148,8 +171,28 @@ class TroutData():
             stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
             stdout.flush()
 
-        dir = os.path.dirname(os.path.abspath(__file__))
         file = open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'w')
         file.write(json.dumps(tz_name_ids))
+        file.close()
+
+    def generate_offset_to_tz_id_map(self):
+        """ Generate the map of UTC offsets to time zone identifiers.
+        """
+        offset_tz_ids = {}
+        tzs_len = len(pytz.common_timezones)
+        for cnt, id in enumerate(pytz.common_timezones):
+            tz = pytz.timezone(id)
+            offsets = self._get_latest_offsets(tz)
+            for offset in offsets:
+                if offset in offset_tz_ids:
+                    offset_tz_ids[offset].append(id)
+                else:
+                    offset_tz_ids[offset] = [id]
+            stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
+            stdout.flush()
+
+        print offset_tz_ids
+        file = open(OFFSET_TO_TZ_IDS_MAP_PATH, 'w')
+        file.write(json.dumps(offset_tz_ids))
         file.close()
 

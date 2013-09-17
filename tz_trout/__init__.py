@@ -29,7 +29,7 @@ def tz_ids_for_tz_name(tz_name):
     []
     """
 
-    ids = td.tz_name_to_tz_ids.get(tz_name, [])
+    ids = td.tz_name_to_tz_ids.get(tz_name)
     valid_ids = []
     if ids:
         # only get the tz ids that match the tz name currently
@@ -108,6 +108,39 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
                     return td.zip_to_tz_ids.get(zipcodes[0].zip)
     else:
         return pytz.country_timezones.get(country)
+
+def tz_ids_for_offset(offset_in_minutes):
+    """ Get the TZ identifiers for a given UTC offset (in minutes), e.g.
+
+    >>> tz_trout.tz_ids_for_offset(-7 * 60)  # during DST
+    [
+        u'America/Creston',
+        u'America/Dawson',
+        u'America/Dawson_Creek',
+        u'America/Hermosillo',
+        u'America/Los_Angeles',
+        u'America/Phoenix',
+        u'America/Santa_Isabel',
+        u'America/Tijuana',
+        u'America/Vancouver',
+        u'America/Whitehorse',
+        u'Canada/Pacific',
+        u'US/Arizona',
+        u'US/Pacific'
+    ]
+    """
+    ids = td.offset_to_tz_ids.get(str(offset_in_minutes))
+    valid_ids = []
+    if ids:
+        # only get the tz ids that match the tz offset currently
+        for id in ids:
+            tz = pytz.timezone(id)
+            try:
+                if int(tz.utcoffset(datetime.datetime.utcnow()).total_seconds() / 60) == offset_in_minutes:
+                    valid_ids.append(id)
+            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
+                pass
+    return valid_ids
 
 def local_time_for_phone(phone):
     ids = tz_ids_for_phone(phone)
