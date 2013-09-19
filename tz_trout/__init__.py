@@ -166,3 +166,52 @@ def local_time_for_address(country, state=None, city=None, zipcode=None, **kwarg
     if ids:
         return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
 
+def offset_ranges_for_local_time(local_start, local_end):
+    """ Return a list of UTC offset ranges where the local time is between
+    local_start and local_end, e.g.
+
+    >>> tz_trout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))  # ran at 8pm UTC
+    [[-660, -180], [780, 840]]
+
+    local_start and local_end can be instances of datetime.time or integers
+    (minutes from midnight).
+    """
+
+    # validate
+    if not isinstance(local_start, (datetime.time, int)):
+        raise ValueError('local_start is not an instance of datetime.time or int')
+    if not isinstance(local_end, (datetime.time, int)):
+        raise ValueError('local_end is not an instance of datetime.time or int')
+
+    # convert to ints (minutes)
+    to_minutes = lambda t: t.hour * 60 + t.minute
+    local_start = local_start if isinstance(local_start, int) else to_minutes(local_start)
+    local_end = local_end if isinstance(local_end, int) else to_minutes(local_end)
+
+    # get current UTC time
+    current_time = to_minutes(datetime.datetime.utcnow().time())
+
+    # tweak for ranges that pass midnight (e.g. (5pm, 9am))
+    if local_end < local_start:
+        local_end += 24 * 60
+
+    # calculate offsets
+    offset_ranges = [
+        [local_start - current_time, local_end - current_time],
+        [24 * 60 - current_time + local_start, 24 * 60 - current_time + local_end],
+        [-24 * 60 - current_time + local_start, -24 * 60 - current_time + local_end]
+    ]
+
+    # cap the offsets at UTC-14:00 and UTC+14:00
+    capped = lambda t: 14 * 60 if t > 14 * 60 else -14 * 60 if t < -14 * 60 else t
+    for i, range in enumerate(offset_ranges):
+        offset_ranges[i][0] = capped(range[0])
+        offset_ranges[i][1] = capped(range[1])
+
+    # discard the irrelevant ranges (i.e. where start == end)
+    offset_ranges = [range for range in offset_ranges if range[0] != range[1]]
+    return offset_ranges
+
+def tz_ids_for_offset_range(offset_start, offset_end):
+    pass  # TODO
+

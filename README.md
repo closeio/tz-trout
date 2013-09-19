@@ -5,6 +5,15 @@ a specific address or a phone number is in. It does so by using several
 mappings that are generated with the help of pytz (http://pytz.sourceforge.net/)
 and pyzipcode (https://github.com/fdintino/pyzipcode).
 
+Current version is fairly accurate for the United States and the countries
+with a single time zone.
+
+Vocabulary used in this library:
+* PST - time zone name
+* America/Los_Angeles - time zone identifier
+* UTC-07:00 or -420 - utc offset (the latter given in minutes)
+* DST - daylight savings time
+
 #### Examples
 
 ```
