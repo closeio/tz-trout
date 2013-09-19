@@ -15,7 +15,7 @@ td = TroutData()
 def tz_ids_for_tz_name(tz_name):
     """ Get the TZ identifiers that are currently in a specific time zone, e.g.
 
-    >>> tz_trout.tz_ids_for_tz_name('PDT')  # ran during DST
+    >>> tztrout.tz_ids_for_tz_name('PDT')  # ran during DST
     [
         u'America/Dawson',
         u'America/Los_Angeles',
@@ -26,7 +26,7 @@ def tz_ids_for_tz_name(tz_name):
         u'Canada/Pacific',
         u'US/Pacific'
     ]
-    >>> tz_trout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
+    >>> tztrout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
     []
     """
 
@@ -47,9 +47,9 @@ def tz_ids_for_tz_name(tz_name):
 def tz_ids_for_phone(phone):
     """ Get the TZ identifiers that a phone number might be related to, e.g.
 
-    >>> tz_trout.tz_ids_for_phone('+16503334444')
+    >>> tztrout.tz_ids_for_phone('+16503334444')
     [u'America/Los_Angeles']
-    >>> tz_trout.tz_ids_for_phone('+49 (0)711 400 40990')
+    >>> tztrout.tz_ids_for_phone('+49 (0)711 400 40990')
     [u'Europe/Berlin', u'Europe/Busingen']
     """
 
@@ -80,11 +80,11 @@ def tz_ids_for_phone(phone):
 def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
     """ Get the TZ identifiers for a given address, e.g.:
 
-    >>> tz_trout.tz_ids_for_address('US', state='CA', city='Palo Alto')
+    >>> tztrout.tz_ids_for_address('US', state='CA', city='Palo Alto')
     [u'America/Los_Angeles']
-    >>> tz_trout.tz_ids_for_address('PL')
+    >>> tztrout.tz_ids_for_address('PL')
     [u'Europe/Warsaw']
-    >>> tz_trout.tz_ids_for_address('CN')
+    >>> tztrout.tz_ids_for_address('CN')
     [
         u'Asia/Shanghai',
         u'Asia/Harbin',
@@ -113,7 +113,7 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
 def tz_ids_for_offset(offset_in_minutes):
     """ Get the TZ identifiers for a given UTC offset (in minutes), e.g.
 
-    >>> tz_trout.tz_ids_for_offset(-7 * 60)  # during DST
+    >>> tztrout.tz_ids_for_offset(-7 * 60)  # during DST
     [
         u'America/Creston',
         u'America/Dawson',
@@ -149,7 +149,7 @@ def local_time_for_phone(phone):
 
     >>> datetime.datetime.utcnow()
     datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
-    >>> tz_trout.local_time_for_phone('+16503334444')
+    >>> tztrout.local_time_for_phone('+16503334444')
     datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
     """
     ids = tz_ids_for_phone(phone)
@@ -161,7 +161,7 @@ def local_time_for_address(country, state=None, city=None, zipcode=None, **kwarg
 
     >>> datetime.datetime.utcnow()
     datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
-    >>> tz_trout.local_time_for_address('US', state='California')
+    >>> tztrout.local_time_for_address('US', state='California')
     datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
     """
     ids = tz_ids_for_address(country, state, city, zipcode, **kwargs)
@@ -172,7 +172,7 @@ def offset_ranges_for_local_time(local_start, local_end):
     """ Return a list of UTC offset ranges where the local time is between
     local_start and local_end, e.g.
 
-    >>> tz_trout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))  # ran at 8pm UTC
+    >>> tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))  # ran at 8pm UTC
     [[-660, -180], [780, 840]]
 
     local_start and local_end can be instances of datetime.time, integers
