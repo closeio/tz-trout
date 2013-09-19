@@ -35,6 +35,23 @@ class TZTroutTestCase(unittest.TestCase):
         ids = tztrout.tz_ids_for_address('PL')
         self.assertEqual(ids, ['Europe/Warsaw'])
 
+    def test_ids_for_tz_name(self):
+        pacific_ids = [
+            u'America/Dawson',
+            u'America/Los_Angeles',
+            u'America/Santa_Isabel',
+            u'America/Tijuana',
+            u'America/Vancouver',
+            u'America/Whitehorse',
+            u'Canada/Pacific',
+            u'Pacific/Pitcairn',
+            u'US/Pacific'
+        ]
+        ids = tztrout.tz_ids_for_tz_name('PT')
+        self.assertEqual(ids, pacific_ids)
+        ids = tztrout.tz_ids_for_tz_name('Pacific')
+        self.assertEqual(ids, pacific_ids)
+
     @patch('datetime.datetime', FakeDateTime)
     def test_offset_ranges_for_9_to_5(self):
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC

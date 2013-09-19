@@ -1,5 +1,6 @@
 import datetime
 import json
+import operator
 import os
 import pytz
 from sys import stdout
@@ -14,6 +15,8 @@ ZIP_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/zip_to_tz_id.json')
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
 OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
+ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
+
 
 class TroutData():
     """ Helper class that generates the JSON data used by TZTrout """
@@ -29,16 +32,27 @@ class TroutData():
     TD_STEP = { 'days': 40 }
 
     def __init__(self):
-
         # load the data files, if they exist
-        if os.path.exists(ZIP_TO_TZ_IDS_MAP_PATH):
-            self.zip_to_tz_ids = json.loads(open(ZIP_TO_TZ_IDS_MAP_PATH, 'r').read())
-        if os.path.exists(TZ_NAME_TO_TZ_IDS_MAP_PATH):
-            self.tz_name_to_tz_ids = json.loads(open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'r').read())
-        if os.path.exists(OFFSET_TO_TZ_IDS_MAP_PATH):
-            self.offset_to_tz_ids = json.loads(open(OFFSET_TO_TZ_IDS_MAP_PATH, 'r').read())
-        if os.path.exists(STATES_PATH):
-            self.normalized_states  = json.loads(open(STATES_PATH, 'r').read())
+        self._load_data('zip_to_tz_ids', ZIP_TO_TZ_IDS_MAP_PATH)
+        self._load_data('tz_name_to_tz_ids', TZ_NAME_TO_TZ_IDS_MAP_PATH)
+        self._load_data('offset_to_tz_ids', OFFSET_TO_TZ_IDS_MAP_PATH)
+        self._load_data('normalized_states', STATES_PATH)
+        self._load_data('tz_name_aliases', ALIASES_PATH)
+
+        # convert string offsets into integers
+        self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.iteritems())
+
+        # flatten the values of all tz name aliases (needed to identify which
+        # filters don't need to be exact in tztrout.tz_ids_for_tz_name
+        self.alias_list = reduce(operator.add, [v for v in self.tz_name_aliases.values()])
+
+    def _load_data(self, name, path):
+        """ Helper method to load a data file. """
+        if os.path.exists(path):
+            with open(path, 'r') as file:
+                setattr(self, name, json.loads(file.read()))
+        else:
+            raise ImportError("Data file is missing: %s" % path)
 
     def _get_latest_non_dst_offset(self, tz):
         """ Get the UTC offset for a given time zone identifier. Ignore the
@@ -163,11 +177,17 @@ class TroutData():
         for cnt, id in enumerate(pytz.common_timezones):
             tz = pytz.timezone(id)
             tz_names = self._get_latest_tz_names(tz)
+
+            # include the aliases in the map, too
             for name in tz_names:
-                if name in tz_name_ids:
+                tz_names.extend(self.tz_name_aliases.get(name, []))
+
+            for name in tz_names:
+                if name in tz_name_ids and id not in tz_name_ids[name]:
                     tz_name_ids[name].append(id)
-                else:
+                elif name not in tz_name_ids:
                     tz_name_ids[name] = [id]
+
             stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
             stdout.flush()
 
@@ -188,6 +208,7 @@ class TroutData():
                     offset_tz_ids[offset].append(id)
                 else:
                     offset_tz_ids[offset] = [id]
+
             stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
             stdout.flush()
 

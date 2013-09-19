@@ -1,0 +1,11 @@
+{
+    "PST": ["PT", "Pacific"],
+    "PDT": ["PT", "Pacific"],
+    "MST": ["MT", "Mountain"],
+    "MDT": ["MT", "Mountain"],
+    "CST": ["CT", "Central"],
+    "CDT": ["CT", "Central"],
+    "EST": ["ET", "Eastern"],
+    "EDT": ["ET", "Eastern"]
+}
+

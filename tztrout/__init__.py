@@ -32,6 +32,11 @@ def tz_ids_for_tz_name(tz_name):
     """
 
     ids = td.tz_name_to_tz_ids.get(tz_name)
+
+    # if the tz_name is just an alias, don't perform the fine-grained filtering
+    if tz_name in td.alias_list:
+        return ids
+
     valid_ids = []
     if ids:
         # only get the tz ids that match the tz name currently
