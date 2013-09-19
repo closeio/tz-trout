@@ -138,3 +138,7 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
     "Europe/Zurich"
 ]
 ```
+
+#### Testing
+
+Just run `python tests/__init__.py`
