@@ -45,7 +45,7 @@ def tz_ids_for_tz_name(tz_name):
     return valid_ids
 
 
-def tz_ids_for_phone(phone):
+def tz_ids_for_phone(phone, country='US'):
     """ Get the TZ identifiers that a phone number might be related to, e.g.
 
     >>> tztrout.tz_ids_for_phone('+16503334444')
@@ -55,7 +55,7 @@ def tz_ids_for_phone(phone):
     """
 
     try:
-        phone = phonenumbers.parse(phone, 'US')
+        phone = phonenumbers.parse(phone, country)
     except:
         pass
     else:
@@ -145,7 +145,7 @@ def tz_ids_for_offset(offset_in_minutes):
                 pass
     return valid_ids
 
-def local_time_for_phone(phone):
+def local_time_for_phone(phone, country='US'):
     """ Get the local time for a given phone number, e.g.
 
     >>> datetime.datetime.utcnow()
@@ -153,7 +153,7 @@ def local_time_for_phone(phone):
     >>> tztrout.local_time_for_phone('+16503334444')
     datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
     """
-    ids = tz_ids_for_phone(phone)
+    ids = tz_ids_for_phone(phone, country)
     if ids:
         return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
 
