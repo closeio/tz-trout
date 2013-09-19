@@ -5,7 +5,6 @@ import phonenumbers
 import pytz
 
 from dateutil.parser import parse as parse_date
-from phonenumbers.geocoder import description_for_number
 from pyzipcode import ZipCodeDatabase
 
 from .data import TroutData
@@ -67,7 +66,7 @@ def tz_ids_for_phone(phone, country='US'):
         country_iso = phonenumbers.region_code_for_number(phone)
         if country_iso == 'US':
             state = city = None
-            area = description_for_number(phone, 'en').split(',')
+            area = phonenumbers.description_for_number(phone, 'en').split(',')
             if len(area) == 2:
                 city = area[0].strip()
                 state = area[1].strip()
@@ -106,11 +105,12 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
         elif state or city:
             if len(state) != 2:
                 state = td.normalized_states.get(state.lower(), state)
-            zipcodes = ZipCodeDatabase().find_zip(city, state)
+            zcdb = ZipCodeDatabase()
+            zipcodes = zcdb.find_zip(city=city, state=state, exact=True, limit=1)
             if zipcodes:
                 return td.zip_to_tz_ids.get(zipcodes[0].zip)
             elif city:
-                zipcodes = ZipCodeDatabase().find_zip(None, state)
+                zipcodes = zcdb.find_zip(state=state, exact=True, limit=1)
                 if zipcodes:
                     return td.zip_to_tz_ids.get(zipcodes[0].zip)
     else:
