@@ -2,3 +2,4 @@ pytz==2013d
 pyzipcode==0.4
 phonenumbers==5.8b1
 mock==1.0b1
+python-dateutil==2.1

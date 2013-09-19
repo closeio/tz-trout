@@ -3,6 +3,7 @@ import json
 import phonenumbers
 import pytz
 
+from dateutil.parser import parse as parse_date
 from phonenumbers.geocoder import description_for_number
 from pyzipcode import ZipCodeDatabase
 
@@ -136,7 +137,8 @@ def tz_ids_for_offset(offset_in_minutes):
         for id in ids:
             tz = pytz.timezone(id)
             try:
-                if int(tz.utcoffset(datetime.datetime.utcnow()).total_seconds() / 60) == offset_in_minutes:
+                off = tz.utcoffset(datetime.datetime.utcnow()).total_seconds()
+                if off / 60 == offset_in_minutes:
                     valid_ids.append(id)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
                 pass
@@ -173,15 +175,19 @@ def offset_ranges_for_local_time(local_start, local_end):
     >>> tz_trout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))  # ran at 8pm UTC
     [[-660, -180], [780, 840]]
 
-    local_start and local_end can be instances of datetime.time or integers
-    (minutes from midnight).
+    local_start and local_end can be instances of datetime.time, integers
+    (minutes from midnight) or strings (e.g. '10:00', '20:00', '8pm', etc.)
     """
 
     # validate
-    if not isinstance(local_start, (datetime.time, int)):
-        raise ValueError('local_start is not an instance of datetime.time or int')
-    if not isinstance(local_end, (datetime.time, int)):
-        raise ValueError('local_end is not an instance of datetime.time or int')
+    if not isinstance(local_start, (datetime.time, int, str)):
+        raise ValueError('local_start is not an instance of datetime.time or int or str')
+    if not isinstance(local_end, (datetime.time, int, str)):
+        raise ValueError('local_end is not an instance of datetime.time or int or str')
+
+    # convert to datetime.time if strings
+    local_start = parse_date(local_start).time() if isinstance(local_start, str) else local_start
+    local_end = parse_date(local_end).time() if isinstance(local_end, str) else local_end
 
     # convert to ints (minutes)
     to_minutes = lambda t: t.hour * 60 + t.minute

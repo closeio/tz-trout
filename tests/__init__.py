@@ -93,6 +93,21 @@ class TZTroutTestCase(unittest.TestCase):
             [-14 * 60, 2 * 60]
         ])
 
+    @patch('datetime.datetime', FakeDateTime)
+    def test_offset_ranges_for_parsed_time(self):
+        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
+        offset_ranges = tz_trout.offset_ranges_for_local_time('9am', '5 pm')
+        self.assertEqual(offset_ranges, [
+            [-11 * 60, -3 * 60],
+            [13 * 60, 14 * 60]
+        ])
+
+        offset_ranges = tz_trout.offset_ranges_for_local_time('9:00', '17:00')
+        self.assertEqual(offset_ranges, [
+            [-11 * 60, -3 * 60],
+            [13 * 60, 14 * 60]
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()
