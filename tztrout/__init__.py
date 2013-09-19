@@ -1,5 +1,6 @@
 import datetime
 import json
+import operator
 import phonenumbers
 import pytz
 
@@ -219,5 +220,30 @@ def offset_ranges_for_local_time(local_start, local_end):
     return offset_ranges
 
 def tz_ids_for_offset_range(offset_start, offset_end):
-    pass  # TODO
+    """ Return all the time zone identifiers which offsets are within the
+    (offset_start, offset_end) range. The arguments should be integers
+    (UTC offsets in minutes).
+
+    >>> tztrout.tz_ids_for_offset_range(-7*60, -6 *60)
+    [
+        u'America/Belize', u'America/Boise', u'America/Cambridge_Bay',
+        u'America/Chihuahua', u'America/Costa_Rica', u'America/Denver',
+        u'America/Edmonton', u'America/El_Salvador', u'America/Guatemala',
+        u'America/Inuvik', u'America/Managua', u'America/Mazatlan',
+        u'America/Ojinaga', u'America/Regina', u'America/Shiprock',
+        u'America/Swift_Current', u'America/Tegucigalpa',
+        u'America/Yellowknife', u'Canada/Mountain', u'Pacific/Galapagos',
+        u'US/Mountain', u'America/Creston', u'America/Dawson',
+        u'America/Dawson_Creek', u'America/Hermosillo', u'America/Los_Angeles',
+        u'America/Phoenix', u'America/Santa_Isabel', u'America/Tijuana',
+        u'America/Vancouver', u'America/Whitehorse', u'Canada/Pacific',
+        u'US/Arizona', u'US/Pacific'
+    ]
+    """
+    offsets = [int(o) for o in td.offset_to_tz_ids.keys() if (
+                            int(o) >= offset_start and int(o) <= offset_end)]
+    ids = [tz_ids_for_offset(o) for o in offsets]
+    if ids:
+        ids = reduce(operator.add, ids)  # flatten the list of lists
+    return ids
 
