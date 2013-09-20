@@ -29,7 +29,7 @@ class JSONDawg():
         pairs = []
         for key, val in doc.iteritems():
             # convert complex objects into a string
-            pairs.append((key, bytes(json.dumps(val))))
+            pairs.append((key, bytes(val)))
         self.data = dawg.BytesDAWG(pairs)
 
     def get(self, key):
@@ -189,7 +189,7 @@ class TroutData():
         zips = list(zcdb.find_zip())
         zips_len = len(zips)
         for cnt, zip in enumerate(zips):
-            zip_tz_ids[zip.zip] = self._get_tz_identifiers_for_us_zipcode(zip)
+            zip_tz_ids[zip.zip] = json.dumps(self._get_tz_identifiers_for_us_zipcode(zip))
 
             stdout.write('\r%d/%d' % (cnt + 1, zips_len))
             stdout.flush()
