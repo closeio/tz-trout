@@ -1,4 +1,5 @@
 import datetime
+import dawg
 import json
 import operator
 import os
@@ -18,6 +19,30 @@ STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
 ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
 
 
+class JSONDawg():
+    """ Converts a dictionary into a read-only BytesDAWG for performance and
+    memory efficiency.
+    """
+
+    def __init__(self, doc):
+        # transform the key-value pairs into a (key, value) list
+        pairs = []
+        for key, val in doc.iteritems():
+            # convert complex objects into a string
+            pairs.append((key, bytes(json.dumps(val))))
+        self.data = dawg.BytesDAWG(pairs)
+
+    def get(self, key):
+        val = self.data.get(key)
+        if val is not None:
+            return json.loads(val[0])
+
+    def __getitem__(self, key):
+        val = self.data[key]
+        if val is not None:
+            return json.loads(val[0])
+
+
 class TroutData():
     """ Helper class that generates the JSON data used by TZTrout """
 
@@ -33,7 +58,7 @@ class TroutData():
 
     def __init__(self):
         # load the data files, if they exist
-        self._load_data('zip_to_tz_ids', ZIP_TO_TZ_IDS_MAP_PATH)
+        self._load_data('zip_to_tz_ids', ZIP_TO_TZ_IDS_MAP_PATH, dawgify=True)
         self._load_data('tz_name_to_tz_ids', TZ_NAME_TO_TZ_IDS_MAP_PATH)
         self._load_data('offset_to_tz_ids', OFFSET_TO_TZ_IDS_MAP_PATH)
         self._load_data('normalized_states', STATES_PATH)
@@ -46,11 +71,15 @@ class TroutData():
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
         self.alias_list = reduce(operator.add, [v for v in self.tz_name_aliases.values()])
 
-    def _load_data(self, name, path):
+    def _load_data(self, name, path, dawgify=False):
         """ Helper method to load a data file. """
         if os.path.exists(path):
             with open(path, 'r') as file:
-                setattr(self, name, json.loads(file.read()))
+                data = json.loads(file.read())
+                if dawgify:
+                    setattr(self, name, JSONDawg(data))
+                else:
+                    setattr(self, name, data)
         else:
             raise ImportError("Data file is missing: %s" % path)
 
