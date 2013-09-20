@@ -150,6 +150,17 @@ def tz_ids_for_offset(offset_in_minutes):
                 pass
     return valid_ids
 
+def non_dst_offset_for_tz_id(id):
+    """ Return the non-DST offset (in minutes) for a given tz id, e.g.
+
+    >>> tztrout.non_dst_offset_for_tz_id('America/Los_Angeles')
+    -480
+    """
+    tz = pytz.timezone(id)
+    offset = td._get_latest_non_dst_offset(tz)
+    if offset:
+        return int(offset.total_seconds() / 60)
+
 def local_time_for_phone(phone, country='US'):
     """ Get the local time for a given phone number, e.g.
 

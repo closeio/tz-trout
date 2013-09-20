@@ -52,6 +52,10 @@ class TZTroutTestCase(unittest.TestCase):
         ids = tztrout.tz_ids_for_tz_name('Pacific')
         self.assertEqual(ids, pacific_ids)
 
+    def test_non_dst_offset_for_tz_id(self):
+        offset = tztrout.non_dst_offset_for_tz_id('America/Los_Angeles')
+        self.assertEqual(offset, -8 * 60)
+
     @patch('datetime.datetime', FakeDateTime)
     def test_offset_ranges_for_9_to_5(self):
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
