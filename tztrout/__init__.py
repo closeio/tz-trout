@@ -150,17 +150,6 @@ def tz_ids_for_offset(offset_in_minutes):
                 pass
     return valid_ids
 
-def non_dst_offset_for_tz_id(id):
-    """ Return the non-DST offset (in minutes) for a given tz id, e.g.
-
-    >>> tztrout.non_dst_offset_for_tz_id('America/Los_Angeles')
-    -480
-    """
-    tz = pytz.timezone(id)
-    offset = td._get_latest_non_dst_offset(tz)
-    if offset:
-        return int(offset.total_seconds() / 60)
-
 def local_time_for_phone(phone, country='US'):
     """ Get the local time for a given phone number, e.g.
 
@@ -262,4 +251,26 @@ def tz_ids_for_offset_range(offset_start, offset_end):
     if ids:
         ids = reduce(operator.add, ids)  # flatten the list of lists
     return ids
+
+def non_dst_offsets_for_phone(phone):
+    """ Return the non-DST offsets (in minutes) for a given phone, e.g.
+
+    >>> tztrout.non_dst_offsets_for_phone('+1 650 248 6188')
+    [-480]
+    """
+    ids = tz_ids_for_phone(phone)
+    if ids:
+        offsets = [td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids]
+        return [int(o.total_seconds() / 60) for o in offsets if o]
+
+def non_dst_offsets_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+    """ Return the non-DST offsets (in minutes) for a given address, e.g.
+
+    >>> tztrout.non_dst_offsets_for_address('US', state='CA')
+    [-480]
+    """
+    ids = tz_ids_for_address(country, state=state, city=city, zipcode=zipcode, **kwargs)
+    if ids:
+        offsets = [td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids]
+        return [int(o.total_seconds() / 60) for o in offsets if o]
 
