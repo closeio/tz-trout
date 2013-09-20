@@ -7,7 +7,6 @@ import pytz
 from sys import stdout
 
 from pyzipcode import ZipCodeDatabase, ZipCode
-from .utils import build_normalization_map
 
 
 # paths to the data files
