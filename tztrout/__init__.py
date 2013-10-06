@@ -136,7 +136,7 @@ def tz_ids_for_offset(offset_in_minutes):
         u'US/Pacific'
     ]
     """
-    ids = td.offset_to_tz_ids.get(str(offset_in_minutes))
+    ids = td.offset_to_tz_ids.get(offset_in_minutes)
     valid_ids = []
     if ids:
         # only get the tz ids that match the tz offset currently
