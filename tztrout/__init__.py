@@ -7,7 +7,7 @@ import pytz
 from dateutil.parser import parse as parse_date
 from pyzipcode import ZipCodeDatabase
 
-from .data import TroutData
+from tztrout.data import TroutData
 
 
 td = TroutData()
