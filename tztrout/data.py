@@ -18,7 +18,7 @@ STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
 ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
 
 
-class JSONDawg():
+class JSONDawg(object):
     """ Converts a dictionary into a read-only BytesDAWG for performance and
     memory efficiency.
     """
@@ -42,7 +42,7 @@ class JSONDawg():
             return json.loads(val[0])
 
 
-class TroutData():
+class TroutData(object):
     """ Helper class that generates the JSON data used by TZTrout """
 
     # We don't care about the historic data - we just want to know the recent
