@@ -49,7 +49,7 @@ class TZTroutTestCase(unittest.TestCase):
         ]
         ids = tztrout.tz_ids_for_tz_name('PT')
         self.assertEqual(ids, pacific_ids)
-        ids = tztrout.tz_ids_for_tz_name('Pacific')
+        ids = tztrout.tz_ids_for_tz_name('PACIFIC')
         self.assertEqual(ids, pacific_ids)
 
     def test_non_dst_offsets_for_phone(self):

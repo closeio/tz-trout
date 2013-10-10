@@ -1,11 +1,11 @@
 {
-    "PST": ["PT", "Pacific"],
-    "PDT": ["PT", "Pacific"],
-    "MST": ["MT", "Mountain"],
-    "MDT": ["MT", "Mountain"],
-    "CST": ["CT", "Central"],
-    "CDT": ["CT", "Central"],
-    "EST": ["ET", "Eastern"],
-    "EDT": ["ET", "Eastern"]
+    "PST": ["PT", "PACIFIC"],
+    "PDT": ["PT", "PACIFIC"],
+    "MST": ["MT", "MOUNTAIN"],
+    "MDT": ["MT", "MOUNTAIN"],
+    "CST": ["CT", "CENTRAL"],
+    "CDT": ["CT", "CENTRAL"],
+    "EST": ["ET", "EASTERN"],
+    "EDT": ["ET", "EASTERN"]
 }
 
