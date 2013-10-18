@@ -1,5 +1,4 @@
 import datetime
-import json
 import operator
 import phonenumbers
 import pytz

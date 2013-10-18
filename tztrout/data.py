@@ -3,7 +3,9 @@ import dawg
 import json
 import operator
 import os
+import pickle
 import pytz
+from collections import defaultdict
 from sys import stdout
 
 from pyzipcode import ZipCodeDatabase, ZipCode
@@ -11,7 +13,7 @@ from pyzipcode import ZipCodeDatabase, ZipCode
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
-ZIP_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/zip_to_tz_id.json')
+ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/zips_to_tz_ids.pkl')
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
 OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
@@ -57,7 +59,7 @@ class TroutData(object):
 
     def __init__(self):
         # load the data files, if they exist
-        self._load_data('zip_to_tz_ids', ZIP_TO_TZ_IDS_MAP_PATH, dawgify=True)
+        self._load_us_zipcode_data('zip_to_tz_ids', ZIPS_TO_TZ_IDS_MAP_PATH)
         self._load_data('tz_name_to_tz_ids', TZ_NAME_TO_TZ_IDS_MAP_PATH)
         self._load_data('offset_to_tz_ids', OFFSET_TO_TZ_IDS_MAP_PATH)
         self._load_data('normalized_states', STATES_PATH)
@@ -75,12 +77,17 @@ class TroutData(object):
         if os.path.exists(path):
             with open(path, 'r') as file:
                 data = json.loads(file.read())
-                if dawgify:
-                    setattr(self, name, JSONDawg(data))
-                else:
-                    setattr(self, name, data)
+                setattr(self, name, data)
         else:
-            raise ImportError("Data file is missing: %s" % path)
+            print "Data file is missing: %s" % path
+
+    def _load_us_zipcode_data(self, name, path):
+        if os.path.exists(path):
+            with open(path, 'r') as file:
+                data = pickle.loads(file.read())
+                setattr(self, name, JSONDawg({single_k: v for k, v in data.items() for single_k in k}))
+        else:
+            print "Data file is missing: %s" % path
 
     def _get_latest_non_dst_offset(self, tz):
         """ Get the UTC offset for a given time zone identifier. Ignore the
@@ -184,17 +191,20 @@ class TroutData(object):
         based on a UTC offset stored for that zip in pyzipcode.ZipCodeDatabase.
         """
         zcdb = ZipCodeDatabase()
-        zip_tz_ids = {}
         zips = list(zcdb.find_zip())
         zips_len = len(zips)
+        tz_ids_to_zips = defaultdict(list)
         for cnt, zip in enumerate(zips):
-            zip_tz_ids[zip.zip] = json.dumps(self._get_tz_identifiers_for_us_zipcode(zip))
+            ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
+            tz_ids_to_zips[ids].append(zip.zip)
 
             stdout.write('\r%d/%d' % (cnt + 1, zips_len))
             stdout.flush()
 
-        file = open(ZIP_TO_TZ_IDS_MAP_PATH , 'w')
-        file.write(json.dumps(zip_tz_ids))
+        zips_to_tz_ids = {tuple(zips): json.dumps(ids) for ids, zips in tz_ids_to_zips.iteritems()}
+
+        file = open(ZIPS_TO_TZ_IDS_MAP_PATH , 'w')
+        file.write(pickle.dumps(zips_to_tz_ids))
         file.close()
 
     def generate_tz_name_to_tz_id_map(self):
@@ -226,21 +236,17 @@ class TroutData(object):
     def generate_offset_to_tz_id_map(self):
         """ Generate the map of UTC offsets to time zone identifiers.
         """
-        offset_tz_ids = {}
+        offset_tz_ids = defaultdict(list)
         tzs_len = len(pytz.common_timezones)
         for cnt, id in enumerate(pytz.common_timezones):
             tz = pytz.timezone(id)
             offsets = self._get_latest_offsets(tz)
             for offset in offsets:
-                if offset in offset_tz_ids:
-                    offset_tz_ids[offset].append(id)
-                else:
-                    offset_tz_ids[offset] = [id]
+                offset_tz_ids[offset].append(id)
 
             stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
             stdout.flush()
 
-        print offset_tz_ids
         file = open(OFFSET_TO_TZ_IDS_MAP_PATH, 'w')
         file.write(json.dumps(offset_tz_ids))
         file.close()
