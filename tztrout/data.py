@@ -1,9 +1,9 @@
+import cPickle as pickle
 import datetime
 import dawg
 import json
 import operator
 import os
-import pickle
 import pytz
 from collections import defaultdict
 from sys import stdout
