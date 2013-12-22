@@ -57,6 +57,8 @@ def tz_ids_for_phone(phone, country='US'):
     [u'Europe/Berlin', u'Europe/Busingen']
     """
 
+    from phonenumbers.geocoder import description_for_number
+
     try:
         phone = phonenumbers.parse(phone, country)
     except:
@@ -65,7 +67,7 @@ def tz_ids_for_phone(phone, country='US'):
         country_iso = phonenumbers.region_code_for_number(phone)
         if country_iso == 'US':
             state = city = None
-            area = phonenumbers.description_for_number(phone, 'en').split(',')
+            area = description_for_number(phone, 'en').split(',')
             if len(area) == 2:
                 city = area[0].strip()
                 state = area[1].strip()
