@@ -11,6 +11,11 @@ from tztrout.data import TroutData
 
 td = TroutData()
 
+def _dedupe_preserve_ord(lst):
+    """ Dedupe a list and preserve the order of its items. """
+    seen = set()
+    return [x for x in lst if x not in seen and not seen.add(x)]
+
 def tz_ids_for_tz_name(tz_name):
     """ Get the TZ identifiers that are currently in a specific time zone, e.g.
 
@@ -262,7 +267,7 @@ def non_dst_offsets_for_phone(phone):
     ids = tz_ids_for_phone(phone)
     if ids:
         offsets = [td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids]
-        return [int(o.total_seconds() / 60) for o in offsets if o]
+        return _dedupe_preserve_ord([int(o.total_seconds() / 60) for o in offsets if o])
 
 def non_dst_offsets_for_address(country, state=None, city=None, zipcode=None, **kwargs):
     """ Return the non-DST offsets (in minutes) for a given address, e.g.
@@ -273,5 +278,5 @@ def non_dst_offsets_for_address(country, state=None, city=None, zipcode=None, **
     ids = tz_ids_for_address(country, state=state, city=city, zipcode=zipcode, **kwargs)
     if ids:
         offsets = [td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids]
-        return [int(o.total_seconds() / 60) for o in offsets if o]
+        return _dedupe_preserve_ord([int(o.total_seconds() / 60) for o in offsets if o])
 

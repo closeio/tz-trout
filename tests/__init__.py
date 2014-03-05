@@ -56,9 +56,15 @@ class TZTroutTestCase(unittest.TestCase):
         offsets = tztrout.non_dst_offsets_for_phone('+1 650 333 4444')
         self.assertEqual(offsets, [-8 * 60])
 
+        offsets = tztrout.non_dst_offsets_for_phone('+1 212 333 4444')
+        self.assertEqual(offsets, [-5 * 60])
+
     def test_non_dst_offsets_for_address(self):
         offsets = tztrout.non_dst_offsets_for_address('US', state='CA')
         self.assertEqual(offsets, [-8 * 60])
+
+        offsets = tztrout.non_dst_offsets_for_address('US', state='NY')
+        self.assertEqual(offsets, [-5 * 60])
 
     @patch('datetime.datetime', FakeDateTime)
     def test_offset_ranges_for_9_to_5(self):
