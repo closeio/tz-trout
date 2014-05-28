@@ -139,6 +139,15 @@ class TZTroutTestCase(unittest.TestCase):
             [13 * 60, 14 * 60]
         ])
 
+    def test_wisconsin(self):
+        """ Make sure WI is not counted as part of ET. """
+
+        ids = tztrout.tz_ids_for_address('US', state='WI')
+        ids2 = tztrout.tz_ids_for_address('US', state='Wisconsin')
+        self.assertEqual(ids, ids2)
+        self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
+        self.assertFalse(set(tztrout.tz_ids_for_tz_name('ET')) & set(ids))
+
 
 if __name__ == '__main__':
     unittest.main()

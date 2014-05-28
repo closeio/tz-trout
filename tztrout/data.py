@@ -10,6 +10,8 @@ from sys import stdout
 
 from pyzipcode import ZipCodeDatabase, ZipCode
 
+from tztrout.data_exceptions import data_exceptions
+
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
@@ -196,6 +198,12 @@ class TroutData(object):
         tz_ids_to_zips = defaultdict(list)
         for cnt, zip in enumerate(zips):
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
+
+            # apply the data exceptions
+            exceptions = data_exceptions.get('zip:' + zip.zip) or data_exceptions.get('state:' + zip.state)
+            if exceptions:
+                ids = tuple((set(ids) | set(exceptions.get('include', []))) - set(exceptions.get('exclude', [])))
+
             tz_ids_to_zips[ids].append(zip.zip)
 
             stdout.write('\r%d/%d' % (cnt + 1, zips_len))
