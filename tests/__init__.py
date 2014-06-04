@@ -144,10 +144,22 @@ class TZTroutTestCase(unittest.TestCase):
 
         ids = tztrout.tz_ids_for_address('US', state='WI')
         ids2 = tztrout.tz_ids_for_address('US', state='Wisconsin')
+        ids3 = tztrout.tz_ids_for_phone('+14143334444')
         self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
         self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
         self.assertFalse(set(tztrout.tz_ids_for_tz_name('ET')) & set(ids))
 
+    def test_texas(self):
+        """ Make sure TX is not counted as part of ET. """
+
+        ids = tztrout.tz_ids_for_address('US', state='TX')
+        ids2 = tztrout.tz_ids_for_address('US', state='Texas')
+        ids3 = tztrout.tz_ids_for_phone('+12143334444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
+        self.assertFalse(set(tztrout.tz_ids_for_tz_name('ET')) & set(ids))
 
 if __name__ == '__main__':
     unittest.main()

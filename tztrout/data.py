@@ -200,9 +200,11 @@ class TroutData(object):
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
 
             # apply the data exceptions
-            exceptions = data_exceptions.get('zip:' + zip.zip) or data_exceptions.get('state:' + zip.state)
+            exceptions = data_exceptions.get('zip:' + zip.zip) or data_exceptions.get('state:' + zip.state) or {}
+            exceptions['include'] = exceptions.get('include', []) + data_exceptions['all'].get('include', []) if 'all' in data_exceptions else []
+            exceptions['exclude'] = exceptions.get('exclude', []) + data_exceptions['all'].get('exclude', []) if 'all' in data_exceptions else []
             if exceptions:
-                ids = tuple((set(ids) | set(exceptions.get('include', []))) - set(exceptions.get('exclude', [])))
+                ids = tuple((set(ids) | set(exceptions['include'])) - set(exceptions['exclude']))
 
             tz_ids_to_zips[ids].append(zip.zip)
 
