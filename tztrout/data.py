@@ -204,7 +204,7 @@ class TroutData(object):
             exceptions['include'] = exceptions.get('include', []) + data_exceptions['all'].get('include', []) if 'all' in data_exceptions else []
             exceptions['exclude'] = exceptions.get('exclude', []) + data_exceptions['all'].get('exclude', []) if 'all' in data_exceptions else []
             if exceptions:
-                ids = tuple((set(ids) | set(exceptions['include'])) - set(exceptions['exclude']))
+                ids = tuple((set(ids) - set(exceptions['exclude'])) | set(exceptions['include']))
 
             tz_ids_to_zips[ids].append(zip.zip)
 

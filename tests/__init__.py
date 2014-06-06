@@ -148,7 +148,18 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertEqual(ids, ids2)
         self.assertEqual(ids, ids3)
         self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
-        self.assertFalse(set(tztrout.tz_ids_for_tz_name('ET')) & set(ids))
+        self.assert_only_one_us_tz(ids, 'CT')
+
+    def assert_only_one_us_tz(self, ids, tz_name):
+        """ Assert that a given set of timezone ids only matches one tz name
+        in the United States.
+        """
+        tz_names = ['PT', 'MT', 'CT', 'ET']
+        self.assertTrue(tz_name in tz_names)
+        tz_names.remove(tz_name)
+        self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
+        for other_name in tz_names:
+            self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
 
     def test_texas(self):
         """ Make sure TX is not counted as part of ET. """
@@ -159,7 +170,146 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertEqual(ids, ids2)
         self.assertEqual(ids, ids3)
         self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
-        self.assertFalse(set(tztrout.tz_ids_for_tz_name('ET')) & set(ids))
+        self.assert_only_one_us_tz(ids, 'CT')
+
+    def test_major_cities(self):
+        """ Make sure all the major cities match the right time zone (and the
+        right time zone only). """
+
+        # New York
+        ids = tztrout.tz_ids_for_address('US', state='NY', city='New York')
+        ids2 = tztrout.tz_ids_for_phone('+12123334444')
+        ids3 = tztrout.tz_ids_for_phone('+16463334444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # Los Angeles
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='Los Angeles')
+        ids2 = tztrout.tz_ids_for_phone('+18183334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'PT')
+
+        # Chicago
+        ids = tztrout.tz_ids_for_address('US', state='IL', city='Chicago')
+        ids2 = tztrout.tz_ids_for_phone('+16303334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'CT')
+
+        # Houston
+        ids = tztrout.tz_ids_for_address('US', state='TX', city='Houston')
+        ids2 = tztrout.tz_ids_for_phone('+17133334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'CT')
+
+        # Philadelphia
+        ids = tztrout.tz_ids_for_address('US', state='PA', city='Philadelphia')
+        ids2 = tztrout.tz_ids_for_phone('+12153334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # Phoenix
+        ids = tztrout.tz_ids_for_address('US', state='AZ', city='Phoenix')
+        ids2 = tztrout.tz_ids_for_phone('+16023334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'MT')
+
+        # San Antonio
+        ids = tztrout.tz_ids_for_address('US', state='TX', city='San Antonio')
+        ids2 = tztrout.tz_ids_for_phone('+12103334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'CT')
+
+        # San Diego
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='San Diego')
+        ids2 = tztrout.tz_ids_for_phone('+16193334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'PT')
+
+        # Dallas
+        ids = tztrout.tz_ids_for_address('US', state='TX', city='Dallas')
+        ids2 = tztrout.tz_ids_for_phone('+12143334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'CT')
+
+        # San Jose
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='San Jose')
+        ids2 = tztrout.tz_ids_for_phone('+14083334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'PT')
+
+        # Austin
+        ids = tztrout.tz_ids_for_address('US', state='TX', city='Austin')
+        ids2 = tztrout.tz_ids_for_phone('+15123334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'CT')
+
+        # Indianapolis
+        ids = tztrout.tz_ids_for_address('US', state='IN', city='Indianapolis')
+        ids2 = tztrout.tz_ids_for_phone('+13173334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # Jacksonville
+        ids = tztrout.tz_ids_for_address('US', state='FL', city='Jacksonville')
+        ids2 = tztrout.tz_ids_for_phone('+19043334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # San Francisco
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='San Francisco')
+        ids2 = tztrout.tz_ids_for_phone('+14153334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'PT')
+
+        # Columbus
+        ids = tztrout.tz_ids_for_address('US', state='OH', city='Columbus')
+        ids2 = tztrout.tz_ids_for_phone('+16143334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # Charlotte
+        ids = tztrout.tz_ids_for_address('US', state='NC', city='Charlotte')
+        ids2 = tztrout.tz_ids_for_phone('+17043334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # Fort Worth
+        ids = tztrout.tz_ids_for_address('US', state='TX', city='Fort Worth')
+        ids2 = tztrout.tz_ids_for_phone('+16823334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'CT')
+
+        # Detroit
+        ids = tztrout.tz_ids_for_address('US', state='MI', city='Detroit')
+        ids2 = tztrout.tz_ids_for_phone('+13133334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'ET')
+
+        # El Paso
+        ids = tztrout.tz_ids_for_address('US', state='TX', city='El Paso')
+        ids2 = tztrout.tz_ids_for_phone('+19153334444')
+        self.assert_only_one_us_tz(ids, 'MT')
+        self.assert_only_one_us_tz(ids2, 'MT')
+
+        # Memphis
+        ids = tztrout.tz_ids_for_address('US', state='TN', city='Memphis')
+        ids2 = tztrout.tz_ids_for_phone('+19013334444')
+        self.assert_only_one_us_tz(ids, 'CT')
+        self.assert_only_one_us_tz(ids2, 'CT')
+
+        # Denver
+        ids = tztrout.tz_ids_for_address('US', state='CO', city='Denver')
+        ids2 = tztrout.tz_ids_for_phone('+13033334444')
+        self.assertEqual(ids, ids2)
+        self.assert_only_one_us_tz(ids, 'MT')
+
+        # Washington
+        ids = tztrout.tz_ids_for_address('US', state='DC', city='Washington')
+        ids2 = tztrout.tz_ids_for_phone('+12023334444')
+        self.assert_only_one_us_tz(ids, 'ET')
+        self.assert_only_one_us_tz(ids2, 'ET')
+
 
 if __name__ == '__main__':
     unittest.main()

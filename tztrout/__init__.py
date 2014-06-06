@@ -7,6 +7,7 @@ from dateutil.parser import parse as parse_date
 from pyzipcode import ZipCodeDatabase
 
 from tztrout.data import TroutData
+from tztrout.data_exceptions import data_exceptions
 
 
 td = TroutData()
@@ -71,6 +72,12 @@ def tz_ids_for_phone(phone, country='US'):
     else:
         country_iso = phonenumbers.region_code_for_number(phone)
         if country_iso == 'US':
+
+            # check if we have a specific exception for a given area code first
+            exception_key = 'areacode:%s' % str(phone.national_number)[:3]
+            if exception_key in data_exceptions:
+                return data_exceptions[exception_key]['include']
+
             state = city = None
             area = description_for_number(phone, 'en').split(',')
             if len(area) == 2:
@@ -109,6 +116,8 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
         if zipcode:
             return td.zip_to_tz_ids.get(zipcode)
         elif state or city:
+            if city and 'city:%s' % city.lower() in data_exceptions:
+                return data_exceptions['city:%s' % city.lower()]['include']
             if len(state) != 2:
                 state = td.normalized_states.get(state.lower(), state)
             zcdb = ZipCodeDatabase()
