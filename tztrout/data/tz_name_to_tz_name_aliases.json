@@ -6,6 +6,8 @@
     "CST": ["CT", "CENTRAL"],
     "CDT": ["CT", "CENTRAL"],
     "EST": ["ET", "EASTERN"],
-    "EDT": ["ET", "EASTERN"]
+    "EDT": ["ET", "EASTERN"],
+    "ADT": ["AT", "ATLANTIC"],
+    "AST": ["AT", "ATLANTIC"]
 }
 

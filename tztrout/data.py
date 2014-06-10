@@ -15,11 +15,13 @@ from tztrout.data_exceptions import data_exceptions
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
-ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/zips_to_tz_ids.pkl')
+US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.pkl')
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
 OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
 ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
+CA_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/ca_state_to_tz_ids.json')
+CA_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/ca_area_code_to_state.json')
 
 
 class JSONDawg(object):
@@ -61,11 +63,13 @@ class TroutData(object):
 
     def __init__(self):
         # load the data files, if they exist
-        self._load_us_zipcode_data('zip_to_tz_ids', ZIPS_TO_TZ_IDS_MAP_PATH)
+        self._load_us_zipcode_data('us_zip_to_tz_ids', US_ZIPS_TO_TZ_IDS_MAP_PATH)
         self._load_data('tz_name_to_tz_ids', TZ_NAME_TO_TZ_IDS_MAP_PATH)
         self._load_data('offset_to_tz_ids', OFFSET_TO_TZ_IDS_MAP_PATH)
         self._load_data('normalized_states', STATES_PATH)
         self._load_data('tz_name_aliases', ALIASES_PATH)
+        self._load_data('ca_state_to_tz_ids', CA_STATE_TO_TZ_IDS_MAP_PATH)
+        self._load_data('ca_area_code_to_state', CA_AREA_CODE_TO_STATE_MAP_PATH)
 
         # convert string offsets into integers
         self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.iteritems())
@@ -213,7 +217,7 @@ class TroutData(object):
 
         zips_to_tz_ids = {tuple(zips): json.dumps(ids) for ids, zips in tz_ids_to_zips.iteritems()}
 
-        file = open(ZIPS_TO_TZ_IDS_MAP_PATH , 'w')
+        file = open(US_ZIPS_TO_TZ_IDS_MAP_PATH , 'w')
         file.write(pickle.dumps(zips_to_tz_ids))
         file.close()
 

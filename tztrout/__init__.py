@@ -85,9 +85,14 @@ def tz_ids_for_phone(phone, country='US'):
                 state = area[1].strip()
             elif len(area) == 1 and area[0]:
                 state = area[0].lower().strip()
-                state = td.normalized_states.get(state, None)
+                state = td.normalized_states['US'].get(state, None)
 
             return tz_ids_for_address(country_iso, state=state, city=city)
+
+        elif country_iso == 'CA':
+            area_code = str(phone.national_number)[:3]
+            state = td.ca_area_code_to_state.get(area_code)
+            return td.ca_state_to_tz_ids.get(state)
 
         elif country_iso:
             return pytz.country_timezones.get(country_iso)
@@ -114,22 +119,26 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
 
     if country == 'US':
         if zipcode:
-            return td.zip_to_tz_ids.get(zipcode)
+            return td.us_zip_to_tz_ids.get(zipcode)
         elif state or city:
             if city and 'city:%s' % city.lower() in data_exceptions:
                 return data_exceptions['city:%s' % city.lower()]['include']
             if len(state) != 2:
-                state = td.normalized_states.get(state.lower(), state)
+                state = td.normalized_states['US'].get(state.lower(), state)
             zcdb = ZipCodeDatabase()
             zipcodes = zcdb.find_zip(city=city, state=state, exact=True, limit=1)
             if zipcodes:
-                return td.zip_to_tz_ids.get(zipcodes[0].zip)
+                return td.us_zip_to_tz_ids.get(zipcodes[0].zip)
             elif city:
                 zipcodes = zcdb.find_zip(state=state, exact=True, limit=1)
                 if zipcodes:
-                    return td.zip_to_tz_ids.get(zipcodes[0].zip)
-    else:
-        return pytz.country_timezones.get(country)
+                    return td.us_zip_to_tz_ids.get(zipcodes[0].zip)
+    elif country == 'CA' and state:
+        if len(state) != 2:
+            state = td.normalized_states['CA'].get(state.lower(), state)
+        return td.ca_state_to_tz_ids.get(state)
+
+    return pytz.country_timezones.get(country)
 
 def tz_ids_for_offset(offset_in_minutes):
     """ Get the TZ identifiers for a given UTC offset (in minutes), e.g.
