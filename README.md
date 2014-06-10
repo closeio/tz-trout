@@ -5,8 +5,8 @@ a specific address or a phone number is in. It does so by using several
 mappings that are generated with the help of pytz (http://pytz.sourceforge.net/)
 and pyzipcode (https://github.com/fdintino/pyzipcode).
 
-Current version is fairly accurate for the United States and the countries
-with a single time zone.
+Current version is fairly accurate for the United States, Canada, and
+countries which fit within a single time zone.
 
 Vocabulary used in this library:
 * PST - time zone name
