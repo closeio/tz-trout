@@ -376,6 +376,17 @@ class TZTroutTestCase(unittest.TestCase):
         self.assert_only_one_us_tz(ids, 'CT')
         self.assert_only_one_us_tz(ids2, 'CT')
 
+    def test_canada_without_state_info(self):
+        ids = tztrout.tz_ids_for_address('CA')
+        expected_ids = [
+            "America/Whitehorse", "America/Vancouver", "America/Yellowknife",
+            "America/Edmonton", "America/Regina", "America/Winnipeg",
+            "America/Iqaluit", "America/Toronto", #"America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
+            "America/Moncton", "America/Halifax", "America/St_Johns"
+        ]
+        for tz_id in expected_ids:
+            self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
+
 
 if __name__ == '__main__':
     unittest.main()
