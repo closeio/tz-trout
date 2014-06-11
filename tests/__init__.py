@@ -523,6 +523,16 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertEqual(ids, ids4)
         self.assert_only_one_au_tz(ids, 'AET')
 
+    def test_australia_without_state_info(self):
+        ids = tztrout.tz_ids_for_address('AU')
+        expected_ids = ["Australia/Sydney", "Australia/Perth", "Australia/Darwin",
+            "Australia/Adelaide", "Australia/Darwin", "Australia/Adelaide",
+            "Australia/Hobart", "Australia/Melbourne", "Australia/Sydney",
+            "Australia/Brisbane"
+        ]
+        for tz_id in expected_ids:
+            self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
+
 
 if __name__ == '__main__':
     unittest.main()
