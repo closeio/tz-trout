@@ -22,6 +22,8 @@ STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
 ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
 CA_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/ca_state_to_tz_ids.json')
 CA_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/ca_area_code_to_state.json')
+AU_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/au_state_to_tz_ids.json')
+AU_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/au_area_code_to_state.json')
 
 
 class JSONDawg(object):
@@ -70,6 +72,8 @@ class TroutData(object):
         self._load_data('tz_name_aliases', ALIASES_PATH)
         self._load_data('ca_state_to_tz_ids', CA_STATE_TO_TZ_IDS_MAP_PATH)
         self._load_data('ca_area_code_to_state', CA_AREA_CODE_TO_STATE_MAP_PATH)
+        self._load_data('au_state_to_tz_ids', AU_STATE_TO_TZ_IDS_MAP_PATH)
+        self._load_data('au_area_code_to_state', AU_AREA_CODE_TO_STATE_MAP_PATH)
 
         # convert string offsets into integers
         self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.iteritems())
@@ -230,7 +234,21 @@ class TroutData(object):
             tz = pytz.timezone(id)
             tz_names = self._get_latest_tz_names(tz)
 
-            # include the aliases in the map, too
+            # Australian tz names are resolved as EST, WST, etc., which is ok
+            # for local usage, but conflicts with the more common US tz names
+            # if we're thinking globally. Instead, we should use AWST, ACST,
+            # AEST, etc.
+            if id.startswith('Australia'):
+                au_map = {
+                    'WST': 'AWST',
+                    'CST': 'ACST',
+                    'EST': 'AEST',
+                    'CWST': 'AWST',
+                    'LHST': 'AEST'
+                }
+                tz_names = [au_map[tz_name] for tz_name in tz_names]
+
+            # Include the aliases in the map, too
             for name in tz_names:
                 tz_names.extend(self.tz_name_aliases.get(name, []))
 

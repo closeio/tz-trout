@@ -8,6 +8,13 @@
     "EST": ["ET", "EASTERN"],
     "EDT": ["ET", "EASTERN"],
     "ADT": ["AT", "ATLANTIC"],
-    "AST": ["AT", "ATLANTIC"]
+    "AST": ["AT", "ATLANTIC"],
+
+    "AWST": ["AWT", "AUSTRALIAN WESTERN"],
+    "AWDT": ["AWT", "AUSTRALIAN WESTERN"],
+    "ACST": ["ACT", "AUSTRALIAN CENTRAL"],
+    "ACDT": ["ACT", "AUSTRALIAN CENTRAL"],
+    "AEST": ["AET", "AUSTRALIAN EASTERN"],
+    "AEDT": ["AET", "AUSTRALIAN EASTERN"]
 }
 

@@ -142,3 +142,12 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
 #### Testing
 
 Just run `python tests/__init__.py`
+
+#### Known Issues
+
+* Australian Central Western Standard Time (CWST) is treated as Australian Central Standard Time (ACST). See [Australian anomalies](http://en.wikipedia.org/wiki/Time_in_Australia#Anomalies) for more details.
+* Lord Howe Standard Time (LHST) is treated as Australian Eastern Standard Time (AEST). In reality, they're 30 minutes apart.
+* The whole state of British Columbia (Canada) is recognized as Pacific Time, although a small portion of its south-east territory should be recognized as Mountain Time.
+* The whole state of Ontario (Canada) is recognized as Eastern Time, although a small portion of its west territory should be recognized as Central Time.
+* All +1 867 phone numbers are recognized as Mountain Time, although this prefix is shared by three Canadian territories in the Arctic far north, spanning across Pacific, Mountain, and Central Time.
+

@@ -387,6 +387,142 @@ class TZTroutTestCase(unittest.TestCase):
         for tz_id in expected_ids:
             self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
 
+    def assert_only_one_au_tz(self, ids, tz_name):
+        """ Assert that a given set of timezone ids only matches one tz name
+        in Australia.
+        """
+        tz_names = ['AWT', 'ACT', 'AET']
+        self.assertTrue(tz_name in tz_names)
+        tz_names.remove(tz_name)
+        self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
+        for other_name in tz_names:
+            self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
+
+    def test_major_cities_australia(self):
+
+        # NSW - New South Wales
+        # WA - Western Australia
+        # NT - Northern Territory
+        # SA - South Australia
+        # TAS - Tasmania
+        # VIC - Victoria
+        # ACT - Australian Capital Territory
+        # QLD - Queensland
+
+        # Sydney, NSW
+        ids = tztrout.tz_ids_for_address('AU', state='NSW', city='Sydney')
+        ids2 = tztrout.tz_ids_for_phone('+61 27 333 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 28 333 4444')
+        ids4 = tztrout.tz_ids_for_phone('+61 29 333 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertEqual(ids, ids4)
+        self.assert_only_one_au_tz(ids, 'AET')
+
+        # Perth, WA
+        ids = tztrout.tz_ids_for_address('AU', state='WA', city='Perth')
+        ids2 = tztrout.tz_ids_for_phone('+61 852 22 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 853 22 4444')
+        ids4 = tztrout.tz_ids_for_phone('+61 854 22 4444')
+        ids5 = tztrout.tz_ids_for_phone('+61 861 22 4444')
+        ids6 = tztrout.tz_ids_for_phone('+61 862 22 4444')
+        ids7 = tztrout.tz_ids_for_phone('+61 863 22 4444')
+        ids8 = tztrout.tz_ids_for_phone('+61 864 22 4444')
+        ids9 = tztrout.tz_ids_for_phone('+61 865 22 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertEqual(ids, ids4)
+        self.assertEqual(ids, ids5)
+        self.assertEqual(ids, ids6)
+        self.assertEqual(ids, ids7)
+        self.assertEqual(ids, ids8)
+        self.assertEqual(ids, ids9)
+        self.assert_only_one_au_tz(ids, 'AWT')
+
+        # Darwin, NT
+        ids = tztrout.tz_ids_for_address('AU', state='NT', city='Darwin')
+        ids2 = tztrout.tz_ids_for_phone('+61 879 22 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 889 22 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assert_only_one_au_tz(ids, 'ACT')
+
+        # Eucla, WA - ignore for now
+        # "Eucla and the surrounding area, notably Mundrabilla and Madura, use
+        # the Central Western Time Zone of UTC+8:45. Although it has no official
+        # sanction, it is universally observed in this area, stopping just to
+        # the east of Caiguna.
+
+        # Adelaide, SA
+        ids = tztrout.tz_ids_for_address('AU', state='SA', city='Adelaide')
+        ids2 = tztrout.tz_ids_for_phone('+61 870 22 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 871 22 4444')
+        ids4 = tztrout.tz_ids_for_phone('+61 872 22 4444')
+        ids5 = tztrout.tz_ids_for_phone('+61 873 22 4444')
+        ids6 = tztrout.tz_ids_for_phone('+61 874 22 4444')
+        ids7 = tztrout.tz_ids_for_phone('+61 881 22 4444')
+        ids8 = tztrout.tz_ids_for_phone('+61 882 22 4444')
+        ids9 = tztrout.tz_ids_for_phone('+61 883 22 4444')
+        ids10 = tztrout.tz_ids_for_phone('+61 884 22 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertEqual(ids, ids4)
+        self.assertEqual(ids, ids5)
+        self.assertEqual(ids, ids6)
+        self.assertEqual(ids, ids7)
+        self.assertEqual(ids, ids8)
+        self.assertEqual(ids, ids9)
+        self.assertEqual(ids, ids10)
+        self.assert_only_one_au_tz(ids, 'ACT')
+
+        # Hobart, TAS
+        ids = tztrout.tz_ids_for_address('AU', state='TAS', city='Hobart')
+        ids2 = tztrout.tz_ids_for_phone('+61 361 22 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 362 22 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assert_only_one_au_tz(ids, 'AET')
+
+        # Melbourne, VIC
+        ids = tztrout.tz_ids_for_address('AU', state='VIC', city='Melbourne')
+        ids2 = tztrout.tz_ids_for_phone('+61 37 333 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 38 333 4444')
+        ids4 = tztrout.tz_ids_for_phone('+61 39 333 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertEqual(ids, ids4)
+        self.assert_only_one_au_tz(ids, 'AET')
+
+        # Canberra, ACT
+        ids = tztrout.tz_ids_for_address('AU', state='ACT', city='Canberra')
+        ids2 = tztrout.tz_ids_for_phone('+61 251 22 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 252 22 4444')
+        ids4 = tztrout.tz_ids_for_phone('+61 261 22 4444')
+        ids5 = tztrout.tz_ids_for_phone('+61 262 22 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertEqual(ids, ids4)
+        self.assertEqual(ids, ids5)
+        self.assert_only_one_au_tz(ids, 'AET')
+
+        # Brisbane, QLD
+        ids = tztrout.tz_ids_for_address('AU', state='QLD', city='Brisbane')
+        ids2 = tztrout.tz_ids_for_phone('+61 72 333 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 73 333 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assert_only_one_au_tz(ids, 'AET')
+
+        # Townsville, QLD
+        ids = tztrout.tz_ids_for_address('AU', state='QLD', city='Brisbane')
+        ids2 = tztrout.tz_ids_for_phone('+61 744 22 4444')
+        ids3 = tztrout.tz_ids_for_phone('+61 745 22 4444')
+        ids4 = tztrout.tz_ids_for_phone('+61 777 22 4444')
+        self.assertEqual(ids, ids2)
+        self.assertEqual(ids, ids3)
+        self.assertEqual(ids, ids4)
+        self.assert_only_one_au_tz(ids, 'AET')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,10 @@
+{
+    "NSW": ["Australia/Sydney"],
+    "WA": ["Australia/Perth"],
+    "NT": ["Australia/Darwin", "Australia/Adelaide"],
+    "SA": ["Australia/Darwin", "Australia/Adelaide"],
+    "TAS": ["Australia/Hobart"],
+    "VIC": ["Australia/Melbourne"],
+    "ACT": ["Australia/Sydney"],
+    "QLD": ["Australia/Brisbane"]
+}
