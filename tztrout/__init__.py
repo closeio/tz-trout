@@ -142,7 +142,7 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
             zipcodes = zcdb.find_zip(city=city, state=state, exact=True, limit=1)
             if zipcodes:
                 return td.us_zip_to_tz_ids.get(zipcodes[0].zip)
-            elif city:
+            elif city is not None:
                 zipcodes = zcdb.find_zip(state=state, exact=True, limit=1)
                 if zipcodes:
                     return td.us_zip_to_tz_ids.get(zipcodes[0].zip)

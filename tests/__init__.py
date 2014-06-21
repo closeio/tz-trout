@@ -35,6 +35,10 @@ class TZTroutTestCase(unittest.TestCase):
         ids = tztrout.tz_ids_for_address('PL')
         self.assertEqual(ids, ['Europe/Warsaw'])
 
+    def test_city_empty_string(self):
+        ids = tztrout.tz_ids_for_address('US', state='California', city='')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+
     def test_ids_for_tz_name(self):
         pacific_ids = [
             u'America/Dawson',
