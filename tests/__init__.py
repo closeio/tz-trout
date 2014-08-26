@@ -35,6 +35,20 @@ class TZTroutTestCase(unittest.TestCase):
         ids = tztrout.tz_ids_for_address('PL')
         self.assertEqual(ids, ['Europe/Warsaw'])
 
+    def test_ids_for_address_with_zipcode(self):
+        ids = tztrout.tz_ids_for_address('US', state='California', zipcode='94041')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+        ids = tztrout.tz_ids_for_address('US', zipcode='94041')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+
+        # make sure passing an int works, too
+        ids = tztrout.tz_ids_for_address('US', zipcode=94041)
+        self.assertEqual(ids, ['America/Los_Angeles'])
+
+        # make sure passing an extended zipcode works as well
+        ids = tztrout.tz_ids_for_address('US', zipcode='94041-1191')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+
     def test_city_empty_string(self):
         ids = tztrout.tz_ids_for_address('US', state='California', city='')
         self.assertEqual(ids, ['America/Los_Angeles'])

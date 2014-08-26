@@ -132,6 +132,13 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
 
     if country == 'US':
         if zipcode:
+            if not isinstance(zipcode, basestring):
+                zipcode = str(zipcode)
+
+            # If an extended zipcode in a form of XXXXX-XXXX is provided,
+            # only use the first part
+            zipcode = zipcode.split('-')[0]
+
             return td.us_zip_to_tz_ids.get(zipcode)
         elif state or city:
             if city and 'city:%s' % city.lower() in data_exceptions:
