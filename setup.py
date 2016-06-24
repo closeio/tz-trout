@@ -17,4 +17,13 @@ setup(
     packages=[
         'tztrout',
     ],
+    install_requires=[
+        'dawg',
+        'phonenumbers',
+        'python-dateutil',
+        'pytz',
+        'pyzipcode',
+    ],
+    test_suite='tests',
+    tests_require=['mock'],
 )
