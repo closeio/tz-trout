@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tz-trout',
-    version='0.1',
+    version='0.1.1',
     url='http://github.com/closeio/tz-trout',
     license='MIT',
     description='Helps you figure out the time zone based on an address or a phone number.',
