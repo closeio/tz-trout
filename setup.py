@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tz-trout',
-    version='0.1.2',
+    version='0.1.3',
     url='http://github.com/closeio/tz-trout',
     license='MIT',
     author='Close.io',
@@ -21,6 +21,9 @@ setup(
     packages=[
         'tztrout',
     ],
+    package_data={
+        'tztrout': ['data/*']
+    },
     install_requires=[
         'dawg',
         'phonenumbers',
