@@ -551,6 +551,13 @@ class TZTroutTestCase(unittest.TestCase):
         for tz_id in expected_ids:
             self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
 
+    @patch('datetime.datetime', FakeDateTime)
+    def test_local_time_in_spain(self):
+        """Make sure local time is properly calculated for Spain."""
+        FakeDateTime.set_utcnow(datetime.datetime(2016, 9, 13, 22, 15))  # 15:15 PT / 22:15 UTC / 00:15 CEST
+        local_time = tztrout.local_time_for_address('ES', city='Barcelona')
+        self.assertEqual(str(local_time), '2016-09-14 00:15:00+02:00')
+
 
 if __name__ == '__main__':
     unittest.main()
