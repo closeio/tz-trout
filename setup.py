@@ -26,7 +26,7 @@ setup(
     },
     install_requires=[
         'dawg',
-        'phonenumbers',
+        'phonenumbers>=8.3.0',
         'python-dateutil',
         'pytz',
         'pyzipcode',
