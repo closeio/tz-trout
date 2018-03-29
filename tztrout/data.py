@@ -26,6 +26,74 @@ AU_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/au_state_to_tz_ids.j
 AU_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/au_area_code_to_state.json')
 
 
+def deduplicator():
+    """Deduplicate strings in memory using a canonical mapping.
+
+    Works similarly to intern() but supports unicode as well.
+
+    >>> a = chr(1) + chr(1)  # Create two strings
+    >>> b = chr(1) + chr(1)
+
+    >>> a == b  # These have the same contents
+    True
+    >>> id(a) == id(b)  # But they're different objects
+    False
+
+    >>> deduplicate = deduplicator()  # Deduplicating them returns the same object
+    >>> id(deduplicate(a)) == id(deduplicate(b))
+    True
+    """
+    memo = {}
+
+    def deduplicate(item):
+        if item in memo:
+            return memo[item]
+        memo[item] = item
+        return item
+
+    return deduplicate
+
+
+class InMemoryZipData(object):
+    """In-memory copy of ZipCodeDatabase.
+
+    This enables 20x speedup for city/state zip code lookup
+    at a cost of more restricted / use-case-specific API,
+    extra startup time of about 0.25-0.5s (depending on CPU),
+    and holding the dataset in process memory (4-8MB).
+    """
+
+    def __init__(self):
+        self.by_state = {}
+        self.by_city = {}
+        self.by_state_city = {}
+        deduplicate = deduplicator()
+
+        for zip in map(ZipCode, ZipCodeDatabase().conn_manager.query("SELECT * FROM ZipCodes", [])):
+            code = deduplicate(zip.zip)
+            state = deduplicate(zip.state)
+            city = deduplicate(zip.city)
+            if state not in self.by_state:
+                self.by_state[state] = code
+            if city not in self.by_city:
+                self.by_city[city] = code
+            if (state, city) not in self.by_state_city:
+                self.by_state_city[(state, city)] = code
+
+    def find_zip(self, city=None, state=None):
+        if city and state:
+            return self.by_state_city.get((state, city))
+        elif city:
+            return self.by_city.get(city)
+        elif state:
+            return self.by_state.get(state)
+
+        raise ValueError('Specify either city or state')
+
+
+ZIP_DATA = InMemoryZipData()
+
+
 class JSONDawg(object):
     """ Converts a dictionary into a read-only BytesDAWG for performance and
     memory efficiency.

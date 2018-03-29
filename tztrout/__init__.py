@@ -4,9 +4,8 @@ import phonenumbers
 import pytz
 
 from dateutil.parser import parse as parse_date
-from pyzipcode import ZipCodeDatabase
 
-from tztrout.data import TroutData
+from tztrout.data import TroutData, ZIP_DATA
 from tztrout.data_exceptions import data_exceptions
 
 
@@ -145,14 +144,13 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
                 return data_exceptions['city:%s' % city.lower()]['include']
             if len(state) != 2:
                 state = td.normalized_states['US'].get(state.lower(), state)
-            zcdb = ZipCodeDatabase()
-            zipcodes = zcdb.find_zip(city=city, state=state, exact=True, limit=1)
-            if zipcodes:
-                return td.us_zip_to_tz_ids.get(zipcodes[0].zip)
+            code = ZIP_DATA.find_zip(city=city, state=state)
+            if code:
+                return td.us_zip_to_tz_ids.get(code)
             elif city is not None:
-                zipcodes = zcdb.find_zip(state=state, exact=True, limit=1)
-                if zipcodes:
-                    return td.us_zip_to_tz_ids.get(zipcodes[0].zip)
+                code = ZIP_DATA.find_zip(state=state)
+                if code:
+                    return td.us_zip_to_tz_ids.get(code)
     elif country == 'CA' and state:
         if len(state) != 2:
             state = td.normalized_states['CA'].get(state.lower(), state)
