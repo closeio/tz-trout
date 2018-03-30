@@ -32,8 +32,45 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertEqual(ids, ['America/Los_Angeles'])
         ids = tztrout.tz_ids_for_address('US', state='CA')
         self.assertEqual(ids, ['America/Los_Angeles'])
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='Palo Alto')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+        ids = tztrout.tz_ids_for_address('US', state='', city='Palo Alto')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+        ids = tztrout.tz_ids_for_address('US', city='Palo Alto')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+
+        ids = tztrout.tz_ids_for_address('US', state='', city='')
+        self.assertTrue('America/Los_Angeles' in ids)
+        self.assertTrue('America/New_York' in ids)
+
+        ids = tztrout.tz_ids_for_address('US')
+        self.assertTrue('America/Los_Angeles' in ids)
+        self.assertTrue('America/New_York' in ids)
+
         ids = tztrout.tz_ids_for_address('PL')
         self.assertEqual(ids, ['Europe/Warsaw'])
+
+        # Invalid state, assume any US tz
+        ids = tztrout.tz_ids_for_address('US', state='XX')
+        self.assertTrue('America/Los_Angeles' in ids)
+        self.assertTrue('America/New_York' in ids)
+        ids = tztrout.tz_ids_for_address('US', state='XX', city='')
+        self.assertTrue('America/Los_Angeles' in ids)
+        self.assertTrue('America/New_York' in ids)
+
+        # Invalid city with state, ignore city
+        ids = tztrout.tz_ids_for_address('US', state='CA', city='XX')
+        self.assertEqual(ids, ['America/Los_Angeles'])
+
+        # Invalid city without state, assume any US tz
+        ids = tztrout.tz_ids_for_address('US', state='', city='XX')
+        self.assertTrue('America/Los_Angeles' in ids)
+        self.assertTrue('America/New_York' in ids)
+        ids = tztrout.tz_ids_for_address('US', city='XX')
+        self.assertTrue('America/Los_Angeles' in ids)
+        self.assertTrue('America/New_York' in ids)
 
     def test_ids_for_address_with_zipcode(self):
         ids = tztrout.tz_ids_for_address('US', state='California', zipcode='94041')

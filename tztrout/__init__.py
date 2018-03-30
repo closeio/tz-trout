@@ -142,12 +142,13 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
         elif state or city:
             if city and 'city:%s' % city.lower() in data_exceptions:
                 return data_exceptions['city:%s' % city.lower()]['include']
-            if len(state) != 2:
+            if state and len(state) != 2:
                 state = td.normalized_states['US'].get(state.lower(), state)
             code = ZIP_DATA.find_zip(city=city, state=state)
             if code:
                 return td.us_zip_to_tz_ids.get(code)
-            elif city is not None:
+            elif city and state:
+                # Couldn't find by city+state, try ignoring city
                 code = ZIP_DATA.find_zip(state=state)
                 if code:
                     return td.us_zip_to_tz_ids.get(code)
