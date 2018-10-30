@@ -312,7 +312,7 @@ class TroutData(object):
             stdout.flush()
 
         file = open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'w')
-        file.write(json.dumps(tz_name_ids, indent=2, sort_keys=True))
+        file.write(json.dumps(tz_name_ids, indent=2, sort_keys=True, separators=(',', ': ')))
         file.close()
 
     def generate_offset_to_tz_id_map(self):
