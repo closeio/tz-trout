@@ -1,9 +1,66 @@
 {
-  "ULAST": [
-    "Asia/Ulaanbaatar"
+  "ACDT": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill"
   ],
-  "FNT": [
-    "America/Noronha"
+  "ACST": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill",
+    "Australia/Darwin"
+  ],
+  "ACT": [
+    "America/Eirunepe",
+    "America/Rio_Branco",
+    "Australia/Adelaide",
+    "Australia/Broken_Hill",
+    "Australia/Darwin"
+  ],
+  "ACWDT": [
+    "Australia/Eucla"
+  ],
+  "ACWST": [
+    "Australia/Eucla"
+  ],
+  "ADT": [
+    "America/Glace_Bay",
+    "America/Goose_Bay",
+    "America/Halifax",
+    "America/Moncton",
+    "America/Thule",
+    "Asia/Baghdad",
+    "Atlantic/Bermuda",
+    "Canada/Atlantic"
+  ],
+  "AEDT": [
+    "Antarctica/Macquarie",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lord_Howe",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AEST": [
+    "Antarctica/Macquarie",
+    "Australia/Brisbane",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lindeman",
+    "Australia/Lord_Howe",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AET": [
+    "Antarctica/Macquarie",
+    "Australia/Brisbane",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lindeman",
+    "Australia/Lord_Howe",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AFT": [
+    "Asia/Kabul"
   ],
   "AKDT": [
     "America/Anchorage",
@@ -13,234 +70,21 @@
     "America/Yakutat",
     "US/Alaska"
   ],
-  "GST": [
-    "Asia/Dubai",
-    "Asia/Muscat",
-    "Atlantic/South_Georgia"
+  "AKST": [
+    "America/Anchorage",
+    "America/Juneau",
+    "America/Nome",
+    "America/Sitka",
+    "America/Yakutat",
+    "US/Alaska"
   ],
-  "PMDT": [
-    "America/Miquelon"
+  "ALMT": [
+    "Asia/Almaty"
   ],
-  "ET": [
-    "America/Atikokan",
-    "America/Cancun",
-    "America/Cayman",
-    "America/Detroit",
-    "America/Grand_Turk",
-    "America/Indiana/Indianapolis",
-    "America/Indiana/Knox",
-    "America/Indiana/Marengo",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vevay",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Iqaluit",
-    "America/Jamaica",
-    "America/Kentucky/Louisville",
-    "America/Kentucky/Monticello",
-    "America/Nassau",
-    "America/New_York",
-    "America/Nipigon",
-    "America/Panama",
-    "America/Pangnirtung",
-    "America/Port-au-Prince",
-    "America/Resolute",
-    "America/Thunder_Bay",
-    "America/Toronto",
-    "Canada/Eastern",
-    "US/Eastern"
-  ],
-  "LINT": [
-    "Pacific/Kiritimati"
-  ],
-  "BOT": [
-    "America/La_Paz"
-  ],
-  "EGT": [
-    "America/Scoresbysund"
-  ],
-  "XJT": [
-    "Asia/Urumqi"
-  ],
-  "GAMT": [
-    "Pacific/Gambier"
-  ],
-  "WITA": [
-    "Asia/Makassar"
-  ],
-  "AWST": [
-    "Antarctica/Casey",
-    "Australia/Perth"
-  ],
-  "MUST": [
-    "Indian/Mauritius"
-  ],
-  "KOST": [
-    "Pacific/Kosrae"
-  ],
-  "EASTERN": [
-    "America/Atikokan",
-    "America/Cancun",
-    "America/Cayman",
-    "America/Detroit",
-    "America/Grand_Turk",
-    "America/Indiana/Indianapolis",
-    "America/Indiana/Knox",
-    "America/Indiana/Marengo",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vevay",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Iqaluit",
-    "America/Jamaica",
-    "America/Kentucky/Louisville",
-    "America/Kentucky/Monticello",
-    "America/Nassau",
-    "America/New_York",
-    "America/Nipigon",
-    "America/Panama",
-    "America/Pangnirtung",
-    "America/Port-au-Prince",
-    "America/Resolute",
-    "America/Thunder_Bay",
-    "America/Toronto",
-    "Canada/Eastern",
-    "US/Eastern"
-  ],
-  "AWT": [
-    "Antarctica/Casey",
-    "Australia/Perth"
-  ],
-  "NZDT": [
-    "Antarctica/McMurdo",
-    "Pacific/Auckland"
-  ],
-  "MYT": [
-    "Asia/Kuala_Lumpur",
-    "Asia/Kuching"
-  ],
-  "HKT": [
-    "Asia/Hong_Kong"
-  ],
-  "NDT": [
-    "America/St_Johns",
-    "Canada/Newfoundland"
-  ],
-  "IRST": [
-    "Asia/Tehran"
-  ],
-  "HST": [
-    "America/Adak",
-    "Pacific/Honolulu",
-    "Pacific/Johnston",
-    "US/Hawaii"
-  ],
-  "HOVST": [
-    "Asia/Hovd"
-  ],
-  "NOVST": [
-    "Asia/Novokuznetsk",
-    "Asia/Novosibirsk"
-  ],
-  "GMT": [
-    "Africa/Abidjan",
-    "Africa/Accra",
-    "Africa/Bamako",
-    "Africa/Banjul",
-    "Africa/Bissau",
-    "Africa/Conakry",
-    "Africa/Dakar",
-    "Africa/Freetown",
-    "Africa/Lome",
-    "Africa/Monrovia",
-    "Africa/Nouakchott",
-    "Africa/Ouagadougou",
-    "Africa/Sao_Tome",
-    "America/Danmarkshavn",
-    "Atlantic/Reykjavik",
-    "Atlantic/St_Helena",
-    "Europe/Dublin",
-    "Europe/Guernsey",
-    "Europe/Isle_of_Man",
-    "Europe/Jersey",
-    "Europe/London",
-    "GMT"
-  ],
-  "PMST": [
-    "America/Miquelon"
-  ],
-  "MAWT": [
-    "Antarctica/Mawson"
-  ],
-  "IOT": [
-    "Indian/Chagos"
-  ],
-  "WSDT": [
-    "Pacific/Apia"
-  ],
-  "BNT": [
-    "Asia/Brunei"
-  ],
-  "ACWDT": [
-    "Australia/Eucla"
-  ],
-  "EASST": [
-    "Pacific/Easter"
-  ],
-  "WET": [
-    "Africa/Casablanca",
-    "Africa/El_Aaiun",
-    "Atlantic/Canary",
-    "Atlantic/Faroe",
-    "Atlantic/Madeira",
-    "Europe/Lisbon"
-  ],
-  "KRAT": [
-    "Asia/Krasnoyarsk",
-    "Asia/Novokuznetsk"
-  ],
-  "NZST": [
-    "Antarctica/McMurdo",
-    "Pacific/Auckland"
-  ],
-  "OMSST": [
-    "Asia/Omsk"
-  ],
-  "ACDT": [
-    "Australia/Adelaide",
-    "Australia/Broken_Hill"
-  ],
-  "BRST": [
-    "America/Araguaina",
-    "America/Bahia",
-    "America/Sao_Paulo"
-  ],
-  "ANAT": [
-    "Asia/Anadyr"
-  ],
-  "CXT": [
-    "Indian/Christmas"
-  ],
-  "UYT": [
-    "America/Montevideo"
-  ],
-  "VLAST": [
-    "Asia/Khandyga",
-    "Asia/Vladivostok"
-  ],
-  "HOVT": [
-    "Asia/Hovd"
-  ],
-  "CHAST": [
-    "Pacific/Chatham"
-  ],
-  "PYT": [
-    "America/Asuncion"
-  ],
-  "VUT": [
-    "Pacific/Efate"
+  "AMST": [
+    "America/Campo_Grande",
+    "America/Cuiaba",
+    "Asia/Yerevan"
   ],
   "AMT": [
     "America/Boa_Vista",
@@ -253,476 +97,42 @@
     "America/Santarem",
     "Asia/Yerevan"
   ],
-  "ALMT": [
-    "Asia/Almaty"
-  ],
-  "IRKST": [
-    "Asia/Irkutsk"
-  ],
-  "NPT": [
-    "Asia/Kathmandu"
-  ],
-  "QYZT": [
-    "Asia/Qyzylorda"
-  ],
-  "PHT": [
-    "Asia/Manila"
-  ],
-  "KST": [
-    "Asia/Pyongyang",
-    "Asia/Seoul"
-  ],
-  "AUSTRALIAN EASTERN": [
-    "Antarctica/Macquarie",
-    "Australia/Brisbane",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lindeman",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
-  ],
-  "HDT": [
-    "America/Adak"
-  ],
-  "AET": [
-    "Antarctica/Macquarie",
-    "Australia/Brisbane",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lindeman",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
-  ],
-  "YEKST": [
-    "Asia/Yekaterinburg"
-  ],
-  "EET": [
-    "Africa/Cairo",
-    "Africa/Tripoli",
-    "Asia/Amman",
-    "Asia/Beirut",
-    "Asia/Damascus",
-    "Asia/Gaza",
-    "Asia/Hebron",
-    "Asia/Nicosia",
-    "Europe/Athens",
-    "Europe/Bucharest",
-    "Europe/Chisinau",
-    "Europe/Helsinki",
-    "Europe/Istanbul",
-    "Europe/Kaliningrad",
-    "Europe/Kiev",
-    "Europe/Mariehamn",
-    "Europe/Minsk",
-    "Europe/Riga",
-    "Europe/Simferopol",
-    "Europe/Sofia",
-    "Europe/Tallinn",
-    "Europe/Uzhgorod",
-    "Europe/Vilnius",
-    "Europe/Zaporozhye"
-  ],
-  "AUSTRALIAN WESTERN": [
-    "Antarctica/Casey",
-    "Australia/Perth"
-  ],
-  "VLAT": [
-    "Asia/Khandyga",
-    "Asia/Ust-Nera",
-    "Asia/Vladivostok"
-  ],
-  "ATLANTIC": [
-    "America/Anguilla",
-    "America/Antigua",
-    "America/Aruba",
-    "America/Barbados",
-    "America/Blanc-Sablon",
-    "America/Curacao",
-    "America/Dominica",
-    "America/Glace_Bay",
-    "America/Goose_Bay",
-    "America/Grand_Turk",
-    "America/Grenada",
-    "America/Guadeloupe",
-    "America/Halifax",
-    "America/Kralendijk",
-    "America/Lower_Princes",
-    "America/Marigot",
-    "America/Martinique",
-    "America/Moncton",
-    "America/Montserrat",
-    "America/Port_of_Spain",
-    "America/Puerto_Rico",
-    "America/Santo_Domingo",
-    "America/St_Barthelemy",
-    "America/St_Kitts",
-    "America/St_Lucia",
-    "America/St_Thomas",
-    "America/St_Vincent",
-    "America/Thule",
-    "America/Tortola",
-    "Asia/Aden",
-    "Asia/Baghdad",
-    "Asia/Bahrain",
-    "Asia/Kuwait",
-    "Asia/Qatar",
-    "Asia/Riyadh",
-    "Atlantic/Bermuda",
-    "Canada/Atlantic"
-  ],
-  "AZST": [
-    "Asia/Baku"
-  ],
-  "LKT": [
-    "Asia/Colombo"
-  ],
-  "SRET": [
-    "Asia/Srednekolymsk"
-  ],
-  "WFT": [
-    "Pacific/Wallis"
-  ],
-  "MOUNTAIN": [
-    "America/Bahia_Banderas",
-    "America/Boise",
-    "America/Cambridge_Bay",
-    "America/Chihuahua",
-    "America/Creston",
-    "America/Dawson_Creek",
-    "America/Denver",
-    "America/Edmonton",
-    "America/Fort_Nelson",
-    "America/Hermosillo",
-    "America/Inuvik",
-    "America/Mazatlan",
-    "America/North_Dakota/Beulah",
-    "America/Ojinaga",
-    "America/Phoenix",
-    "America/Yellowknife",
-    "Canada/Mountain",
-    "US/Arizona",
-    "US/Mountain"
-  ],
-  "WSST": [
-    "Pacific/Apia"
-  ],
-  "MART": [
-    "Pacific/Marquesas"
-  ],
-  "SAMST": [
-    "Europe/Samara"
-  ],
-  "PT": [
-    "America/Dawson",
-    "America/Fort_Nelson",
-    "America/Los_Angeles",
-    "America/Metlakatla",
-    "America/Santa_Isabel",
-    "America/Tijuana",
-    "America/Vancouver",
-    "America/Whitehorse",
-    "Canada/Pacific",
-    "Pacific/Pitcairn",
-    "US/Pacific"
-  ],
-  "GET": [
-    "Asia/Tbilisi"
-  ],
-  "EGST": [
-    "America/Scoresbysund"
-  ],
-  "TKT": [
-    "Pacific/Fakaofo"
-  ],
-  "CET": [
-    "Africa/Algiers",
-    "Africa/Ceuta",
-    "Africa/Tripoli",
-    "Africa/Tunis",
-    "Arctic/Longyearbyen",
-    "Europe/Amsterdam",
-    "Europe/Andorra",
-    "Europe/Belgrade",
-    "Europe/Berlin",
-    "Europe/Bratislava",
-    "Europe/Brussels",
-    "Europe/Budapest",
-    "Europe/Busingen",
-    "Europe/Copenhagen",
-    "Europe/Gibraltar",
-    "Europe/Ljubljana",
-    "Europe/Luxembourg",
-    "Europe/Madrid",
-    "Europe/Malta",
-    "Europe/Monaco",
-    "Europe/Oslo",
-    "Europe/Paris",
-    "Europe/Podgorica",
-    "Europe/Prague",
-    "Europe/Rome",
-    "Europe/San_Marino",
-    "Europe/Sarajevo",
-    "Europe/Skopje",
-    "Europe/Stockholm",
-    "Europe/Tirane",
-    "Europe/Vaduz",
-    "Europe/Vatican",
-    "Europe/Vienna",
-    "Europe/Warsaw",
-    "Europe/Zagreb",
-    "Europe/Zurich"
-  ],
-  "CHOST": [
-    "Asia/Choibalsan"
-  ],
-  "EEST": [
-    "Africa/Cairo",
-    "Asia/Amman",
-    "Asia/Beirut",
-    "Asia/Damascus",
-    "Asia/Gaza",
-    "Asia/Hebron",
-    "Asia/Nicosia",
-    "Europe/Athens",
-    "Europe/Bucharest",
-    "Europe/Chisinau",
-    "Europe/Helsinki",
-    "Europe/Istanbul",
-    "Europe/Kaliningrad",
-    "Europe/Kiev",
-    "Europe/Mariehamn",
-    "Europe/Minsk",
-    "Europe/Riga",
-    "Europe/Simferopol",
-    "Europe/Sofia",
-    "Europe/Tallinn",
-    "Europe/Uzhgorod",
-    "Europe/Vilnius",
-    "Europe/Zaporozhye"
-  ],
-  "SCT": [
-    "Indian/Mahe"
-  ],
-  "WARST": [
-    "America/Argentina/San_Luis"
-  ],
-  "SAKST": [
-    "Asia/Sakhalin"
-  ],
-  "ChST": [
-    "Pacific/Guam",
-    "Pacific/Saipan"
-  ],
-  "CCT": [
-    "Indian/Cocos"
-  ],
-  "MAGT": [
-    "Asia/Magadan",
-    "Asia/Srednekolymsk",
-    "Asia/Ust-Nera"
-  ],
-  "WGT": [
-    "America/Godthab"
-  ],
-  "CHUT": [
-    "Pacific/Chuuk"
-  ],
-  "NFT": [
-    "Pacific/Norfolk"
-  ],
-  "AFT": [
-    "Asia/Kabul"
-  ],
-  "CST": [
-    "America/Bahia_Banderas",
-    "America/Belize",
-    "America/Cancun",
-    "America/Chicago",
-    "America/Costa_Rica",
-    "America/El_Salvador",
-    "America/Guatemala",
-    "America/Havana",
-    "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Managua",
-    "America/Matamoros",
-    "America/Menominee",
-    "America/Merida",
-    "America/Mexico_City",
-    "America/Monterrey",
-    "America/North_Dakota/Beulah",
-    "America/North_Dakota/Center",
-    "America/North_Dakota/New_Salem",
-    "America/Rainy_River",
-    "America/Rankin_Inlet",
-    "America/Regina",
-    "America/Resolute",
-    "America/Swift_Current",
-    "America/Tegucigalpa",
-    "America/Winnipeg",
-    "Asia/Macau",
-    "Asia/Shanghai",
-    "Asia/Taipei",
-    "Canada/Central",
-    "US/Central"
-  ],
-  "MHT": [
-    "Pacific/Kwajalein",
-    "Pacific/Majuro"
-  ],
-  "MIST": [
-    "Antarctica/Macquarie"
-  ],
-  "BTT": [
-    "Asia/Thimphu"
-  ],
-  "BDT": [
-    "Asia/Dhaka"
-  ],
-  "SST": [
-    "Pacific/Apia",
-    "Pacific/Midway",
-    "Pacific/Pago_Pago"
-  ],
-  "MT": [
-    "America/Bahia_Banderas",
-    "America/Boise",
-    "America/Cambridge_Bay",
-    "America/Chihuahua",
-    "America/Creston",
-    "America/Dawson_Creek",
-    "America/Denver",
-    "America/Edmonton",
-    "America/Fort_Nelson",
-    "America/Hermosillo",
-    "America/Inuvik",
-    "America/Mazatlan",
-    "America/North_Dakota/Beulah",
-    "America/Ojinaga",
-    "America/Phoenix",
-    "America/Yellowknife",
-    "Canada/Mountain",
-    "US/Arizona",
-    "US/Mountain"
-  ],
-  "TJT": [
-    "Asia/Dushanbe"
-  ],
-  "TVT": [
-    "Pacific/Funafuti"
-  ],
-  "AWDT": [
-    "Australia/Perth"
-  ],
-  "ADT": [
-    "America/Glace_Bay",
-    "America/Goose_Bay",
-    "America/Halifax",
-    "America/Moncton",
-    "America/Thule",
-    "Asia/Baghdad",
-    "Atlantic/Bermuda",
-    "Canada/Atlantic"
-  ],
-  "PST": [
-    "America/Dawson",
-    "America/Fort_Nelson",
-    "America/Los_Angeles",
-    "America/Metlakatla",
-    "America/Santa_Isabel",
-    "America/Tijuana",
-    "America/Vancouver",
-    "America/Whitehorse",
-    "Canada/Pacific",
-    "Pacific/Pitcairn",
-    "US/Pacific"
-  ],
-  "MUT": [
-    "Indian/Mauritius"
-  ],
-  "DAVT": [
-    "Antarctica/Davis"
-  ],
-  "TMT": [
-    "Asia/Ashgabat"
-  ],
-  "COT": [
-    "America/Bogota"
-  ],
-  "PET": [
-    "America/Lima"
-  ],
-  "UYST": [
-    "America/Montevideo"
-  ],
-  "IDT": [
-    "Asia/Jerusalem"
-  ],
-  "CHADT": [
-    "Pacific/Chatham"
-  ],
-  "AZOST": [
-    "Atlantic/Azores"
-  ],
-  "IRDT": [
-    "Asia/Tehran"
-  ],
-  "RET": [
-    "Indian/Reunion"
-  ],
-  "IST": [
-    "Asia/Colombo",
-    "Asia/Jerusalem",
-    "Asia/Kolkata",
-    "Europe/Dublin"
-  ],
-  "GILT": [
-    "Pacific/Tarawa"
-  ],
-  "FKST": [
-    "Atlantic/Stanley"
-  ],
-  "AEDT": [
-    "Antarctica/Macquarie",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
-  ],
-  "YAKST": [
-    "Asia/Chita",
-    "Asia/Yakutsk"
-  ],
-  "ACT": [
-    "America/Eirunepe",
-    "America/Rio_Branco",
-    "Australia/Adelaide",
-    "Australia/Broken_Hill",
-    "Australia/Darwin"
-  ],
-  "CKT": [
-    "Pacific/Rarotonga"
-  ],
-  "FJT": [
-    "Pacific/Fiji"
-  ],
-  "IRKT": [
-    "Asia/Chita",
-    "Asia/Irkutsk"
-  ],
-  "SAST": [
-    "Africa/Johannesburg",
-    "Africa/Maseru",
-    "Africa/Mbabane"
-  ],
-  "ORAT": [
-    "Asia/Oral"
+  "ANAST": [
+    "Asia/Anadyr"
+  ],
+  "ANAT": [
+    "Asia/Anadyr"
+  ],
+  "AQTT": [
+    "Asia/Aqtau",
+    "Asia/Aqtobe"
+  ],
+  "ARST": [
+    "America/Argentina/Buenos_Aires",
+    "America/Argentina/Catamarca",
+    "America/Argentina/Cordoba",
+    "America/Argentina/Jujuy",
+    "America/Argentina/La_Rioja",
+    "America/Argentina/Mendoza",
+    "America/Argentina/Rio_Gallegos",
+    "America/Argentina/Salta",
+    "America/Argentina/San_Juan",
+    "America/Argentina/Tucuman",
+    "America/Argentina/Ushuaia"
+  ],
+  "ART": [
+    "America/Argentina/Buenos_Aires",
+    "America/Argentina/Catamarca",
+    "America/Argentina/Cordoba",
+    "America/Argentina/Jujuy",
+    "America/Argentina/La_Rioja",
+    "America/Argentina/Mendoza",
+    "America/Argentina/Rio_Gallegos",
+    "America/Argentina/Salta",
+    "America/Argentina/San_Juan",
+    "America/Argentina/San_Luis",
+    "America/Argentina/Tucuman",
+    "America/Argentina/Ushuaia"
   ],
   "AST": [
     "America/Anguilla",
@@ -763,529 +173,6 @@
     "Atlantic/Bermuda",
     "Canada/Atlantic"
   ],
-  "BST": [
-    "Europe/Guernsey",
-    "Europe/Isle_of_Man",
-    "Europe/Jersey",
-    "Europe/London",
-    "Pacific/Bougainville"
-  ],
-  "FKT": [
-    "Atlantic/Stanley"
-  ],
-  "NUT": [
-    "Pacific/Niue"
-  ],
-  "PACIFIC": [
-    "America/Dawson",
-    "America/Fort_Nelson",
-    "America/Los_Angeles",
-    "America/Metlakatla",
-    "America/Santa_Isabel",
-    "America/Tijuana",
-    "America/Vancouver",
-    "America/Whitehorse",
-    "Canada/Pacific",
-    "Pacific/Pitcairn",
-    "US/Pacific"
-  ],
-  "JST": [
-    "Asia/Tokyo"
-  ],
-  "CAST": [
-    "Antarctica/Casey"
-  ],
-  "ANAST": [
-    "Asia/Anadyr"
-  ],
-  "ECT": [
-    "America/Guayaquil"
-  ],
-  "MAGST": [
-    "Asia/Magadan",
-    "Asia/Srednekolymsk",
-    "Asia/Ust-Nera"
-  ],
-  "AQTT": [
-    "Asia/Aqtau",
-    "Asia/Aqtobe"
-  ],
-  "EAST": [
-    "Pacific/Easter"
-  ],
-  "TAHT": [
-    "Pacific/Tahiti"
-  ],
-  "MDT": [
-    "America/Bahia_Banderas",
-    "America/Boise",
-    "America/Cambridge_Bay",
-    "America/Chihuahua",
-    "America/Denver",
-    "America/Edmonton",
-    "America/Inuvik",
-    "America/Mazatlan",
-    "America/North_Dakota/Beulah",
-    "America/Ojinaga",
-    "America/Yellowknife",
-    "Canada/Mountain",
-    "US/Mountain"
-  ],
-  "GALT": [
-    "Pacific/Galapagos"
-  ],
-  "VET": [
-    "America/Caracas"
-  ],
-  "CLST": [
-    "America/Santiago",
-    "Antarctica/Palmer"
-  ],
-  "PKST": [
-    "Asia/Karachi"
-  ],
-  "TLT": [
-    "Asia/Dili"
-  ],
-  "OMST": [
-    "Asia/Omsk"
-  ],
-  "PDT": [
-    "America/Dawson",
-    "America/Fort_Nelson",
-    "America/Los_Angeles",
-    "America/Santa_Isabel",
-    "America/Tijuana",
-    "America/Vancouver",
-    "America/Whitehorse",
-    "Canada/Pacific",
-    "US/Pacific"
-  ],
-  "PKT": [
-    "Asia/Karachi"
-  ],
-  "FET": [
-    "Europe/Kaliningrad",
-    "Europe/Minsk"
-  ],
-  "SRT": [
-    "America/Paramaribo"
-  ],
-  "CLT": [
-    "America/Santiago",
-    "Antarctica/Palmer"
-  ],
-  "WAT": [
-    "Africa/Bangui",
-    "Africa/Brazzaville",
-    "Africa/Douala",
-    "Africa/Kinshasa",
-    "Africa/Lagos",
-    "Africa/Libreville",
-    "Africa/Luanda",
-    "Africa/Malabo",
-    "Africa/Ndjamena",
-    "Africa/Niamey",
-    "Africa/Porto-Novo",
-    "Africa/Windhoek"
-  ],
-  "SYOT": [
-    "Antarctica/Syowa"
-  ],
-  "CT": [
-    "America/Bahia_Banderas",
-    "America/Belize",
-    "America/Cancun",
-    "America/Chicago",
-    "America/Costa_Rica",
-    "America/El_Salvador",
-    "America/Guatemala",
-    "America/Havana",
-    "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Managua",
-    "America/Matamoros",
-    "America/Menominee",
-    "America/Merida",
-    "America/Mexico_City",
-    "America/Monterrey",
-    "America/North_Dakota/Beulah",
-    "America/North_Dakota/Center",
-    "America/North_Dakota/New_Salem",
-    "America/Rainy_River",
-    "America/Rankin_Inlet",
-    "America/Regina",
-    "America/Resolute",
-    "America/Swift_Current",
-    "America/Tegucigalpa",
-    "America/Winnipeg",
-    "Asia/Macau",
-    "Asia/Shanghai",
-    "Asia/Taipei",
-    "Canada/Central",
-    "US/Central"
-  ],
-  "AMST": [
-    "America/Campo_Grande",
-    "America/Cuiaba",
-    "Asia/Yerevan"
-  ],
-  "WIB": [
-    "Asia/Jakarta",
-    "Asia/Pontianak"
-  ],
-  "SBT": [
-    "Pacific/Guadalcanal"
-  ],
-  "PHOT": [
-    "Pacific/Enderbury"
-  ],
-  "PYST": [
-    "America/Asuncion"
-  ],
-  "MMT": [
-    "Asia/Rangoon"
-  ],
-  "BRT": [
-    "America/Araguaina",
-    "America/Bahia",
-    "America/Belem",
-    "America/Fortaleza",
-    "America/Maceio",
-    "America/Recife",
-    "America/Santarem",
-    "America/Sao_Paulo"
-  ],
-  "PETT": [
-    "Asia/Kamchatka"
-  ],
-  "YAKT": [
-    "Asia/Chita",
-    "Asia/Khandyga",
-    "Asia/Yakutsk"
-  ],
-  "CDT": [
-    "America/Bahia_Banderas",
-    "America/Cancun",
-    "America/Chicago",
-    "America/Guatemala",
-    "America/Havana",
-    "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Managua",
-    "America/Matamoros",
-    "America/Menominee",
-    "America/Merida",
-    "America/Mexico_City",
-    "America/Monterrey",
-    "America/North_Dakota/Beulah",
-    "America/North_Dakota/Center",
-    "America/North_Dakota/New_Salem",
-    "America/Rainy_River",
-    "America/Rankin_Inlet",
-    "America/Resolute",
-    "America/Tegucigalpa",
-    "America/Winnipeg",
-    "Canada/Central",
-    "US/Central"
-  ],
-  "WIT": [
-    "Asia/Jayapura"
-  ],
-  "EDT": [
-    "America/Cayman",
-    "America/Detroit",
-    "America/Grand_Turk",
-    "America/Indiana/Indianapolis",
-    "America/Indiana/Marengo",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Vevay",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Iqaluit",
-    "America/Kentucky/Louisville",
-    "America/Kentucky/Monticello",
-    "America/Nassau",
-    "America/New_York",
-    "America/Nipigon",
-    "America/Pangnirtung",
-    "America/Port-au-Prince",
-    "America/Thunder_Bay",
-    "America/Toronto",
-    "Canada/Eastern",
-    "US/Eastern"
-  ],
-  "SAKT": [
-    "Asia/Sakhalin"
-  ],
-  "NOVT": [
-    "Asia/Novokuznetsk",
-    "Asia/Novosibirsk"
-  ],
-  "KRAST": [
-    "Asia/Krasnoyarsk",
-    "Asia/Novokuznetsk"
-  ],
-  "AUSTRALIAN CENTRAL": [
-    "Australia/Adelaide",
-    "Australia/Broken_Hill",
-    "Australia/Darwin"
-  ],
-  "FJST": [
-    "Pacific/Fiji"
-  ],
-  "PONT": [
-    "Pacific/Pohnpei"
-  ],
-  "CVT": [
-    "Atlantic/Cape_Verde"
-  ],
-  "MST": [
-    "America/Bahia_Banderas",
-    "America/Boise",
-    "America/Cambridge_Bay",
-    "America/Chihuahua",
-    "America/Creston",
-    "America/Dawson_Creek",
-    "America/Denver",
-    "America/Edmonton",
-    "America/Fort_Nelson",
-    "America/Hermosillo",
-    "America/Inuvik",
-    "America/Mazatlan",
-    "America/North_Dakota/Beulah",
-    "America/Ojinaga",
-    "America/Phoenix",
-    "America/Yellowknife",
-    "Canada/Mountain",
-    "US/Arizona",
-    "US/Mountain"
-  ],
-  "VOST": [
-    "Antarctica/Vostok"
-  ],
-  "WAST": [
-    "Africa/Windhoek"
-  ],
-  "TOT": [
-    "Pacific/Tongatapu"
-  ],
-  "CAT": [
-    "Africa/Blantyre",
-    "Africa/Bujumbura",
-    "Africa/Gaborone",
-    "Africa/Harare",
-    "Africa/Kigali",
-    "Africa/Lubumbashi",
-    "Africa/Lusaka",
-    "Africa/Maputo"
-  ],
-  "AEST": [
-    "Antarctica/Macquarie",
-    "Australia/Brisbane",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lindeman",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
-  ],
-  "MSK": [
-    "Europe/Minsk",
-    "Europe/Moscow",
-    "Europe/Simferopol",
-    "Europe/Volgograd"
-  ],
-  "CENTRAL": [
-    "America/Bahia_Banderas",
-    "America/Belize",
-    "America/Cancun",
-    "America/Chicago",
-    "America/Costa_Rica",
-    "America/El_Salvador",
-    "America/Guatemala",
-    "America/Havana",
-    "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Managua",
-    "America/Matamoros",
-    "America/Menominee",
-    "America/Merida",
-    "America/Mexico_City",
-    "America/Monterrey",
-    "America/North_Dakota/Beulah",
-    "America/North_Dakota/Center",
-    "America/North_Dakota/New_Salem",
-    "America/Rainy_River",
-    "America/Rankin_Inlet",
-    "America/Regina",
-    "America/Resolute",
-    "America/Swift_Current",
-    "America/Tegucigalpa",
-    "America/Winnipeg",
-    "Asia/Macau",
-    "Asia/Shanghai",
-    "Asia/Taipei",
-    "Canada/Central",
-    "US/Central"
-  ],
-  "BDST": [
-    "Asia/Dhaka"
-  ],
-  "AZT": [
-    "Asia/Baku"
-  ],
-  "MSD": [
-    "Europe/Moscow",
-    "Europe/Volgograd"
-  ],
-  "ACST": [
-    "Australia/Adelaide",
-    "Australia/Broken_Hill",
-    "Australia/Darwin"
-  ],
-  "ROTT": [
-    "Antarctica/Rothera"
-  ],
-  "AKST": [
-    "America/Anchorage",
-    "America/Juneau",
-    "America/Nome",
-    "America/Sitka",
-    "America/Yakutat",
-    "US/Alaska"
-  ],
-  "PGT": [
-    "Pacific/Bougainville",
-    "Pacific/Port_Moresby"
-  ],
-  "GYT": [
-    "America/Guyana"
-  ],
-  "CHOT": [
-    "Asia/Choibalsan"
-  ],
-  "CEST": [
-    "Africa/Ceuta",
-    "Africa/Tripoli",
-    "Africa/Tunis",
-    "Antarctica/Troll",
-    "Arctic/Longyearbyen",
-    "Europe/Amsterdam",
-    "Europe/Andorra",
-    "Europe/Belgrade",
-    "Europe/Berlin",
-    "Europe/Bratislava",
-    "Europe/Brussels",
-    "Europe/Budapest",
-    "Europe/Busingen",
-    "Europe/Copenhagen",
-    "Europe/Gibraltar",
-    "Europe/Ljubljana",
-    "Europe/Luxembourg",
-    "Europe/Madrid",
-    "Europe/Malta",
-    "Europe/Monaco",
-    "Europe/Oslo",
-    "Europe/Paris",
-    "Europe/Podgorica",
-    "Europe/Prague",
-    "Europe/Rome",
-    "Europe/San_Marino",
-    "Europe/Sarajevo",
-    "Europe/Skopje",
-    "Europe/Stockholm",
-    "Europe/Tirane",
-    "Europe/Vaduz",
-    "Europe/Vatican",
-    "Europe/Vienna",
-    "Europe/Warsaw",
-    "Europe/Zagreb",
-    "Europe/Zurich"
-  ],
-  "UZT": [
-    "Asia/Samarkand",
-    "Asia/Tashkent"
-  ],
-  "NST": [
-    "America/St_Johns",
-    "Canada/Newfoundland"
-  ],
-  "EAT": [
-    "Africa/Addis_Ababa",
-    "Africa/Asmara",
-    "Africa/Dar_es_Salaam",
-    "Africa/Djibouti",
-    "Africa/Juba",
-    "Africa/Kampala",
-    "Africa/Khartoum",
-    "Africa/Mogadishu",
-    "Africa/Nairobi",
-    "Indian/Antananarivo",
-    "Indian/Comoro",
-    "Indian/Mayotte"
-  ],
-  "UTC": [
-    "Antarctica/Troll",
-    "UTC"
-  ],
-  "EST": [
-    "America/Atikokan",
-    "America/Cancun",
-    "America/Cayman",
-    "America/Detroit",
-    "America/Grand_Turk",
-    "America/Indiana/Indianapolis",
-    "America/Indiana/Knox",
-    "America/Indiana/Marengo",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vevay",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Iqaluit",
-    "America/Jamaica",
-    "America/Kentucky/Louisville",
-    "America/Kentucky/Monticello",
-    "America/Nassau",
-    "America/New_York",
-    "America/Nipigon",
-    "America/Panama",
-    "America/Pangnirtung",
-    "America/Port-au-Prince",
-    "America/Resolute",
-    "America/Thunder_Bay",
-    "America/Toronto",
-    "Canada/Eastern",
-    "US/Eastern"
-  ],
-  "WAKT": [
-    "Pacific/Wake"
-  ],
-  "PETST": [
-    "Asia/Kamchatka"
-  ],
-  "MVT": [
-    "Indian/Maldives"
-  ],
-  "SGT": [
-    "Asia/Singapore"
-  ],
-  "WART": [
-    "America/Argentina/San_Luis"
-  ],
-  "ACWST": [
-    "Australia/Eucla"
-  ],
   "AT": [
     "America/Anguilla",
     "America/Antigua",
@@ -1325,14 +212,673 @@
     "Atlantic/Bermuda",
     "Canada/Atlantic"
   ],
-  "TFT": [
-    "Indian/Kerguelen"
+  "ATLANTIC": [
+    "America/Anguilla",
+    "America/Antigua",
+    "America/Aruba",
+    "America/Barbados",
+    "America/Blanc-Sablon",
+    "America/Curacao",
+    "America/Dominica",
+    "America/Glace_Bay",
+    "America/Goose_Bay",
+    "America/Grand_Turk",
+    "America/Grenada",
+    "America/Guadeloupe",
+    "America/Halifax",
+    "America/Kralendijk",
+    "America/Lower_Princes",
+    "America/Marigot",
+    "America/Martinique",
+    "America/Moncton",
+    "America/Montserrat",
+    "America/Port_of_Spain",
+    "America/Puerto_Rico",
+    "America/Santo_Domingo",
+    "America/St_Barthelemy",
+    "America/St_Kitts",
+    "America/St_Lucia",
+    "America/St_Thomas",
+    "America/St_Vincent",
+    "America/Thule",
+    "America/Tortola",
+    "Asia/Aden",
+    "Asia/Baghdad",
+    "Asia/Bahrain",
+    "Asia/Kuwait",
+    "Asia/Qatar",
+    "Asia/Riyadh",
+    "Atlantic/Bermuda",
+    "Canada/Atlantic"
   ],
-  "ULAT": [
-    "Asia/Ulaanbaatar"
+  "AUSTRALIAN CENTRAL": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill",
+    "Australia/Darwin"
+  ],
+  "AUSTRALIAN EASTERN": [
+    "Antarctica/Macquarie",
+    "Australia/Brisbane",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lindeman",
+    "Australia/Lord_Howe",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AUSTRALIAN WESTERN": [
+    "Antarctica/Casey",
+    "Australia/Perth"
+  ],
+  "AWDT": [
+    "Australia/Perth"
+  ],
+  "AWST": [
+    "Antarctica/Casey",
+    "Australia/Perth"
+  ],
+  "AWT": [
+    "Antarctica/Casey",
+    "Australia/Perth"
+  ],
+  "AZOST": [
+    "Atlantic/Azores"
   ],
   "AZOT": [
     "Atlantic/Azores"
+  ],
+  "AZST": [
+    "Asia/Baku"
+  ],
+  "AZT": [
+    "Asia/Baku"
+  ],
+  "BDST": [
+    "Asia/Dhaka"
+  ],
+  "BDT": [
+    "Asia/Dhaka"
+  ],
+  "BNT": [
+    "Asia/Brunei"
+  ],
+  "BOT": [
+    "America/La_Paz"
+  ],
+  "BRST": [
+    "America/Araguaina",
+    "America/Bahia",
+    "America/Sao_Paulo"
+  ],
+  "BRT": [
+    "America/Araguaina",
+    "America/Bahia",
+    "America/Belem",
+    "America/Fortaleza",
+    "America/Maceio",
+    "America/Recife",
+    "America/Santarem",
+    "America/Sao_Paulo"
+  ],
+  "BST": [
+    "Europe/Guernsey",
+    "Europe/Isle_of_Man",
+    "Europe/Jersey",
+    "Europe/London",
+    "Pacific/Bougainville"
+  ],
+  "BTT": [
+    "Asia/Thimphu"
+  ],
+  "CAST": [
+    "Antarctica/Casey"
+  ],
+  "CAT": [
+    "Africa/Blantyre",
+    "Africa/Bujumbura",
+    "Africa/Gaborone",
+    "Africa/Harare",
+    "Africa/Kigali",
+    "Africa/Lubumbashi",
+    "Africa/Lusaka",
+    "Africa/Maputo"
+  ],
+  "CCT": [
+    "Indian/Cocos"
+  ],
+  "CDT": [
+    "America/Bahia_Banderas",
+    "America/Cancun",
+    "America/Chicago",
+    "America/Guatemala",
+    "America/Havana",
+    "America/Indiana/Knox",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Managua",
+    "America/Matamoros",
+    "America/Menominee",
+    "America/Merida",
+    "America/Mexico_City",
+    "America/Monterrey",
+    "America/North_Dakota/Beulah",
+    "America/North_Dakota/Center",
+    "America/North_Dakota/New_Salem",
+    "America/Rainy_River",
+    "America/Rankin_Inlet",
+    "America/Resolute",
+    "America/Tegucigalpa",
+    "America/Winnipeg",
+    "Canada/Central",
+    "US/Central"
+  ],
+  "CENTRAL": [
+    "America/Bahia_Banderas",
+    "America/Belize",
+    "America/Cancun",
+    "America/Chicago",
+    "America/Costa_Rica",
+    "America/El_Salvador",
+    "America/Guatemala",
+    "America/Havana",
+    "America/Indiana/Knox",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Managua",
+    "America/Matamoros",
+    "America/Menominee",
+    "America/Merida",
+    "America/Mexico_City",
+    "America/Monterrey",
+    "America/North_Dakota/Beulah",
+    "America/North_Dakota/Center",
+    "America/North_Dakota/New_Salem",
+    "America/Rainy_River",
+    "America/Rankin_Inlet",
+    "America/Regina",
+    "America/Resolute",
+    "America/Swift_Current",
+    "America/Tegucigalpa",
+    "America/Winnipeg",
+    "Asia/Macau",
+    "Asia/Shanghai",
+    "Asia/Taipei",
+    "Canada/Central",
+    "US/Central"
+  ],
+  "CEST": [
+    "Africa/Ceuta",
+    "Africa/Tripoli",
+    "Africa/Tunis",
+    "Antarctica/Troll",
+    "Arctic/Longyearbyen",
+    "Europe/Amsterdam",
+    "Europe/Andorra",
+    "Europe/Belgrade",
+    "Europe/Berlin",
+    "Europe/Bratislava",
+    "Europe/Brussels",
+    "Europe/Budapest",
+    "Europe/Busingen",
+    "Europe/Copenhagen",
+    "Europe/Gibraltar",
+    "Europe/Ljubljana",
+    "Europe/Luxembourg",
+    "Europe/Madrid",
+    "Europe/Malta",
+    "Europe/Monaco",
+    "Europe/Oslo",
+    "Europe/Paris",
+    "Europe/Podgorica",
+    "Europe/Prague",
+    "Europe/Rome",
+    "Europe/San_Marino",
+    "Europe/Sarajevo",
+    "Europe/Skopje",
+    "Europe/Stockholm",
+    "Europe/Tirane",
+    "Europe/Vaduz",
+    "Europe/Vatican",
+    "Europe/Vienna",
+    "Europe/Warsaw",
+    "Europe/Zagreb",
+    "Europe/Zurich"
+  ],
+  "CET": [
+    "Africa/Algiers",
+    "Africa/Ceuta",
+    "Africa/Tripoli",
+    "Africa/Tunis",
+    "Arctic/Longyearbyen",
+    "Europe/Amsterdam",
+    "Europe/Andorra",
+    "Europe/Belgrade",
+    "Europe/Berlin",
+    "Europe/Bratislava",
+    "Europe/Brussels",
+    "Europe/Budapest",
+    "Europe/Busingen",
+    "Europe/Copenhagen",
+    "Europe/Gibraltar",
+    "Europe/Ljubljana",
+    "Europe/Luxembourg",
+    "Europe/Madrid",
+    "Europe/Malta",
+    "Europe/Monaco",
+    "Europe/Oslo",
+    "Europe/Paris",
+    "Europe/Podgorica",
+    "Europe/Prague",
+    "Europe/Rome",
+    "Europe/San_Marino",
+    "Europe/Sarajevo",
+    "Europe/Skopje",
+    "Europe/Stockholm",
+    "Europe/Tirane",
+    "Europe/Vaduz",
+    "Europe/Vatican",
+    "Europe/Vienna",
+    "Europe/Warsaw",
+    "Europe/Zagreb",
+    "Europe/Zurich"
+  ],
+  "CHADT": [
+    "Pacific/Chatham"
+  ],
+  "CHAST": [
+    "Pacific/Chatham"
+  ],
+  "CHOST": [
+    "Asia/Choibalsan"
+  ],
+  "CHOT": [
+    "Asia/Choibalsan"
+  ],
+  "CHUT": [
+    "Pacific/Chuuk"
+  ],
+  "CKT": [
+    "Pacific/Rarotonga"
+  ],
+  "CLST": [
+    "America/Santiago",
+    "Antarctica/Palmer"
+  ],
+  "CLT": [
+    "America/Santiago",
+    "Antarctica/Palmer"
+  ],
+  "COT": [
+    "America/Bogota"
+  ],
+  "CST": [
+    "America/Bahia_Banderas",
+    "America/Belize",
+    "America/Cancun",
+    "America/Chicago",
+    "America/Costa_Rica",
+    "America/El_Salvador",
+    "America/Guatemala",
+    "America/Havana",
+    "America/Indiana/Knox",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Managua",
+    "America/Matamoros",
+    "America/Menominee",
+    "America/Merida",
+    "America/Mexico_City",
+    "America/Monterrey",
+    "America/North_Dakota/Beulah",
+    "America/North_Dakota/Center",
+    "America/North_Dakota/New_Salem",
+    "America/Rainy_River",
+    "America/Rankin_Inlet",
+    "America/Regina",
+    "America/Resolute",
+    "America/Swift_Current",
+    "America/Tegucigalpa",
+    "America/Winnipeg",
+    "Asia/Macau",
+    "Asia/Shanghai",
+    "Asia/Taipei",
+    "Canada/Central",
+    "US/Central"
+  ],
+  "CT": [
+    "America/Bahia_Banderas",
+    "America/Belize",
+    "America/Cancun",
+    "America/Chicago",
+    "America/Costa_Rica",
+    "America/El_Salvador",
+    "America/Guatemala",
+    "America/Havana",
+    "America/Indiana/Knox",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Managua",
+    "America/Matamoros",
+    "America/Menominee",
+    "America/Merida",
+    "America/Mexico_City",
+    "America/Monterrey",
+    "America/North_Dakota/Beulah",
+    "America/North_Dakota/Center",
+    "America/North_Dakota/New_Salem",
+    "America/Rainy_River",
+    "America/Rankin_Inlet",
+    "America/Regina",
+    "America/Resolute",
+    "America/Swift_Current",
+    "America/Tegucigalpa",
+    "America/Winnipeg",
+    "Asia/Macau",
+    "Asia/Shanghai",
+    "Asia/Taipei",
+    "Canada/Central",
+    "US/Central"
+  ],
+  "CVT": [
+    "Atlantic/Cape_Verde"
+  ],
+  "CXT": [
+    "Indian/Christmas"
+  ],
+  "ChST": [
+    "Pacific/Guam",
+    "Pacific/Saipan"
+  ],
+  "DAVT": [
+    "Antarctica/Davis"
+  ],
+  "DDUT": [
+    "Antarctica/DumontDUrville"
+  ],
+  "EASST": [
+    "Pacific/Easter"
+  ],
+  "EAST": [
+    "Pacific/Easter"
+  ],
+  "EASTERN": [
+    "America/Atikokan",
+    "America/Cancun",
+    "America/Cayman",
+    "America/Detroit",
+    "America/Grand_Turk",
+    "America/Indiana/Indianapolis",
+    "America/Indiana/Knox",
+    "America/Indiana/Marengo",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vevay",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Iqaluit",
+    "America/Jamaica",
+    "America/Kentucky/Louisville",
+    "America/Kentucky/Monticello",
+    "America/Nassau",
+    "America/New_York",
+    "America/Nipigon",
+    "America/Panama",
+    "America/Pangnirtung",
+    "America/Port-au-Prince",
+    "America/Resolute",
+    "America/Thunder_Bay",
+    "America/Toronto",
+    "Canada/Eastern",
+    "US/Eastern"
+  ],
+  "EAT": [
+    "Africa/Addis_Ababa",
+    "Africa/Asmara",
+    "Africa/Dar_es_Salaam",
+    "Africa/Djibouti",
+    "Africa/Juba",
+    "Africa/Kampala",
+    "Africa/Khartoum",
+    "Africa/Mogadishu",
+    "Africa/Nairobi",
+    "Indian/Antananarivo",
+    "Indian/Comoro",
+    "Indian/Mayotte"
+  ],
+  "ECT": [
+    "America/Guayaquil"
+  ],
+  "EDT": [
+    "America/Cayman",
+    "America/Detroit",
+    "America/Grand_Turk",
+    "America/Indiana/Indianapolis",
+    "America/Indiana/Marengo",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Vevay",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Iqaluit",
+    "America/Kentucky/Louisville",
+    "America/Kentucky/Monticello",
+    "America/Nassau",
+    "America/New_York",
+    "America/Nipigon",
+    "America/Pangnirtung",
+    "America/Port-au-Prince",
+    "America/Thunder_Bay",
+    "America/Toronto",
+    "Canada/Eastern",
+    "US/Eastern"
+  ],
+  "EEST": [
+    "Africa/Cairo",
+    "Asia/Amman",
+    "Asia/Beirut",
+    "Asia/Damascus",
+    "Asia/Gaza",
+    "Asia/Hebron",
+    "Asia/Nicosia",
+    "Europe/Athens",
+    "Europe/Bucharest",
+    "Europe/Chisinau",
+    "Europe/Helsinki",
+    "Europe/Istanbul",
+    "Europe/Kaliningrad",
+    "Europe/Kiev",
+    "Europe/Mariehamn",
+    "Europe/Minsk",
+    "Europe/Riga",
+    "Europe/Simferopol",
+    "Europe/Sofia",
+    "Europe/Tallinn",
+    "Europe/Uzhgorod",
+    "Europe/Vilnius",
+    "Europe/Zaporozhye"
+  ],
+  "EET": [
+    "Africa/Cairo",
+    "Africa/Tripoli",
+    "Asia/Amman",
+    "Asia/Beirut",
+    "Asia/Damascus",
+    "Asia/Gaza",
+    "Asia/Hebron",
+    "Asia/Nicosia",
+    "Europe/Athens",
+    "Europe/Bucharest",
+    "Europe/Chisinau",
+    "Europe/Helsinki",
+    "Europe/Istanbul",
+    "Europe/Kaliningrad",
+    "Europe/Kiev",
+    "Europe/Mariehamn",
+    "Europe/Minsk",
+    "Europe/Riga",
+    "Europe/Simferopol",
+    "Europe/Sofia",
+    "Europe/Tallinn",
+    "Europe/Uzhgorod",
+    "Europe/Vilnius",
+    "Europe/Zaporozhye"
+  ],
+  "EGST": [
+    "America/Scoresbysund"
+  ],
+  "EGT": [
+    "America/Scoresbysund"
+  ],
+  "EST": [
+    "America/Atikokan",
+    "America/Cancun",
+    "America/Cayman",
+    "America/Detroit",
+    "America/Grand_Turk",
+    "America/Indiana/Indianapolis",
+    "America/Indiana/Knox",
+    "America/Indiana/Marengo",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vevay",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Iqaluit",
+    "America/Jamaica",
+    "America/Kentucky/Louisville",
+    "America/Kentucky/Monticello",
+    "America/Nassau",
+    "America/New_York",
+    "America/Nipigon",
+    "America/Panama",
+    "America/Pangnirtung",
+    "America/Port-au-Prince",
+    "America/Resolute",
+    "America/Thunder_Bay",
+    "America/Toronto",
+    "Canada/Eastern",
+    "US/Eastern"
+  ],
+  "ET": [
+    "America/Atikokan",
+    "America/Cancun",
+    "America/Cayman",
+    "America/Detroit",
+    "America/Grand_Turk",
+    "America/Indiana/Indianapolis",
+    "America/Indiana/Knox",
+    "America/Indiana/Marengo",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vevay",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Iqaluit",
+    "America/Jamaica",
+    "America/Kentucky/Louisville",
+    "America/Kentucky/Monticello",
+    "America/Nassau",
+    "America/New_York",
+    "America/Nipigon",
+    "America/Panama",
+    "America/Pangnirtung",
+    "America/Port-au-Prince",
+    "America/Resolute",
+    "America/Thunder_Bay",
+    "America/Toronto",
+    "Canada/Eastern",
+    "US/Eastern"
+  ],
+  "FET": [
+    "Europe/Kaliningrad",
+    "Europe/Minsk"
+  ],
+  "FJST": [
+    "Pacific/Fiji"
+  ],
+  "FJT": [
+    "Pacific/Fiji"
+  ],
+  "FKST": [
+    "Atlantic/Stanley"
+  ],
+  "FKT": [
+    "Atlantic/Stanley"
+  ],
+  "FNT": [
+    "America/Noronha"
+  ],
+  "GALT": [
+    "Pacific/Galapagos"
+  ],
+  "GAMT": [
+    "Pacific/Gambier"
+  ],
+  "GET": [
+    "Asia/Tbilisi"
+  ],
+  "GFT": [
+    "America/Cayenne"
+  ],
+  "GILT": [
+    "Pacific/Tarawa"
+  ],
+  "GMT": [
+    "Africa/Abidjan",
+    "Africa/Accra",
+    "Africa/Bamako",
+    "Africa/Banjul",
+    "Africa/Bissau",
+    "Africa/Conakry",
+    "Africa/Dakar",
+    "Africa/Freetown",
+    "Africa/Lome",
+    "Africa/Monrovia",
+    "Africa/Nouakchott",
+    "Africa/Ouagadougou",
+    "Africa/Sao_Tome",
+    "America/Danmarkshavn",
+    "Atlantic/Reykjavik",
+    "Atlantic/St_Helena",
+    "Europe/Dublin",
+    "Europe/Guernsey",
+    "Europe/Isle_of_Man",
+    "Europe/Jersey",
+    "Europe/London",
+    "GMT"
+  ],
+  "GST": [
+    "Asia/Dubai",
+    "Asia/Muscat",
+    "Atlantic/South_Georgia"
+  ],
+  "GYT": [
+    "America/Guyana"
+  ],
+  "HDT": [
+    "America/Adak"
+  ],
+  "HKT": [
+    "Asia/Hong_Kong"
+  ],
+  "HOVST": [
+    "Asia/Hovd"
+  ],
+  "HOVT": [
+    "Asia/Hovd"
+  ],
+  "HST": [
+    "America/Adak",
+    "Pacific/Honolulu",
+    "Pacific/Johnston",
+    "US/Hawaii"
   ],
   "ICT": [
     "Asia/Bangkok",
@@ -1340,28 +886,465 @@
     "Asia/Phnom_Penh",
     "Asia/Vientiane"
   ],
-  "SDT": [
-    "Pacific/Apia"
+  "IDT": [
+    "Asia/Jerusalem"
+  ],
+  "IOT": [
+    "Indian/Chagos"
+  ],
+  "IRDT": [
+    "Asia/Tehran"
+  ],
+  "IRKST": [
+    "Asia/Irkutsk"
+  ],
+  "IRKT": [
+    "Asia/Chita",
+    "Asia/Irkutsk"
+  ],
+  "IRST": [
+    "Asia/Tehran"
+  ],
+  "IST": [
+    "Asia/Colombo",
+    "Asia/Jerusalem",
+    "Asia/Kolkata",
+    "Europe/Dublin"
+  ],
+  "JST": [
+    "Asia/Tokyo"
+  ],
+  "KGT": [
+    "Asia/Bishkek"
+  ],
+  "KOST": [
+    "Pacific/Kosrae"
+  ],
+  "KRAST": [
+    "Asia/Krasnoyarsk",
+    "Asia/Novokuznetsk"
+  ],
+  "KRAT": [
+    "Asia/Krasnoyarsk",
+    "Asia/Novokuznetsk"
+  ],
+  "KST": [
+    "Asia/Pyongyang",
+    "Asia/Seoul"
+  ],
+  "LINT": [
+    "Pacific/Kiritimati"
+  ],
+  "LKT": [
+    "Asia/Colombo"
+  ],
+  "MAGST": [
+    "Asia/Magadan",
+    "Asia/Srednekolymsk",
+    "Asia/Ust-Nera"
+  ],
+  "MAGT": [
+    "Asia/Magadan",
+    "Asia/Srednekolymsk",
+    "Asia/Ust-Nera"
+  ],
+  "MART": [
+    "Pacific/Marquesas"
+  ],
+  "MAWT": [
+    "Antarctica/Mawson"
+  ],
+  "MDT": [
+    "America/Bahia_Banderas",
+    "America/Boise",
+    "America/Cambridge_Bay",
+    "America/Chihuahua",
+    "America/Denver",
+    "America/Edmonton",
+    "America/Inuvik",
+    "America/Mazatlan",
+    "America/North_Dakota/Beulah",
+    "America/Ojinaga",
+    "America/Yellowknife",
+    "Canada/Mountain",
+    "US/Mountain"
+  ],
+  "MHT": [
+    "Pacific/Kwajalein",
+    "Pacific/Majuro"
+  ],
+  "MIST": [
+    "Antarctica/Macquarie"
+  ],
+  "MMT": [
+    "Asia/Rangoon"
+  ],
+  "MOUNTAIN": [
+    "America/Bahia_Banderas",
+    "America/Boise",
+    "America/Cambridge_Bay",
+    "America/Chihuahua",
+    "America/Creston",
+    "America/Dawson_Creek",
+    "America/Denver",
+    "America/Edmonton",
+    "America/Fort_Nelson",
+    "America/Hermosillo",
+    "America/Inuvik",
+    "America/Mazatlan",
+    "America/North_Dakota/Beulah",
+    "America/Ojinaga",
+    "America/Phoenix",
+    "America/Yellowknife",
+    "Canada/Mountain",
+    "US/Arizona",
+    "US/Mountain"
+  ],
+  "MSD": [
+    "Europe/Moscow",
+    "Europe/Volgograd"
+  ],
+  "MSK": [
+    "Europe/Minsk",
+    "Europe/Moscow",
+    "Europe/Simferopol",
+    "Europe/Volgograd"
+  ],
+  "MST": [
+    "America/Bahia_Banderas",
+    "America/Boise",
+    "America/Cambridge_Bay",
+    "America/Chihuahua",
+    "America/Creston",
+    "America/Dawson_Creek",
+    "America/Denver",
+    "America/Edmonton",
+    "America/Fort_Nelson",
+    "America/Hermosillo",
+    "America/Inuvik",
+    "America/Mazatlan",
+    "America/North_Dakota/Beulah",
+    "America/Ojinaga",
+    "America/Phoenix",
+    "America/Yellowknife",
+    "Canada/Mountain",
+    "US/Arizona",
+    "US/Mountain"
+  ],
+  "MT": [
+    "America/Bahia_Banderas",
+    "America/Boise",
+    "America/Cambridge_Bay",
+    "America/Chihuahua",
+    "America/Creston",
+    "America/Dawson_Creek",
+    "America/Denver",
+    "America/Edmonton",
+    "America/Fort_Nelson",
+    "America/Hermosillo",
+    "America/Inuvik",
+    "America/Mazatlan",
+    "America/North_Dakota/Beulah",
+    "America/Ojinaga",
+    "America/Phoenix",
+    "America/Yellowknife",
+    "Canada/Mountain",
+    "US/Arizona",
+    "US/Mountain"
+  ],
+  "MUST": [
+    "Indian/Mauritius"
+  ],
+  "MUT": [
+    "Indian/Mauritius"
+  ],
+  "MVT": [
+    "Indian/Maldives"
+  ],
+  "MYT": [
+    "Asia/Kuala_Lumpur",
+    "Asia/Kuching"
+  ],
+  "NCT": [
+    "Pacific/Noumea"
+  ],
+  "NDT": [
+    "America/St_Johns",
+    "Canada/Newfoundland"
+  ],
+  "NFT": [
+    "Pacific/Norfolk"
+  ],
+  "NOVST": [
+    "Asia/Novokuznetsk",
+    "Asia/Novosibirsk"
+  ],
+  "NOVT": [
+    "Asia/Novokuznetsk",
+    "Asia/Novosibirsk"
+  ],
+  "NPT": [
+    "Asia/Kathmandu"
+  ],
+  "NRT": [
+    "Pacific/Nauru"
+  ],
+  "NST": [
+    "America/St_Johns",
+    "Canada/Newfoundland"
+  ],
+  "NUT": [
+    "Pacific/Niue"
+  ],
+  "NZDT": [
+    "Antarctica/McMurdo",
+    "Pacific/Auckland"
+  ],
+  "NZST": [
+    "Antarctica/McMurdo",
+    "Pacific/Auckland"
+  ],
+  "OMSST": [
+    "Asia/Omsk"
+  ],
+  "OMST": [
+    "Asia/Omsk"
+  ],
+  "ORAT": [
+    "Asia/Oral"
+  ],
+  "PACIFIC": [
+    "America/Dawson",
+    "America/Fort_Nelson",
+    "America/Los_Angeles",
+    "America/Metlakatla",
+    "America/Santa_Isabel",
+    "America/Tijuana",
+    "America/Vancouver",
+    "America/Whitehorse",
+    "Canada/Pacific",
+    "Pacific/Pitcairn",
+    "US/Pacific"
+  ],
+  "PDT": [
+    "America/Dawson",
+    "America/Fort_Nelson",
+    "America/Los_Angeles",
+    "America/Santa_Isabel",
+    "America/Tijuana",
+    "America/Vancouver",
+    "America/Whitehorse",
+    "Canada/Pacific",
+    "US/Pacific"
+  ],
+  "PET": [
+    "America/Lima"
+  ],
+  "PETST": [
+    "Asia/Kamchatka"
+  ],
+  "PETT": [
+    "Asia/Kamchatka"
+  ],
+  "PGT": [
+    "Pacific/Bougainville",
+    "Pacific/Port_Moresby"
+  ],
+  "PHOT": [
+    "Pacific/Enderbury"
+  ],
+  "PHT": [
+    "Asia/Manila"
+  ],
+  "PKST": [
+    "Asia/Karachi"
+  ],
+  "PKT": [
+    "Asia/Karachi"
+  ],
+  "PMDT": [
+    "America/Miquelon"
+  ],
+  "PMST": [
+    "America/Miquelon"
+  ],
+  "PONT": [
+    "Pacific/Pohnpei"
+  ],
+  "PST": [
+    "America/Dawson",
+    "America/Fort_Nelson",
+    "America/Los_Angeles",
+    "America/Metlakatla",
+    "America/Santa_Isabel",
+    "America/Tijuana",
+    "America/Vancouver",
+    "America/Whitehorse",
+    "Canada/Pacific",
+    "Pacific/Pitcairn",
+    "US/Pacific"
+  ],
+  "PT": [
+    "America/Dawson",
+    "America/Fort_Nelson",
+    "America/Los_Angeles",
+    "America/Metlakatla",
+    "America/Santa_Isabel",
+    "America/Tijuana",
+    "America/Vancouver",
+    "America/Whitehorse",
+    "Canada/Pacific",
+    "Pacific/Pitcairn",
+    "US/Pacific"
   ],
   "PWT": [
     "Pacific/Palau"
   ],
-  "ART": [
-    "America/Argentina/Buenos_Aires",
-    "America/Argentina/Catamarca",
-    "America/Argentina/Cordoba",
-    "America/Argentina/Jujuy",
-    "America/Argentina/La_Rioja",
-    "America/Argentina/Mendoza",
-    "America/Argentina/Rio_Gallegos",
-    "America/Argentina/Salta",
-    "America/Argentina/San_Juan",
-    "America/Argentina/San_Luis",
-    "America/Argentina/Tucuman",
-    "America/Argentina/Ushuaia"
+  "PYST": [
+    "America/Asuncion"
   ],
-  "KGT": [
-    "Asia/Bishkek"
+  "PYT": [
+    "America/Asuncion"
+  ],
+  "QYZT": [
+    "Asia/Qyzylorda"
+  ],
+  "RET": [
+    "Indian/Reunion"
+  ],
+  "ROTT": [
+    "Antarctica/Rothera"
+  ],
+  "SAKST": [
+    "Asia/Sakhalin"
+  ],
+  "SAKT": [
+    "Asia/Sakhalin"
+  ],
+  "SAMST": [
+    "Europe/Samara"
+  ],
+  "SAMT": [
+    "Europe/Samara"
+  ],
+  "SAST": [
+    "Africa/Johannesburg",
+    "Africa/Maseru",
+    "Africa/Mbabane"
+  ],
+  "SBT": [
+    "Pacific/Guadalcanal"
+  ],
+  "SCT": [
+    "Indian/Mahe"
+  ],
+  "SDT": [
+    "Pacific/Apia"
+  ],
+  "SGT": [
+    "Asia/Singapore"
+  ],
+  "SRET": [
+    "Asia/Srednekolymsk"
+  ],
+  "SRT": [
+    "America/Paramaribo"
+  ],
+  "SST": [
+    "Pacific/Apia",
+    "Pacific/Midway",
+    "Pacific/Pago_Pago"
+  ],
+  "SYOT": [
+    "Antarctica/Syowa"
+  ],
+  "TAHT": [
+    "Pacific/Tahiti"
+  ],
+  "TFT": [
+    "Indian/Kerguelen"
+  ],
+  "TJT": [
+    "Asia/Dushanbe"
+  ],
+  "TKT": [
+    "Pacific/Fakaofo"
+  ],
+  "TLT": [
+    "Asia/Dili"
+  ],
+  "TMT": [
+    "Asia/Ashgabat"
+  ],
+  "TOT": [
+    "Pacific/Tongatapu"
+  ],
+  "TVT": [
+    "Pacific/Funafuti"
+  ],
+  "ULAST": [
+    "Asia/Ulaanbaatar"
+  ],
+  "ULAT": [
+    "Asia/Ulaanbaatar"
+  ],
+  "UTC": [
+    "Antarctica/Troll",
+    "UTC"
+  ],
+  "UYST": [
+    "America/Montevideo"
+  ],
+  "UYT": [
+    "America/Montevideo"
+  ],
+  "UZT": [
+    "Asia/Samarkand",
+    "Asia/Tashkent"
+  ],
+  "VET": [
+    "America/Caracas"
+  ],
+  "VLAST": [
+    "Asia/Khandyga",
+    "Asia/Vladivostok"
+  ],
+  "VLAT": [
+    "Asia/Khandyga",
+    "Asia/Ust-Nera",
+    "Asia/Vladivostok"
+  ],
+  "VOST": [
+    "Antarctica/Vostok"
+  ],
+  "VUT": [
+    "Pacific/Efate"
+  ],
+  "WAKT": [
+    "Pacific/Wake"
+  ],
+  "WARST": [
+    "America/Argentina/San_Luis"
+  ],
+  "WART": [
+    "America/Argentina/San_Luis"
+  ],
+  "WAST": [
+    "Africa/Windhoek"
+  ],
+  "WAT": [
+    "Africa/Bangui",
+    "Africa/Brazzaville",
+    "Africa/Douala",
+    "Africa/Kinshasa",
+    "Africa/Lagos",
+    "Africa/Libreville",
+    "Africa/Luanda",
+    "Africa/Malabo",
+    "Africa/Ndjamena",
+    "Africa/Niamey",
+    "Africa/Porto-Novo",
+    "Africa/Windhoek"
   ],
   "WEST": [
     "Africa/Casablanca",
@@ -1371,38 +1354,55 @@
     "Atlantic/Madeira",
     "Europe/Lisbon"
   ],
-  "NCT": [
-    "Pacific/Noumea"
+  "WET": [
+    "Africa/Casablanca",
+    "Africa/El_Aaiun",
+    "Atlantic/Canary",
+    "Atlantic/Faroe",
+    "Atlantic/Madeira",
+    "Europe/Lisbon"
   ],
-  "GFT": [
-    "America/Cayenne"
+  "WFT": [
+    "Pacific/Wallis"
   ],
   "WGST": [
     "America/Godthab"
   ],
-  "ARST": [
-    "America/Argentina/Buenos_Aires",
-    "America/Argentina/Catamarca",
-    "America/Argentina/Cordoba",
-    "America/Argentina/Jujuy",
-    "America/Argentina/La_Rioja",
-    "America/Argentina/Mendoza",
-    "America/Argentina/Rio_Gallegos",
-    "America/Argentina/Salta",
-    "America/Argentina/San_Juan",
-    "America/Argentina/Tucuman",
-    "America/Argentina/Ushuaia"
+  "WGT": [
+    "America/Godthab"
   ],
-  "DDUT": [
-    "Antarctica/DumontDUrville"
+  "WIB": [
+    "Asia/Jakarta",
+    "Asia/Pontianak"
+  ],
+  "WIT": [
+    "Asia/Jayapura"
+  ],
+  "WITA": [
+    "Asia/Makassar"
+  ],
+  "WSDT": [
+    "Pacific/Apia"
+  ],
+  "WSST": [
+    "Pacific/Apia"
+  ],
+  "XJT": [
+    "Asia/Urumqi"
+  ],
+  "YAKST": [
+    "Asia/Chita",
+    "Asia/Yakutsk"
+  ],
+  "YAKT": [
+    "Asia/Chita",
+    "Asia/Khandyga",
+    "Asia/Yakutsk"
+  ],
+  "YEKST": [
+    "Asia/Yekaterinburg"
   ],
   "YEKT": [
     "Asia/Yekaterinburg"
-  ],
-  "NRT": [
-    "Pacific/Nauru"
-  ],
-  "SAMT": [
-    "Europe/Samara"
   ]
 }
