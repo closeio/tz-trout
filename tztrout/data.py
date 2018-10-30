@@ -311,9 +311,7 @@ class TroutData(object):
             stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
             stdout.flush()
 
-        file = open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'w')
-        file.write(json.dumps(tz_name_ids, indent=2, sort_keys=True, separators=(',', ': ')))
-        file.close()
+        _dump_json_data(TZ_NAME_TO_TZ_IDS_MAP_PATH, tz_name_ids)
 
     def generate_offset_to_tz_id_map(self):
         """ Generate the map of UTC offsets to time zone identifiers.
@@ -329,7 +327,10 @@ class TroutData(object):
             stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
             stdout.flush()
 
-        file = open(OFFSET_TO_TZ_IDS_MAP_PATH, 'w')
-        file.write(json.dumps(offset_tz_ids))
-        file.close()
+        _dump_json_data(OFFSET_TO_TZ_IDS_MAP_PATH, offset_tz_ids)
+
+
+def _dump_json_data(path, data):
+    with open(path, 'w') as f:
+        json.dump(data, f, indent=2, sort_keys=True, separators=(',', ': '))
 
