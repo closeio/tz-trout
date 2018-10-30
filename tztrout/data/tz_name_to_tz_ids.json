@@ -1,113 +1,236 @@
 {
-  "ACDT": [
-    "Australia/Adelaide",
-    "Australia/Broken_Hill"
+  "+00": [
+    "Africa/Casablanca",
+    "Africa/El_Aaiun",
+    "America/Scoresbysund",
+    "Antarctica/Troll",
+    "Atlantic/Azores"
   ],
-  "ACST": [
-    "Australia/Adelaide",
-    "Australia/Broken_Hill",
-    "Australia/Darwin"
+  "+01": [
+    "Africa/Casablanca",
+    "Africa/El_Aaiun"
   ],
-  "ACT": [
-    "America/Eirunepe",
-    "America/Rio_Branco",
-    "Australia/Adelaide",
-    "Australia/Broken_Hill",
-    "Australia/Darwin"
+  "+02": [
+    "Antarctica/Troll"
   ],
-  "ACWDT": [
-    "Australia/Eucla"
-  ],
-  "ACWST": [
-    "Australia/Eucla"
-  ],
-  "ADT": [
-    "America/Glace_Bay",
-    "America/Goose_Bay",
-    "America/Halifax",
-    "America/Moncton",
-    "America/Thule",
+  "+03": [
+    "Antarctica/Syowa",
+    "Asia/Aden",
     "Asia/Baghdad",
-    "Atlantic/Bermuda",
-    "Canada/Atlantic"
+    "Asia/Bahrain",
+    "Asia/Famagusta",
+    "Asia/Kuwait",
+    "Asia/Qatar",
+    "Asia/Riyadh",
+    "Europe/Astrakhan",
+    "Europe/Istanbul",
+    "Europe/Kaliningrad",
+    "Europe/Kirov",
+    "Europe/Minsk",
+    "Europe/Samara",
+    "Europe/Saratov",
+    "Europe/Ulyanovsk",
+    "Europe/Volgograd"
   ],
-  "AEDT": [
-    "Antarctica/Macquarie",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
+  "+0330": [
+    "Asia/Tehran"
   ],
-  "AEST": [
-    "Antarctica/Macquarie",
-    "Australia/Brisbane",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lindeman",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
+  "+04": [
+    "Asia/Baghdad",
+    "Asia/Baku",
+    "Asia/Dubai",
+    "Asia/Muscat",
+    "Asia/Tbilisi",
+    "Asia/Yerevan",
+    "Europe/Astrakhan",
+    "Europe/Kirov",
+    "Europe/Samara",
+    "Europe/Saratov",
+    "Europe/Ulyanovsk",
+    "Europe/Volgograd",
+    "Indian/Mahe",
+    "Indian/Mauritius",
+    "Indian/Reunion"
   ],
-  "AET": [
-    "Antarctica/Macquarie",
-    "Australia/Brisbane",
-    "Australia/Currie",
-    "Australia/Hobart",
-    "Australia/Lindeman",
-    "Australia/Lord_Howe",
-    "Australia/Melbourne",
-    "Australia/Sydney"
+  "+0430": [
+    "Asia/Kabul",
+    "Asia/Tehran"
   ],
-  "AFT": [
-    "Asia/Kabul"
-  ],
-  "AKDT": [
-    "America/Anchorage",
-    "America/Juneau",
-    "America/Nome",
-    "America/Sitka",
-    "America/Yakutat",
-    "US/Alaska"
-  ],
-  "AKST": [
-    "America/Anchorage",
-    "America/Juneau",
-    "America/Nome",
-    "America/Sitka",
-    "America/Yakutat",
-    "US/Alaska"
-  ],
-  "ALMT": [
-    "Asia/Almaty"
-  ],
-  "AMST": [
-    "America/Campo_Grande",
-    "America/Cuiaba",
-    "Asia/Yerevan"
-  ],
-  "AMT": [
-    "America/Boa_Vista",
-    "America/Campo_Grande",
-    "America/Cuiaba",
-    "America/Eirunepe",
-    "America/Manaus",
-    "America/Porto_Velho",
-    "America/Rio_Branco",
-    "America/Santarem",
-    "Asia/Yerevan"
-  ],
-  "ANAST": [
-    "Asia/Anadyr"
-  ],
-  "ANAT": [
-    "Asia/Anadyr"
-  ],
-  "AQTT": [
+  "+05": [
+    "Antarctica/Davis",
+    "Antarctica/Mawson",
     "Asia/Aqtau",
-    "Asia/Aqtobe"
+    "Asia/Aqtobe",
+    "Asia/Ashgabat",
+    "Asia/Atyrau",
+    "Asia/Baku",
+    "Asia/Dushanbe",
+    "Asia/Oral",
+    "Asia/Samarkand",
+    "Asia/Tashkent",
+    "Asia/Yekaterinburg",
+    "Asia/Yerevan",
+    "Europe/Samara",
+    "Indian/Kerguelen",
+    "Indian/Maldives",
+    "Indian/Mauritius"
   ],
-  "ARST": [
+  "+0530": [
+    "Asia/Colombo"
+  ],
+  "+0545": [
+    "Asia/Kathmandu"
+  ],
+  "+06": [
+    "Antarctica/Mawson",
+    "Antarctica/Vostok",
+    "Asia/Almaty",
+    "Asia/Barnaul",
+    "Asia/Bishkek",
+    "Asia/Colombo",
+    "Asia/Dhaka",
+    "Asia/Novokuznetsk",
+    "Asia/Novosibirsk",
+    "Asia/Omsk",
+    "Asia/Qyzylorda",
+    "Asia/Thimphu",
+    "Asia/Tomsk",
+    "Asia/Urumqi",
+    "Asia/Yekaterinburg",
+    "Indian/Chagos"
+  ],
+  "+0630": [
+    "Asia/Yangon",
+    "Indian/Cocos"
+  ],
+  "+07": [
+    "Antarctica/Davis",
+    "Asia/Bangkok",
+    "Asia/Barnaul",
+    "Asia/Dhaka",
+    "Asia/Ho_Chi_Minh",
+    "Asia/Hovd",
+    "Asia/Krasnoyarsk",
+    "Asia/Novokuznetsk",
+    "Asia/Novosibirsk",
+    "Asia/Omsk",
+    "Asia/Phnom_Penh",
+    "Asia/Tomsk",
+    "Asia/Vientiane",
+    "Indian/Christmas"
+  ],
+  "+08": [
+    "Antarctica/Casey",
+    "Asia/Brunei",
+    "Asia/Chita",
+    "Asia/Choibalsan",
+    "Asia/Hovd",
+    "Asia/Irkutsk",
+    "Asia/Krasnoyarsk",
+    "Asia/Kuala_Lumpur",
+    "Asia/Kuching",
+    "Asia/Novokuznetsk",
+    "Asia/Singapore",
+    "Asia/Ulaanbaatar"
+  ],
+  "+0845": [
+    "Australia/Eucla"
+  ],
+  "+09": [
+    "Asia/Chita",
+    "Asia/Choibalsan",
+    "Asia/Dili",
+    "Asia/Irkutsk",
+    "Asia/Khandyga",
+    "Asia/Ulaanbaatar",
+    "Asia/Yakutsk",
+    "Pacific/Palau"
+  ],
+  "+0945": [
+    "Australia/Eucla"
+  ],
+  "+10": [
+    "Antarctica/DumontDUrville",
+    "Asia/Chita",
+    "Asia/Choibalsan",
+    "Asia/Khandyga",
+    "Asia/Magadan",
+    "Asia/Sakhalin",
+    "Asia/Ust-Nera",
+    "Asia/Vladivostok",
+    "Asia/Yakutsk",
+    "Pacific/Bougainville",
+    "Pacific/Chuuk",
+    "Pacific/Port_Moresby"
+  ],
+  "+1030": [
+    "Australia/Lord_Howe"
+  ],
+  "+11": [
+    "Antarctica/Casey",
+    "Antarctica/Macquarie",
+    "Asia/Anadyr",
+    "Asia/Kamchatka",
+    "Asia/Khandyga",
+    "Asia/Magadan",
+    "Asia/Sakhalin",
+    "Asia/Srednekolymsk",
+    "Asia/Ust-Nera",
+    "Asia/Vladivostok",
+    "Australia/Lord_Howe",
+    "Pacific/Bougainville",
+    "Pacific/Efate",
+    "Pacific/Guadalcanal",
+    "Pacific/Kosrae",
+    "Pacific/Norfolk",
+    "Pacific/Noumea",
+    "Pacific/Pohnpei"
+  ],
+  "+1130": [
+    "Pacific/Norfolk"
+  ],
+  "+12": [
+    "Asia/Anadyr",
+    "Asia/Kamchatka",
+    "Asia/Magadan",
+    "Asia/Srednekolymsk",
+    "Asia/Ust-Nera",
+    "Pacific/Fiji",
+    "Pacific/Funafuti",
+    "Pacific/Kwajalein",
+    "Pacific/Majuro",
+    "Pacific/Nauru",
+    "Pacific/Tarawa",
+    "Pacific/Wake",
+    "Pacific/Wallis"
+  ],
+  "+1245": [
+    "Pacific/Chatham"
+  ],
+  "+13": [
+    "Asia/Anadyr",
+    "Asia/Kamchatka",
+    "Pacific/Apia",
+    "Pacific/Enderbury",
+    "Pacific/Fakaofo",
+    "Pacific/Fiji",
+    "Pacific/Tongatapu"
+  ],
+  "+1345": [
+    "Pacific/Chatham"
+  ],
+  "+14": [
+    "Pacific/Apia",
+    "Pacific/Kiritimati",
+    "Pacific/Tongatapu"
+  ],
+  "-01": [
+    "America/Scoresbysund",
+    "Atlantic/Azores",
+    "Atlantic/Cape_Verde"
+  ],
+  "-02": [
+    "America/Araguaina",
     "America/Argentina/Buenos_Aires",
     "America/Argentina/Catamarca",
     "America/Argentina/Cordoba",
@@ -118,9 +241,17 @@
     "America/Argentina/Salta",
     "America/Argentina/San_Juan",
     "America/Argentina/Tucuman",
-    "America/Argentina/Ushuaia"
+    "America/Argentina/Ushuaia",
+    "America/Bahia",
+    "America/Godthab",
+    "America/Miquelon",
+    "America/Montevideo",
+    "America/Noronha",
+    "America/Sao_Paulo",
+    "Atlantic/South_Georgia"
   ],
-  "ART": [
+  "-03": [
+    "America/Araguaina",
     "America/Argentina/Buenos_Aires",
     "America/Argentina/Catamarca",
     "America/Argentina/Cordoba",
@@ -132,7 +263,146 @@
     "America/Argentina/San_Juan",
     "America/Argentina/San_Luis",
     "America/Argentina/Tucuman",
-    "America/Argentina/Ushuaia"
+    "America/Argentina/Ushuaia",
+    "America/Asuncion",
+    "America/Bahia",
+    "America/Belem",
+    "America/Campo_Grande",
+    "America/Cayenne",
+    "America/Cuiaba",
+    "America/Fortaleza",
+    "America/Godthab",
+    "America/Maceio",
+    "America/Miquelon",
+    "America/Montevideo",
+    "America/Paramaribo",
+    "America/Punta_Arenas",
+    "America/Recife",
+    "America/Santarem",
+    "America/Santiago",
+    "America/Sao_Paulo",
+    "Antarctica/Palmer",
+    "Antarctica/Rothera",
+    "Atlantic/Stanley"
+  ],
+  "-04": [
+    "America/Argentina/San_Luis",
+    "America/Asuncion",
+    "America/Boa_Vista",
+    "America/Campo_Grande",
+    "America/Caracas",
+    "America/Cuiaba",
+    "America/Eirunepe",
+    "America/Guyana",
+    "America/La_Paz",
+    "America/Manaus",
+    "America/Porto_Velho",
+    "America/Punta_Arenas",
+    "America/Rio_Branco",
+    "America/Santarem",
+    "America/Santiago",
+    "Antarctica/Palmer",
+    "Atlantic/Stanley"
+  ],
+  "-0430": [
+    "America/Caracas"
+  ],
+  "-05": [
+    "America/Bogota",
+    "America/Eirunepe",
+    "America/Guayaquil",
+    "America/Lima",
+    "America/Rio_Branco",
+    "Pacific/Easter"
+  ],
+  "-06": [
+    "Pacific/Easter",
+    "Pacific/Galapagos"
+  ],
+  "-08": [
+    "Pacific/Pitcairn"
+  ],
+  "-09": [
+    "Pacific/Gambier"
+  ],
+  "-0930": [
+    "Pacific/Marquesas"
+  ],
+  "-10": [
+    "Pacific/Apia",
+    "Pacific/Rarotonga",
+    "Pacific/Tahiti"
+  ],
+  "-11": [
+    "Pacific/Apia",
+    "Pacific/Fakaofo",
+    "Pacific/Niue"
+  ],
+  "ACDT": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill"
+  ],
+  "ACST": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill",
+    "Australia/Darwin"
+  ],
+  "ACT": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill",
+    "Australia/Darwin"
+  ],
+  "ADT": [
+    "America/Glace_Bay",
+    "America/Goose_Bay",
+    "America/Halifax",
+    "America/Moncton",
+    "America/Thule",
+    "Atlantic/Bermuda",
+    "Canada/Atlantic"
+  ],
+  "AEDT": [
+    "Antarctica/Macquarie",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AEST": [
+    "Antarctica/Macquarie",
+    "Australia/Brisbane",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lindeman",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AET": [
+    "Antarctica/Macquarie",
+    "Australia/Brisbane",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lindeman",
+    "Australia/Melbourne",
+    "Australia/Sydney"
+  ],
+  "AKDT": [
+    "America/Anchorage",
+    "America/Juneau",
+    "America/Metlakatla",
+    "America/Nome",
+    "America/Sitka",
+    "America/Yakutat",
+    "US/Alaska"
+  ],
+  "AKST": [
+    "America/Anchorage",
+    "America/Juneau",
+    "America/Metlakatla",
+    "America/Nome",
+    "America/Sitka",
+    "America/Yakutat",
+    "US/Alaska"
   ],
   "AST": [
     "America/Anguilla",
@@ -164,12 +434,6 @@
     "America/St_Vincent",
     "America/Thule",
     "America/Tortola",
-    "Asia/Aden",
-    "Asia/Baghdad",
-    "Asia/Bahrain",
-    "Asia/Kuwait",
-    "Asia/Qatar",
-    "Asia/Riyadh",
     "Atlantic/Bermuda",
     "Canada/Atlantic"
   ],
@@ -203,12 +467,6 @@
     "America/St_Vincent",
     "America/Thule",
     "America/Tortola",
-    "Asia/Aden",
-    "Asia/Baghdad",
-    "Asia/Bahrain",
-    "Asia/Kuwait",
-    "Asia/Qatar",
-    "Asia/Riyadh",
     "Atlantic/Bermuda",
     "Canada/Atlantic"
   ],
@@ -242,12 +500,6 @@
     "America/St_Vincent",
     "America/Thule",
     "America/Tortola",
-    "Asia/Aden",
-    "Asia/Baghdad",
-    "Asia/Bahrain",
-    "Asia/Kuwait",
-    "Asia/Qatar",
-    "Asia/Riyadh",
     "Atlantic/Bermuda",
     "Canada/Atlantic"
   ],
@@ -262,89 +514,38 @@
     "Australia/Currie",
     "Australia/Hobart",
     "Australia/Lindeman",
-    "Australia/Lord_Howe",
     "Australia/Melbourne",
     "Australia/Sydney"
   ],
   "AUSTRALIAN WESTERN": [
-    "Antarctica/Casey",
     "Australia/Perth"
   ],
   "AWDT": [
     "Australia/Perth"
   ],
   "AWST": [
-    "Antarctica/Casey",
     "Australia/Perth"
   ],
   "AWT": [
-    "Antarctica/Casey",
     "Australia/Perth"
-  ],
-  "AZOST": [
-    "Atlantic/Azores"
-  ],
-  "AZOT": [
-    "Atlantic/Azores"
-  ],
-  "AZST": [
-    "Asia/Baku"
-  ],
-  "AZT": [
-    "Asia/Baku"
-  ],
-  "BDST": [
-    "Asia/Dhaka"
-  ],
-  "BDT": [
-    "Asia/Dhaka"
-  ],
-  "BNT": [
-    "Asia/Brunei"
-  ],
-  "BOT": [
-    "America/La_Paz"
-  ],
-  "BRST": [
-    "America/Araguaina",
-    "America/Bahia",
-    "America/Sao_Paulo"
-  ],
-  "BRT": [
-    "America/Araguaina",
-    "America/Bahia",
-    "America/Belem",
-    "America/Fortaleza",
-    "America/Maceio",
-    "America/Recife",
-    "America/Santarem",
-    "America/Sao_Paulo"
   ],
   "BST": [
     "Europe/Guernsey",
     "Europe/Isle_of_Man",
     "Europe/Jersey",
-    "Europe/London",
-    "Pacific/Bougainville"
-  ],
-  "BTT": [
-    "Asia/Thimphu"
-  ],
-  "CAST": [
-    "Antarctica/Casey"
+    "Europe/London"
   ],
   "CAT": [
     "Africa/Blantyre",
     "Africa/Bujumbura",
     "Africa/Gaborone",
     "Africa/Harare",
+    "Africa/Khartoum",
     "Africa/Kigali",
     "Africa/Lubumbashi",
     "Africa/Lusaka",
-    "Africa/Maputo"
-  ],
-  "CCT": [
-    "Indian/Cocos"
+    "Africa/Maputo",
+    "Africa/Windhoek"
   ],
   "CDT": [
     "America/Bahia_Banderas",
@@ -414,7 +615,6 @@
     "Africa/Ceuta",
     "Africa/Tripoli",
     "Africa/Tunis",
-    "Antarctica/Troll",
     "Arctic/Longyearbyen",
     "Europe/Amsterdam",
     "Europe/Andorra",
@@ -485,35 +685,6 @@
     "Europe/Warsaw",
     "Europe/Zagreb",
     "Europe/Zurich"
-  ],
-  "CHADT": [
-    "Pacific/Chatham"
-  ],
-  "CHAST": [
-    "Pacific/Chatham"
-  ],
-  "CHOST": [
-    "Asia/Choibalsan"
-  ],
-  "CHOT": [
-    "Asia/Choibalsan"
-  ],
-  "CHUT": [
-    "Pacific/Chuuk"
-  ],
-  "CKT": [
-    "Pacific/Rarotonga"
-  ],
-  "CLST": [
-    "America/Santiago",
-    "Antarctica/Palmer"
-  ],
-  "CLT": [
-    "America/Santiago",
-    "Antarctica/Palmer"
-  ],
-  "COT": [
-    "America/Bogota"
   ],
   "CST": [
     "America/Bahia_Banderas",
@@ -587,27 +758,9 @@
     "Canada/Central",
     "US/Central"
   ],
-  "CVT": [
-    "Atlantic/Cape_Verde"
-  ],
-  "CXT": [
-    "Indian/Christmas"
-  ],
   "ChST": [
     "Pacific/Guam",
     "Pacific/Saipan"
-  ],
-  "DAVT": [
-    "Antarctica/Davis"
-  ],
-  "DDUT": [
-    "Antarctica/DumontDUrville"
-  ],
-  "EASST": [
-    "Pacific/Easter"
-  ],
-  "EAST": [
-    "Pacific/Easter"
   ],
   "EASTERN": [
     "America/Atikokan",
@@ -653,11 +806,7 @@
     "Indian/Comoro",
     "Indian/Mayotte"
   ],
-  "ECT": [
-    "America/Guayaquil"
-  ],
   "EDT": [
-    "America/Cayman",
     "America/Detroit",
     "America/Grand_Turk",
     "America/Indiana/Indianapolis",
@@ -684,6 +833,7 @@
     "Asia/Amman",
     "Asia/Beirut",
     "Asia/Damascus",
+    "Asia/Famagusta",
     "Asia/Gaza",
     "Asia/Hebron",
     "Asia/Nicosia",
@@ -710,6 +860,7 @@
     "Asia/Amman",
     "Asia/Beirut",
     "Asia/Damascus",
+    "Asia/Famagusta",
     "Asia/Gaza",
     "Asia/Hebron",
     "Asia/Nicosia",
@@ -729,12 +880,6 @@
     "Europe/Uzhgorod",
     "Europe/Vilnius",
     "Europe/Zaporozhye"
-  ],
-  "EGST": [
-    "America/Scoresbysund"
-  ],
-  "EGT": [
-    "America/Scoresbysund"
   ],
   "EST": [
     "America/Atikokan",
@@ -796,40 +941,6 @@
     "Canada/Eastern",
     "US/Eastern"
   ],
-  "FET": [
-    "Europe/Kaliningrad",
-    "Europe/Minsk"
-  ],
-  "FJST": [
-    "Pacific/Fiji"
-  ],
-  "FJT": [
-    "Pacific/Fiji"
-  ],
-  "FKST": [
-    "Atlantic/Stanley"
-  ],
-  "FKT": [
-    "Atlantic/Stanley"
-  ],
-  "FNT": [
-    "America/Noronha"
-  ],
-  "GALT": [
-    "Pacific/Galapagos"
-  ],
-  "GAMT": [
-    "Pacific/Gambier"
-  ],
-  "GET": [
-    "Asia/Tbilisi"
-  ],
-  "GFT": [
-    "America/Cayenne"
-  ],
-  "GILT": [
-    "Pacific/Tarawa"
-  ],
   "GMT": [
     "Africa/Abidjan",
     "Africa/Accra",
@@ -854,59 +965,21 @@
     "Europe/London",
     "GMT"
   ],
-  "GST": [
-    "Asia/Dubai",
-    "Asia/Muscat",
-    "Atlantic/South_Georgia"
-  ],
-  "GYT": [
-    "America/Guyana"
-  ],
   "HDT": [
     "America/Adak"
   ],
   "HKT": [
     "Asia/Hong_Kong"
   ],
-  "HOVST": [
-    "Asia/Hovd"
-  ],
-  "HOVT": [
-    "Asia/Hovd"
-  ],
   "HST": [
     "America/Adak",
     "Pacific/Honolulu",
-    "Pacific/Johnston",
     "US/Hawaii"
-  ],
-  "ICT": [
-    "Asia/Bangkok",
-    "Asia/Ho_Chi_Minh",
-    "Asia/Phnom_Penh",
-    "Asia/Vientiane"
   ],
   "IDT": [
     "Asia/Jerusalem"
   ],
-  "IOT": [
-    "Indian/Chagos"
-  ],
-  "IRDT": [
-    "Asia/Tehran"
-  ],
-  "IRKST": [
-    "Asia/Irkutsk"
-  ],
-  "IRKT": [
-    "Asia/Chita",
-    "Asia/Irkutsk"
-  ],
-  "IRST": [
-    "Asia/Tehran"
-  ],
   "IST": [
-    "Asia/Colombo",
     "Asia/Jerusalem",
     "Asia/Kolkata",
     "Europe/Dublin"
@@ -914,45 +987,9 @@
   "JST": [
     "Asia/Tokyo"
   ],
-  "KGT": [
-    "Asia/Bishkek"
-  ],
-  "KOST": [
-    "Pacific/Kosrae"
-  ],
-  "KRAST": [
-    "Asia/Krasnoyarsk",
-    "Asia/Novokuznetsk"
-  ],
-  "KRAT": [
-    "Asia/Krasnoyarsk",
-    "Asia/Novokuznetsk"
-  ],
   "KST": [
     "Asia/Pyongyang",
     "Asia/Seoul"
-  ],
-  "LINT": [
-    "Pacific/Kiritimati"
-  ],
-  "LKT": [
-    "Asia/Colombo"
-  ],
-  "MAGST": [
-    "Asia/Magadan",
-    "Asia/Srednekolymsk",
-    "Asia/Ust-Nera"
-  ],
-  "MAGT": [
-    "Asia/Magadan",
-    "Asia/Srednekolymsk",
-    "Asia/Ust-Nera"
-  ],
-  "MART": [
-    "Pacific/Marquesas"
-  ],
-  "MAWT": [
-    "Antarctica/Mawson"
   ],
   "MDT": [
     "America/Bahia_Banderas",
@@ -968,16 +1005,6 @@
     "America/Yellowknife",
     "Canada/Mountain",
     "US/Mountain"
-  ],
-  "MHT": [
-    "Pacific/Kwajalein",
-    "Pacific/Majuro"
-  ],
-  "MIST": [
-    "Antarctica/Macquarie"
-  ],
-  "MMT": [
-    "Asia/Rangoon"
   ],
   "MOUNTAIN": [
     "America/Bahia_Banderas",
@@ -1001,14 +1028,11 @@
     "US/Mountain"
   ],
   "MSD": [
-    "Europe/Moscow",
-    "Europe/Volgograd"
+    "Europe/Moscow"
   ],
   "MSK": [
-    "Europe/Minsk",
     "Europe/Moscow",
-    "Europe/Simferopol",
-    "Europe/Volgograd"
+    "Europe/Simferopol"
   ],
   "MST": [
     "America/Bahia_Banderas",
@@ -1052,49 +1076,13 @@
     "US/Arizona",
     "US/Mountain"
   ],
-  "MUST": [
-    "Indian/Mauritius"
-  ],
-  "MUT": [
-    "Indian/Mauritius"
-  ],
-  "MVT": [
-    "Indian/Maldives"
-  ],
-  "MYT": [
-    "Asia/Kuala_Lumpur",
-    "Asia/Kuching"
-  ],
-  "NCT": [
-    "Pacific/Noumea"
-  ],
   "NDT": [
     "America/St_Johns",
     "Canada/Newfoundland"
   ],
-  "NFT": [
-    "Pacific/Norfolk"
-  ],
-  "NOVST": [
-    "Asia/Novokuznetsk",
-    "Asia/Novosibirsk"
-  ],
-  "NOVT": [
-    "Asia/Novokuznetsk",
-    "Asia/Novosibirsk"
-  ],
-  "NPT": [
-    "Asia/Kathmandu"
-  ],
-  "NRT": [
-    "Pacific/Nauru"
-  ],
   "NST": [
     "America/St_Johns",
     "Canada/Newfoundland"
-  ],
-  "NUT": [
-    "Pacific/Niue"
   ],
   "NZDT": [
     "Antarctica/McMurdo",
@@ -1104,57 +1092,27 @@
     "Antarctica/McMurdo",
     "Pacific/Auckland"
   ],
-  "OMSST": [
-    "Asia/Omsk"
-  ],
-  "OMST": [
-    "Asia/Omsk"
-  ],
-  "ORAT": [
-    "Asia/Oral"
-  ],
   "PACIFIC": [
     "America/Dawson",
     "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
-    "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
+    "Asia/Manila",
     "Canada/Pacific",
-    "Pacific/Pitcairn",
     "US/Pacific"
   ],
   "PDT": [
     "America/Dawson",
     "America/Fort_Nelson",
     "America/Los_Angeles",
-    "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
     "Canada/Pacific",
     "US/Pacific"
-  ],
-  "PET": [
-    "America/Lima"
-  ],
-  "PETST": [
-    "Asia/Kamchatka"
-  ],
-  "PETT": [
-    "Asia/Kamchatka"
-  ],
-  "PGT": [
-    "Pacific/Bougainville",
-    "Pacific/Port_Moresby"
-  ],
-  "PHOT": [
-    "Pacific/Enderbury"
-  ],
-  "PHT": [
-    "Asia/Manila"
   ],
   "PKST": [
     "Asia/Karachi"
@@ -1162,26 +1120,16 @@
   "PKT": [
     "Asia/Karachi"
   ],
-  "PMDT": [
-    "America/Miquelon"
-  ],
-  "PMST": [
-    "America/Miquelon"
-  ],
-  "PONT": [
-    "Pacific/Pohnpei"
-  ],
   "PST": [
     "America/Dawson",
     "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
-    "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
+    "Asia/Manila",
     "Canada/Pacific",
-    "Pacific/Pitcairn",
     "US/Pacific"
   ],
   "PT": [
@@ -1189,148 +1137,24 @@
     "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
-    "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
+    "Asia/Manila",
     "Canada/Pacific",
-    "Pacific/Pitcairn",
     "US/Pacific"
-  ],
-  "PWT": [
-    "Pacific/Palau"
-  ],
-  "PYST": [
-    "America/Asuncion"
-  ],
-  "PYT": [
-    "America/Asuncion"
-  ],
-  "QYZT": [
-    "Asia/Qyzylorda"
-  ],
-  "RET": [
-    "Indian/Reunion"
-  ],
-  "ROTT": [
-    "Antarctica/Rothera"
-  ],
-  "SAKST": [
-    "Asia/Sakhalin"
-  ],
-  "SAKT": [
-    "Asia/Sakhalin"
-  ],
-  "SAMST": [
-    "Europe/Samara"
-  ],
-  "SAMT": [
-    "Europe/Samara"
   ],
   "SAST": [
     "Africa/Johannesburg",
     "Africa/Maseru",
     "Africa/Mbabane"
   ],
-  "SBT": [
-    "Pacific/Guadalcanal"
-  ],
-  "SCT": [
-    "Indian/Mahe"
-  ],
-  "SDT": [
-    "Pacific/Apia"
-  ],
-  "SGT": [
-    "Asia/Singapore"
-  ],
-  "SRET": [
-    "Asia/Srednekolymsk"
-  ],
-  "SRT": [
-    "America/Paramaribo"
-  ],
   "SST": [
-    "Pacific/Apia",
     "Pacific/Midway",
     "Pacific/Pago_Pago"
   ],
-  "SYOT": [
-    "Antarctica/Syowa"
-  ],
-  "TAHT": [
-    "Pacific/Tahiti"
-  ],
-  "TFT": [
-    "Indian/Kerguelen"
-  ],
-  "TJT": [
-    "Asia/Dushanbe"
-  ],
-  "TKT": [
-    "Pacific/Fakaofo"
-  ],
-  "TLT": [
-    "Asia/Dili"
-  ],
-  "TMT": [
-    "Asia/Ashgabat"
-  ],
-  "TOT": [
-    "Pacific/Tongatapu"
-  ],
-  "TVT": [
-    "Pacific/Funafuti"
-  ],
-  "ULAST": [
-    "Asia/Ulaanbaatar"
-  ],
-  "ULAT": [
-    "Asia/Ulaanbaatar"
-  ],
   "UTC": [
-    "Antarctica/Troll",
     "UTC"
-  ],
-  "UYST": [
-    "America/Montevideo"
-  ],
-  "UYT": [
-    "America/Montevideo"
-  ],
-  "UZT": [
-    "Asia/Samarkand",
-    "Asia/Tashkent"
-  ],
-  "VET": [
-    "America/Caracas"
-  ],
-  "VLAST": [
-    "Asia/Khandyga",
-    "Asia/Vladivostok"
-  ],
-  "VLAT": [
-    "Asia/Khandyga",
-    "Asia/Ust-Nera",
-    "Asia/Vladivostok"
-  ],
-  "VOST": [
-    "Antarctica/Vostok"
-  ],
-  "VUT": [
-    "Pacific/Efate"
-  ],
-  "WAKT": [
-    "Pacific/Wake"
-  ],
-  "WARST": [
-    "America/Argentina/San_Luis"
-  ],
-  "WART": [
-    "America/Argentina/San_Luis"
-  ],
-  "WAST": [
-    "Africa/Windhoek"
   ],
   "WAT": [
     "Africa/Bangui",
@@ -1344,32 +1168,20 @@
     "Africa/Ndjamena",
     "Africa/Niamey",
     "Africa/Porto-Novo",
+    "Africa/Sao_Tome",
     "Africa/Windhoek"
   ],
   "WEST": [
-    "Africa/Casablanca",
-    "Africa/El_Aaiun",
     "Atlantic/Canary",
     "Atlantic/Faroe",
     "Atlantic/Madeira",
     "Europe/Lisbon"
   ],
   "WET": [
-    "Africa/Casablanca",
-    "Africa/El_Aaiun",
     "Atlantic/Canary",
     "Atlantic/Faroe",
     "Atlantic/Madeira",
     "Europe/Lisbon"
-  ],
-  "WFT": [
-    "Pacific/Wallis"
-  ],
-  "WGST": [
-    "America/Godthab"
-  ],
-  "WGT": [
-    "America/Godthab"
   ],
   "WIB": [
     "Asia/Jakarta",
@@ -1380,29 +1192,5 @@
   ],
   "WITA": [
     "Asia/Makassar"
-  ],
-  "WSDT": [
-    "Pacific/Apia"
-  ],
-  "WSST": [
-    "Pacific/Apia"
-  ],
-  "XJT": [
-    "Asia/Urumqi"
-  ],
-  "YAKST": [
-    "Asia/Chita",
-    "Asia/Yakutsk"
-  ],
-  "YAKT": [
-    "Asia/Chita",
-    "Asia/Khandyga",
-    "Asia/Yakutsk"
-  ],
-  "YEKST": [
-    "Asia/Yekaterinburg"
-  ],
-  "YEKT": [
-    "Asia/Yekaterinburg"
   ]
 }
