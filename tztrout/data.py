@@ -246,9 +246,8 @@ class TroutData(object):
         """
         zcdb = ZipCodeDatabase()
         zips = list(zcdb.find_zip())
-        zips_len = len(zips)
         tz_ids_to_zips = defaultdict(list)
-        for cnt, zip in enumerate(zips):
+        for zip in _progressbar(zips):
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
 
             # apply the data exceptions
@@ -259,9 +258,6 @@ class TroutData(object):
                 ids = tuple((set(ids) - set(exceptions['exclude'])) | set(exceptions['include']))
 
             tz_ids_to_zips[ids].append(zip.zip)
-
-            stdout.write('\r%d/%d' % (cnt + 1, zips_len))
-            stdout.flush()
 
         zips_to_tz_ids = {tuple(zips): json.dumps(ids) for ids, zips in tz_ids_to_zips.iteritems()}
 
@@ -285,8 +281,7 @@ class TroutData(object):
             'LHDT': 'AEDT'
         }
         tz_name_ids = {}
-        tzs_len = len(pytz.common_timezones)
-        for cnt, id in enumerate(pytz.common_timezones):
+        for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
             tz_names = self._get_latest_tz_names(tz)
 
@@ -308,26 +303,27 @@ class TroutData(object):
                 elif name not in tz_name_ids:
                     tz_name_ids[name] = [id]
 
-            stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
-            stdout.flush()
-
         _dump_json_data(TZ_NAME_TO_TZ_IDS_MAP_PATH, tz_name_ids)
 
     def generate_offset_to_tz_id_map(self):
         """ Generate the map of UTC offsets to time zone identifiers.
         """
         offset_tz_ids = defaultdict(list)
-        tzs_len = len(pytz.common_timezones)
-        for cnt, id in enumerate(pytz.common_timezones):
+        for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
             offsets = self._get_latest_offsets(tz)
             for offset in offsets:
                 offset_tz_ids[offset].append(id)
 
-            stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
-            stdout.flush()
-
         _dump_json_data(OFFSET_TO_TZ_IDS_MAP_PATH, offset_tz_ids)
+
+
+def _progressbar(lst):
+    l = len(lst)
+    for cnt, elem in enumerate(lst):
+        yield elem
+        stdout.write('\r%d/%d' % (cnt + 1, l))
+        stdout.flush()
 
 
 def _dump_json_data(path, data):
