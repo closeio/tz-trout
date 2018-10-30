@@ -272,6 +272,18 @@ class TroutData(object):
     def generate_tz_name_to_tz_id_map(self):
         """ Generate the map of timezone names to time zone identifiers.
         """
+        au_map = {
+            'WST': 'AWST',
+            'CST': 'ACST',
+            'EST': 'AEST',
+            'CWST': 'AWST',
+            'LHST': 'AEST',
+            'WDT': 'AWDT',
+            'CDT': 'ACDT',
+            'EDT': 'AEDT',
+            'CWDT': 'AWDT',
+            'LHDT': 'AEDT'
+        }
         tz_name_ids = {}
         tzs_len = len(pytz.common_timezones)
         for cnt, id in enumerate(pytz.common_timezones):
@@ -283,14 +295,8 @@ class TroutData(object):
             # if we're thinking globally. Instead, we should use AWST, ACST,
             # AEST, etc.
             if id.startswith('Australia'):
-                au_map = {
-                    'WST': 'AWST',
-                    'CST': 'ACST',
-                    'EST': 'AEST',
-                    'CWST': 'AWST',
-                    'LHST': 'AEST'
-                }
-                tz_names = [au_map[tz_name] for tz_name in tz_names]
+
+                tz_names = [au_map.get(tz_name, tz_name) for tz_name in tz_names]
 
             # Include the aliases in the map, too
             for name in tz_names:
@@ -306,7 +312,7 @@ class TroutData(object):
             stdout.flush()
 
         file = open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'w')
-        file.write(json.dumps(tz_name_ids))
+        file.write(json.dumps(tz_name_ids, indent=2))
         file.close()
 
     def generate_offset_to_tz_id_map(self):

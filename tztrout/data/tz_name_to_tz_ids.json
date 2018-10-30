@@ -23,6 +23,7 @@
   ],
   "ET": [
     "America/Atikokan",
+    "America/Cancun",
     "America/Cayman",
     "America/Detroit",
     "America/Grand_Turk",
@@ -38,7 +39,6 @@
     "America/Jamaica",
     "America/Kentucky/Louisville",
     "America/Kentucky/Monticello",
-    "America/Montreal",
     "America/Nassau",
     "America/New_York",
     "America/Nipigon",
@@ -48,7 +48,6 @@
     "America/Resolute",
     "America/Thunder_Bay",
     "America/Toronto",
-    "Antarctica/Macquarie",
     "Canada/Eastern",
     "US/Eastern"
   ],
@@ -61,8 +60,8 @@
   "EGT": [
     "America/Scoresbysund"
   ],
-  "HAST": [
-    "America/Adak"
+  "XJT": [
+    "Asia/Urumqi"
   ],
   "GAMT": [
     "Pacific/Gambier"
@@ -71,7 +70,7 @@
     "Asia/Makassar"
   ],
   "AWST": [
-    "Australia/Eucla",
+    "Antarctica/Casey",
     "Australia/Perth"
   ],
   "MUST": [
@@ -82,6 +81,7 @@
   ],
   "EASTERN": [
     "America/Atikokan",
+    "America/Cancun",
     "America/Cayman",
     "America/Detroit",
     "America/Grand_Turk",
@@ -97,7 +97,6 @@
     "America/Jamaica",
     "America/Kentucky/Louisville",
     "America/Kentucky/Monticello",
-    "America/Montreal",
     "America/Nassau",
     "America/New_York",
     "America/Nipigon",
@@ -107,12 +106,11 @@
     "America/Resolute",
     "America/Thunder_Bay",
     "America/Toronto",
-    "Antarctica/Macquarie",
     "Canada/Eastern",
     "US/Eastern"
   ],
   "AWT": [
-    "Australia/Eucla",
+    "Antarctica/Casey",
     "Australia/Perth"
   ],
   "NZDT": [
@@ -133,8 +131,11 @@
   "IRST": [
     "Asia/Tehran"
   ],
-  "PKST": [
-    "Asia/Karachi"
+  "HST": [
+    "America/Adak",
+    "Pacific/Honolulu",
+    "Pacific/Johnston",
+    "US/Hawaii"
   ],
   "HOVST": [
     "Asia/Hovd"
@@ -182,6 +183,9 @@
   "BNT": [
     "Asia/Brunei"
   ],
+  "ACWDT": [
+    "Australia/Eucla"
+  ],
   "EASST": [
     "Pacific/Easter"
   ],
@@ -203,6 +207,10 @@
   ],
   "OMSST": [
     "Asia/Omsk"
+  ],
+  "ACDT": [
+    "Australia/Adelaide",
+    "Australia/Broken_Hill"
   ],
   "BRST": [
     "America/Araguaina",
@@ -230,6 +238,9 @@
   ],
   "PYT": [
     "America/Asuncion"
+  ],
+  "VUT": [
+    "Pacific/Efate"
   ],
   "AMT": [
     "America/Boa_Vista",
@@ -262,6 +273,7 @@
     "Asia/Seoul"
   ],
   "AUSTRALIAN EASTERN": [
+    "Antarctica/Macquarie",
     "Australia/Brisbane",
     "Australia/Currie",
     "Australia/Hobart",
@@ -270,7 +282,11 @@
     "Australia/Melbourne",
     "Australia/Sydney"
   ],
+  "HDT": [
+    "America/Adak"
+  ],
   "AET": [
+    "Antarctica/Macquarie",
     "Australia/Brisbane",
     "Australia/Currie",
     "Australia/Hobart",
@@ -309,7 +325,7 @@
     "Europe/Zaporozhye"
   ],
   "AUSTRALIAN WESTERN": [
-    "Australia/Eucla",
+    "Antarctica/Casey",
     "Australia/Perth"
   ],
   "VLAT": [
@@ -327,6 +343,7 @@
     "America/Dominica",
     "America/Glace_Bay",
     "America/Goose_Bay",
+    "America/Grand_Turk",
     "America/Grenada",
     "America/Guadeloupe",
     "America/Halifax",
@@ -347,7 +364,6 @@
     "America/Thule",
     "America/Tortola",
     "Asia/Aden",
-    "Asia/Amman",
     "Asia/Baghdad",
     "Asia/Bahrain",
     "Asia/Kuwait",
@@ -362,6 +378,9 @@
   "LKT": [
     "Asia/Colombo"
   ],
+  "SRET": [
+    "Asia/Srednekolymsk"
+  ],
   "WFT": [
     "Pacific/Wallis"
   ],
@@ -374,6 +393,7 @@
     "America/Dawson_Creek",
     "America/Denver",
     "America/Edmonton",
+    "America/Fort_Nelson",
     "America/Hermosillo",
     "America/Inuvik",
     "America/Mazatlan",
@@ -385,6 +405,9 @@
     "US/Arizona",
     "US/Mountain"
   ],
+  "WSST": [
+    "Pacific/Apia"
+  ],
   "MART": [
     "Pacific/Marquesas"
   ],
@@ -393,7 +416,9 @@
   ],
   "PT": [
     "America/Dawson",
+    "America/Fort_Nelson",
     "America/Los_Angeles",
+    "America/Metlakatla",
     "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
@@ -404,9 +429,6 @@
   ],
   "GET": [
     "Asia/Tbilisi"
-  ],
-  "MeST": [
-    "America/Metlakatla"
   ],
   "EGST": [
     "America/Scoresbysund"
@@ -498,6 +520,7 @@
   ],
   "MAGT": [
     "Asia/Magadan",
+    "Asia/Srednekolymsk",
     "Asia/Ust-Nera"
   ],
   "WGT": [
@@ -542,13 +565,9 @@
     "America/Swift_Current",
     "America/Tegucigalpa",
     "America/Winnipeg",
-    "Asia/Chongqing",
-    "Asia/Harbin",
-    "Asia/Kashgar",
     "Asia/Macau",
     "Asia/Shanghai",
     "Asia/Taipei",
-    "Asia/Urumqi",
     "Canada/Central",
     "US/Central"
   ],
@@ -559,9 +578,6 @@
   "MIST": [
     "Antarctica/Macquarie"
   ],
-  "UTC": [
-    "UTC"
-  ],
   "BTT": [
     "Asia/Thimphu"
   ],
@@ -569,6 +585,7 @@
     "Asia/Dhaka"
   ],
   "SST": [
+    "Pacific/Apia",
     "Pacific/Midway",
     "Pacific/Pago_Pago"
   ],
@@ -581,6 +598,7 @@
     "America/Dawson_Creek",
     "America/Denver",
     "America/Edmonton",
+    "America/Fort_Nelson",
     "America/Hermosillo",
     "America/Inuvik",
     "America/Mazatlan",
@@ -598,6 +616,9 @@
   "TVT": [
     "Pacific/Funafuti"
   ],
+  "AWDT": [
+    "Australia/Perth"
+  ],
   "ADT": [
     "America/Glace_Bay",
     "America/Goose_Bay",
@@ -608,12 +629,11 @@
     "Atlantic/Bermuda",
     "Canada/Atlantic"
   ],
-  "HADT": [
-    "America/Adak"
-  ],
   "PST": [
     "America/Dawson",
+    "America/Fort_Nelson",
     "America/Los_Angeles",
+    "America/Metlakatla",
     "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
@@ -667,10 +687,16 @@
   "FKST": [
     "Atlantic/Stanley"
   ],
-  "VUT": [
-    "Pacific/Efate"
+  "AEDT": [
+    "Antarctica/Macquarie",
+    "Australia/Currie",
+    "Australia/Hobart",
+    "Australia/Lord_Howe",
+    "Australia/Melbourne",
+    "Australia/Sydney"
   ],
   "YAKST": [
+    "Asia/Chita",
     "Asia/Yakutsk"
   ],
   "ACT": [
@@ -687,6 +713,7 @@
     "Pacific/Fiji"
   ],
   "IRKT": [
+    "Asia/Chita",
     "Asia/Irkutsk"
   ],
   "SAST": [
@@ -707,6 +734,7 @@
     "America/Dominica",
     "America/Glace_Bay",
     "America/Goose_Bay",
+    "America/Grand_Turk",
     "America/Grenada",
     "America/Guadeloupe",
     "America/Halifax",
@@ -727,7 +755,6 @@
     "America/Thule",
     "America/Tortola",
     "Asia/Aden",
-    "Asia/Amman",
     "Asia/Baghdad",
     "Asia/Bahrain",
     "Asia/Kuwait",
@@ -740,7 +767,8 @@
     "Europe/Guernsey",
     "Europe/Isle_of_Man",
     "Europe/Jersey",
-    "Europe/London"
+    "Europe/London",
+    "Pacific/Bougainville"
   ],
   "FKT": [
     "Atlantic/Stanley"
@@ -750,7 +778,9 @@
   ],
   "PACIFIC": [
     "America/Dawson",
+    "America/Fort_Nelson",
     "America/Los_Angeles",
+    "America/Metlakatla",
     "America/Santa_Isabel",
     "America/Tijuana",
     "America/Vancouver",
@@ -773,6 +803,7 @@
   ],
   "MAGST": [
     "Asia/Magadan",
+    "Asia/Srednekolymsk",
     "Asia/Ust-Nera"
   ],
   "AQTT": [
@@ -806,50 +837,12 @@
   "VET": [
     "America/Caracas"
   ],
-  "CENTRAL": [
-    "America/Bahia_Banderas",
-    "America/Belize",
-    "America/Cancun",
-    "America/Chicago",
-    "America/Costa_Rica",
-    "America/El_Salvador",
-    "America/Guatemala",
-    "America/Havana",
-    "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Managua",
-    "America/Matamoros",
-    "America/Menominee",
-    "America/Merida",
-    "America/Mexico_City",
-    "America/Monterrey",
-    "America/North_Dakota/Beulah",
-    "America/North_Dakota/Center",
-    "America/North_Dakota/New_Salem",
-    "America/Rainy_River",
-    "America/Rankin_Inlet",
-    "America/Regina",
-    "America/Resolute",
-    "America/Swift_Current",
-    "America/Tegucigalpa",
-    "America/Winnipeg",
-    "Asia/Chongqing",
-    "Asia/Harbin",
-    "Asia/Kashgar",
-    "Asia/Macau",
-    "Asia/Shanghai",
-    "Asia/Taipei",
-    "Asia/Urumqi",
-    "Canada/Central",
-    "US/Central"
+  "CLST": [
+    "America/Santiago",
+    "Antarctica/Palmer"
   ],
-  "HST": [
-    "Pacific/Honolulu",
-    "Pacific/Johnston",
-    "US/Hawaii"
+  "PKST": [
+    "Asia/Karachi"
   ],
   "TLT": [
     "Asia/Dili"
@@ -859,6 +852,7 @@
   ],
   "PDT": [
     "America/Dawson",
+    "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Santa_Isabel",
     "America/Tijuana",
@@ -928,13 +922,9 @@
     "America/Swift_Current",
     "America/Tegucigalpa",
     "America/Winnipeg",
-    "Asia/Chongqing",
-    "Asia/Harbin",
-    "Asia/Kashgar",
     "Asia/Macau",
     "Asia/Shanghai",
     "Asia/Taipei",
-    "Asia/Urumqi",
     "Canada/Central",
     "US/Central"
   ],
@@ -969,7 +959,11 @@
     "America/Santarem",
     "America/Sao_Paulo"
   ],
+  "PETT": [
+    "Asia/Kamchatka"
+  ],
   "YAKT": [
+    "Asia/Chita",
     "Asia/Khandyga",
     "Asia/Yakutsk"
   ],
@@ -1005,6 +999,7 @@
     "Asia/Jayapura"
   ],
   "EDT": [
+    "America/Cayman",
     "America/Detroit",
     "America/Grand_Turk",
     "America/Indiana/Indianapolis",
@@ -1016,7 +1011,6 @@
     "America/Iqaluit",
     "America/Kentucky/Louisville",
     "America/Kentucky/Monticello",
-    "America/Montreal",
     "America/Nassau",
     "America/New_York",
     "America/Nipigon",
@@ -1061,6 +1055,7 @@
     "America/Dawson_Creek",
     "America/Denver",
     "America/Edmonton",
+    "America/Fort_Nelson",
     "America/Hermosillo",
     "America/Inuvik",
     "America/Mazatlan",
@@ -1092,6 +1087,7 @@
     "Africa/Maputo"
   ],
   "AEST": [
+    "Antarctica/Macquarie",
     "Australia/Brisbane",
     "Australia/Currie",
     "Australia/Hobart",
@@ -1101,15 +1097,46 @@
     "Australia/Sydney"
   ],
   "MSK": [
-    "Europe/Moscow"
+    "Europe/Minsk",
+    "Europe/Moscow",
+    "Europe/Simferopol",
+    "Europe/Volgograd"
   ],
-  "WST": [
-    "Antarctica/Casey",
-    "Pacific/Apia"
-  ],
-  "CLST": [
-    "America/Santiago",
-    "Antarctica/Palmer"
+  "CENTRAL": [
+    "America/Bahia_Banderas",
+    "America/Belize",
+    "America/Cancun",
+    "America/Chicago",
+    "America/Costa_Rica",
+    "America/El_Salvador",
+    "America/Guatemala",
+    "America/Havana",
+    "America/Indiana/Knox",
+    "America/Indiana/Petersburg",
+    "America/Indiana/Tell_City",
+    "America/Indiana/Vincennes",
+    "America/Indiana/Winamac",
+    "America/Managua",
+    "America/Matamoros",
+    "America/Menominee",
+    "America/Merida",
+    "America/Mexico_City",
+    "America/Monterrey",
+    "America/North_Dakota/Beulah",
+    "America/North_Dakota/Center",
+    "America/North_Dakota/New_Salem",
+    "America/Rainy_River",
+    "America/Rankin_Inlet",
+    "America/Regina",
+    "America/Resolute",
+    "America/Swift_Current",
+    "America/Tegucigalpa",
+    "America/Winnipeg",
+    "Asia/Macau",
+    "Asia/Shanghai",
+    "Asia/Taipei",
+    "Canada/Central",
+    "US/Central"
   ],
   "BDST": [
     "Asia/Dhaka"
@@ -1118,9 +1145,7 @@
     "Asia/Baku"
   ],
   "MSD": [
-    "Europe/Moscow"
-  ],
-  "VOLST": [
+    "Europe/Moscow",
     "Europe/Volgograd"
   ],
   "ACST": [
@@ -1140,6 +1165,7 @@
     "US/Alaska"
   ],
   "PGT": [
+    "Pacific/Bougainville",
     "Pacific/Port_Moresby"
   ],
   "GYT": [
@@ -1152,6 +1178,7 @@
     "Africa/Ceuta",
     "Africa/Tripoli",
     "Africa/Tunis",
+    "Antarctica/Troll",
     "Arctic/Longyearbyen",
     "Europe/Amsterdam",
     "Europe/Andorra",
@@ -1207,11 +1234,13 @@
     "Indian/Comoro",
     "Indian/Mayotte"
   ],
-  "PETT": [
-    "Asia/Kamchatka"
+  "UTC": [
+    "Antarctica/Troll",
+    "UTC"
   ],
   "EST": [
     "America/Atikokan",
+    "America/Cancun",
     "America/Cayman",
     "America/Detroit",
     "America/Grand_Turk",
@@ -1227,7 +1256,6 @@
     "America/Jamaica",
     "America/Kentucky/Louisville",
     "America/Kentucky/Monticello",
-    "America/Montreal",
     "America/Nassau",
     "America/New_York",
     "America/Nipigon",
@@ -1237,7 +1265,6 @@
     "America/Resolute",
     "America/Thunder_Bay",
     "America/Toronto",
-    "Antarctica/Macquarie",
     "Canada/Eastern",
     "US/Eastern"
   ],
@@ -1256,8 +1283,8 @@
   "WART": [
     "America/Argentina/San_Luis"
   ],
-  "VOLT": [
-    "Europe/Volgograd"
+  "ACWST": [
+    "Australia/Eucla"
   ],
   "AT": [
     "America/Anguilla",
@@ -1269,6 +1296,7 @@
     "America/Dominica",
     "America/Glace_Bay",
     "America/Goose_Bay",
+    "America/Grand_Turk",
     "America/Grenada",
     "America/Guadeloupe",
     "America/Halifax",
@@ -1289,7 +1317,6 @@
     "America/Thule",
     "America/Tortola",
     "Asia/Aden",
-    "Asia/Amman",
     "Asia/Baghdad",
     "Asia/Bahrain",
     "Asia/Kuwait",
@@ -1313,6 +1340,9 @@
     "Asia/Phnom_Penh",
     "Asia/Vientiane"
   ],
+  "SDT": [
+    "Pacific/Apia"
+  ],
   "PWT": [
     "Pacific/Palau"
   ],
@@ -1335,6 +1365,7 @@
   ],
   "WEST": [
     "Africa/Casablanca",
+    "Africa/El_Aaiun",
     "Atlantic/Canary",
     "Atlantic/Faroe",
     "Atlantic/Madeira",
