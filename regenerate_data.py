@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-"""Run this script when you upgrade pytz dependency and commit changes."""
+"""
+Run this script when you upgrade dependencies.
+Commit changes after the run.
+"""
 import sys
 
 sys.path.append('.')

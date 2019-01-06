@@ -143,6 +143,12 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
 
 Just run `python tests/__init__.py`
 
+#### Updates
+
+If any data needs updating, your first step should be to upgrade `pytz` and
+`pyzipcode` and then run `python regenerate_data.py`. If this doesn't fix the
+problem, consider opening an issue or adding an exception in `data_exceptions.py`.
+
 #### Known Issues
 
 * Australian Central Western Standard Time (CWST) is treated as Australian Central Standard Time (ACST). See [Australian anomalies](http://en.wikipedia.org/wiki/Time_in_Australia#Anomalies) for more details.
@@ -150,4 +156,3 @@ Just run `python tests/__init__.py`
 * The whole state of British Columbia (Canada) is recognized as Pacific Time, although a small portion of its south-east territory should be recognized as Mountain Time.
 * The whole state of Ontario (Canada) is recognized as Eastern Time, although a small portion of its west territory should be recognized as Central Time.
 * All +1 867 phone numbers are recognized as Mountain Time, although this prefix is shared by three Canadian territories in the Arctic far north, spanning across Pacific, Mountain, and Central Time.
-
