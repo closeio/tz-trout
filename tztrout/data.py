@@ -196,7 +196,10 @@ class TroutData(object):
         while dt.year > self.RECENT_YEARS_START:
             try:
                 tz_name = tz.tzname(dt)
-                if tz_name not in tz_names:
+
+                # Ignore TZ names that are really UTC offsets like "+01".
+                is_offset = tz_name.startswith('+') or tz_name.startswith('-')
+                if not is_offset and tz_name not in tz_names:
                     tz_names.append(tz_name)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
                 pass
@@ -290,7 +293,6 @@ class TroutData(object):
             # if we're thinking globally. Instead, we should use AWST, ACST,
             # AEST, etc.
             if id.startswith('Australia'):
-
                 tz_names = [au_map.get(tz_name, tz_name) for tz_name in tz_names]
 
             # Include the aliases in the map, too
