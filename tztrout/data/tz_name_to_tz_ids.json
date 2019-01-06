@@ -761,7 +761,6 @@
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
-    "Asia/Manila",
     "Canada/Pacific",
     "US/Pacific"
   ],
@@ -789,7 +788,6 @@
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
-    "Asia/Manila",
     "Canada/Pacific",
     "US/Pacific"
   ],
@@ -801,7 +799,6 @@
     "America/Tijuana",
     "America/Vancouver",
     "America/Whitehorse",
-    "Asia/Manila",
     "Canada/Pacific",
     "US/Pacific"
   ],
@@ -817,6 +814,9 @@
   "UTC": [
     "UTC"
   ],
+  "WAST": [
+    "Africa/Windhoek"
+  ],
   "WAT": [
     "Africa/Bangui",
     "Africa/Brazzaville",
@@ -829,16 +829,19 @@
     "Africa/Ndjamena",
     "Africa/Niamey",
     "Africa/Porto-Novo",
-    "Africa/Sao_Tome",
     "Africa/Windhoek"
   ],
   "WEST": [
+    "Africa/Casablanca",
+    "Africa/El_Aaiun",
     "Atlantic/Canary",
     "Atlantic/Faroe",
     "Atlantic/Madeira",
     "Europe/Lisbon"
   ],
   "WET": [
+    "Africa/Casablanca",
+    "Africa/El_Aaiun",
     "Atlantic/Canary",
     "Atlantic/Faroe",
     "Atlantic/Madeira",
