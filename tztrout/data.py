@@ -149,21 +149,15 @@ class TroutData(object):
 
     def _load_data(self, name, path):
         """ Helper method to load a data file. """
-        if os.path.exists(path):
-            with open(path, 'r') as file:
-                data = json.loads(file.read())
-                setattr(self, name, data)
-        else:
-            print "Data file is missing: %s" % path
+        with open(path, 'r') as file:
+            data = json.loads(file.read())
+            setattr(self, name, data)
 
     def _load_us_zipcode_data(self, name, path):
         dedupe = deduplicator()
-        if os.path.exists(path):
-            with open(path, 'r') as file:
-                data = pickle.loads(file.read())
-                setattr(self, name, {dedupe(single_k): dedupe(tuple(dedupe(tz) for tz in json.loads(v))) for k, v in data.items() for single_k in k})
-        else:
-            print "Data file is missing: %s" % path
+        with open(path, 'r') as file:
+            data = pickle.loads(file.read())
+            setattr(self, name, {dedupe(single_k): dedupe(tuple(dedupe(tz) for tz in json.loads(v))) for k, v in data.items() for single_k in k})
 
     def _get_latest_non_dst_offset(self, tz):
         """ Get the UTC offset for a given time zone identifier. Ignore the
