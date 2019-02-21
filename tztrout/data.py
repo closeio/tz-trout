@@ -1,4 +1,3 @@
-import cPickle as pickle
 import datetime
 import json
 import operator
@@ -13,7 +12,7 @@ from tztrout.data_exceptions import data_exceptions
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
-US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.pkl')
+US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.json')
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
 OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
@@ -156,8 +155,8 @@ class TroutData(object):
     def _load_us_zipcode_data(self, name, path):
         dedupe = deduplicator()
         with open(path, 'r') as file:
-            data = pickle.loads(file.read())
-            setattr(self, name, {dedupe(single_k): dedupe(tuple(dedupe(tz) for tz in json.loads(v))) for k, v in data.items() for single_k in k})
+            data = json.load(file)
+            setattr(self, name, {dedupe(k): dedupe(tuple(dedupe(tz) for tz in v)) for k, v in data.items()})
 
     def _get_latest_non_dst_offset(self, tz):
         """ Get the UTC offset for a given time zone identifier. Ignore the
