@@ -1,6 +1,5 @@
 import cPickle as pickle
 import datetime
-import dawg
 import json
 import operator
 import os
@@ -94,30 +93,6 @@ class InMemoryZipData(object):
 ZIP_DATA = InMemoryZipData()
 
 
-class JSONDawg(object):
-    """ Converts a dictionary into a read-only BytesDAWG for performance and
-    memory efficiency.
-    """
-
-    def __init__(self, doc):
-        # transform the key-value pairs into a (key, value) list
-        pairs = []
-        for key, val in doc.iteritems():
-            # convert complex objects into a string
-            pairs.append((key, bytes(val)))
-        self.data = dawg.BytesDAWG(pairs)
-
-    def get(self, key):
-        val = self.data.get(key)
-        if val is not None:
-            return json.loads(val[0])
-
-    def __getitem__(self, key):
-        val = self.data[key]
-        if val is not None:
-            return json.loads(val[0])
-
-
 class TroutData(object):
     """ Helper class that generates the JSON data used by TZTrout """
 
@@ -150,7 +125,7 @@ class TroutData(object):
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
         self.alias_list = reduce(operator.add, [v for v in self.tz_name_aliases.values()])
 
-    def _load_data(self, name, path, dawgify=False):
+    def _load_data(self, name, path):
         """ Helper method to load a data file. """
         if os.path.exists(path):
             with open(path, 'r') as file:
@@ -160,10 +135,11 @@ class TroutData(object):
             print "Data file is missing: %s" % path
 
     def _load_us_zipcode_data(self, name, path):
+        dedupe = deduplicator()
         if os.path.exists(path):
             with open(path, 'r') as file:
                 data = pickle.loads(file.read())
-                setattr(self, name, JSONDawg({single_k: v for k, v in data.items() for single_k in k}))
+                setattr(self, name, {dedupe(single_k): dedupe(tuple(dedupe(tz) for tz in json.loads(v))) for k, v in data.items() for single_k in k})
         else:
             print "Data file is missing: %s" % path
 

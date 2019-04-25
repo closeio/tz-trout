@@ -25,7 +25,6 @@ setup(
         'tztrout': ['data/*']
     },
     install_requires=[
-        'dawg',
         'phonenumbers>=8.3.0',
         'python-dateutil',
         'pytz',
