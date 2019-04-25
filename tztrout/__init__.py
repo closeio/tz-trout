@@ -37,7 +37,7 @@ def tz_ids_for_tz_name(tz_name):
     ids = td.tz_name_to_tz_ids.get(tz_name)
 
     # if the tz_name is just an alias, don't perform the fine-grained filtering
-    if tz_name in td.alias_list:
+    if tz_name in td.aliases:
         return ids
 
     valid_ids = []
@@ -131,7 +131,7 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
 
     if country == 'US':
         if zipcode:
-            if not isinstance(zipcode, basestring):
+            if isinstance(zipcode, int):
                 zipcode = str(zipcode)
 
             # If an extended zipcode in a form of XXXXX-XXXX is provided,

@@ -140,11 +140,12 @@ class TroutData(object):
         self._load_data('au_area_code_to_state', AU_AREA_CODE_TO_STATE_MAP_PATH)
 
         # convert string offsets into integers
-        self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.iteritems())
+        self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.items())
 
         # flatten the values of all tz name aliases (needed to identify which
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
-        self.alias_list = reduce(operator.add, [v for v in self.tz_name_aliases.values()])
+        print([v for v in self.tz_name_aliases.values()])
+        self.aliases = {alias for v in self.tz_name_aliases.values() for alias in v}
 
     def _load_data(self, name, path):
         """ Helper method to load a data file. """
@@ -277,7 +278,7 @@ class TroutData(object):
 
             tz_ids_to_zips[ids].append(zip.zip)
 
-        zips_to_tz_ids = {zip: ids for ids, zips in tz_ids_to_zips.iteritems() for zip in zips}
+        zips_to_tz_ids = {zip: ids for ids, zips in tz_ids_to_zips.items() for zip in zips}
 
         _dump_json_data(US_ZIPS_TO_TZ_IDS_MAP_PATH, zips_to_tz_ids)
 
