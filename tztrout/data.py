@@ -1,4 +1,3 @@
-import cPickle as pickle
 import datetime
 import json
 import operator
@@ -13,7 +12,7 @@ from tztrout.data_exceptions import data_exceptions
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
-US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.pkl')
+US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.json')
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
 OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
@@ -141,29 +140,24 @@ class TroutData(object):
         self._load_data('au_area_code_to_state', AU_AREA_CODE_TO_STATE_MAP_PATH)
 
         # convert string offsets into integers
-        self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.iteritems())
+        self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.items())
 
         # flatten the values of all tz name aliases (needed to identify which
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
-        self.alias_list = reduce(operator.add, [v for v in self.tz_name_aliases.values()])
+        print([v for v in self.tz_name_aliases.values()])
+        self.aliases = {alias for v in self.tz_name_aliases.values() for alias in v}
 
     def _load_data(self, name, path):
         """ Helper method to load a data file. """
-        if os.path.exists(path):
-            with open(path, 'r') as file:
-                data = json.loads(file.read())
-                setattr(self, name, data)
-        else:
-            print "Data file is missing: %s" % path
+        with open(path, 'r') as file:
+            data = json.loads(file.read())
+            setattr(self, name, data)
 
     def _load_us_zipcode_data(self, name, path):
         dedupe = deduplicator()
-        if os.path.exists(path):
-            with open(path, 'r') as file:
-                data = pickle.loads(file.read())
-                setattr(self, name, {dedupe(single_k): dedupe(tuple(dedupe(tz) for tz in json.loads(v))) for k, v in data.items() for single_k in k})
-        else:
-            print "Data file is missing: %s" % path
+        with open(path, 'r') as file:
+            data = json.load(file)
+            setattr(self, name, {dedupe(k): dedupe(tuple(dedupe(tz) for tz in v)) for k, v in data.items()})
 
     def _get_latest_non_dst_offset(self, tz):
         """ Get the UTC offset for a given time zone identifier. Ignore the
@@ -284,11 +278,9 @@ class TroutData(object):
 
             tz_ids_to_zips[ids].append(zip.zip)
 
-        zips_to_tz_ids = {tuple(zips): json.dumps(ids) for ids, zips in tz_ids_to_zips.iteritems()}
+        zips_to_tz_ids = {zip: ids for ids, zips in tz_ids_to_zips.items() for zip in zips}
 
-        file = open(US_ZIPS_TO_TZ_IDS_MAP_PATH , 'w')
-        file.write(pickle.dumps(zips_to_tz_ids))
-        file.close()
+        _dump_json_data(US_ZIPS_TO_TZ_IDS_MAP_PATH, zips_to_tz_ids)
 
     def generate_tz_name_to_tz_id_map(self):
         """ Generate the map of timezone names to time zone identifiers.
@@ -335,8 +327,9 @@ def _progressbar(lst):
     l = len(lst)
     for cnt, elem in enumerate(lst):
         yield elem
-        stdout.write('\r%d/%d' % (cnt + 1, l))
-        stdout.flush()
+        if cnt % 10 == 9:
+            stdout.write('\r%d/%d' % (cnt + 1, l))
+            stdout.flush()
 
 
 def _dump_json_data(path, data):
