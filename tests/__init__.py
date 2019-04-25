@@ -93,13 +93,13 @@ class TZTroutTestCase(unittest.TestCase):
     def test_ids_for_tz_name(self):
         pacific_ids = [
             u'America/Dawson',
+            u'America/Fort_Nelson',
             u'America/Los_Angeles',
-            u'America/Santa_Isabel',
+            u'America/Metlakatla',
             u'America/Tijuana',
             u'America/Vancouver',
             u'America/Whitehorse',
             u'Canada/Pacific',
-            u'Pacific/Pitcairn',
             u'US/Pacific'
         ]
         ids = tztrout.tz_ids_for_tz_name('PT')

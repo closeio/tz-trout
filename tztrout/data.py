@@ -11,7 +11,6 @@ from pyzipcode import ZipCodeDatabase, ZipCode
 
 from tztrout.data_exceptions import data_exceptions
 
-
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
 US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.pkl')
@@ -23,6 +22,29 @@ CA_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/ca_state_to_tz_ids.j
 CA_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/ca_area_code_to_state.json')
 AU_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/au_state_to_tz_ids.json')
 AU_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/au_area_code_to_state.json')
+
+# Australian TZ names are resolved as EST, WST, etc., which is ok for local
+# usage, but conflicts with the more common US TZ names if we're thinking
+# globally. We should use AWST, ACST, AEST, etc. instead.
+AU_MAP = {
+    'WST': 'AWST',
+    'CST': 'ACST',
+    'EST': 'AEST',
+    'CWST': 'AWST',
+    'LHST': 'AEST',
+    'WDT': 'AWDT',
+    'CDT': 'ACDT',
+    'EDT': 'AEDT',
+    'CWDT': 'AWDT',
+    'LHDT': 'AEDT'
+}
+
+# Asia/Manila is resolved as PST (Philippine Standard Time), which is ok for
+# local usage, but conflicts with the more common US PST (Pacific Standard
+# Time). We use PHT instead.
+ASIA_MAP = {
+    'PST': 'PHT',
+}
 
 
 def deduplicator():
@@ -196,7 +218,10 @@ class TroutData(object):
         while dt.year > self.RECENT_YEARS_START:
             try:
                 tz_name = tz.tzname(dt)
-                if tz_name not in tz_names:
+
+                # Ignore TZ names that are really UTC offsets like "+01".
+                is_offset = tz_name.startswith('+') or tz_name.startswith('-')
+                if not is_offset and tz_name not in tz_names:
                     tz_names.append(tz_name)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
                 pass
@@ -246,9 +271,8 @@ class TroutData(object):
         """
         zcdb = ZipCodeDatabase()
         zips = list(zcdb.find_zip())
-        zips_len = len(zips)
         tz_ids_to_zips = defaultdict(list)
-        for cnt, zip in enumerate(zips):
+        for zip in _progressbar(zips):
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
 
             # apply the data exceptions
@@ -260,9 +284,6 @@ class TroutData(object):
 
             tz_ids_to_zips[ids].append(zip.zip)
 
-            stdout.write('\r%d/%d' % (cnt + 1, zips_len))
-            stdout.flush()
-
         zips_to_tz_ids = {tuple(zips): json.dumps(ids) for ids, zips in tz_ids_to_zips.iteritems()}
 
         file = open(US_ZIPS_TO_TZ_IDS_MAP_PATH , 'w')
@@ -273,24 +294,17 @@ class TroutData(object):
         """ Generate the map of timezone names to time zone identifiers.
         """
         tz_name_ids = {}
-        tzs_len = len(pytz.common_timezones)
-        for cnt, id in enumerate(pytz.common_timezones):
+        for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
             tz_names = self._get_latest_tz_names(tz)
-
-            # Australian tz names are resolved as EST, WST, etc., which is ok
-            # for local usage, but conflicts with the more common US tz names
-            # if we're thinking globally. Instead, we should use AWST, ACST,
-            # AEST, etc.
             if id.startswith('Australia'):
-                au_map = {
-                    'WST': 'AWST',
-                    'CST': 'ACST',
-                    'EST': 'AEST',
-                    'CWST': 'AWST',
-                    'LHST': 'AEST'
-                }
-                tz_names = [au_map[tz_name] for tz_name in tz_names]
+                tz_names = [
+                    AU_MAP.get(tz_name, tz_name) for tz_name in tz_names
+                ]
+            if id.startswith('Asia'):
+                tz_names = [
+                    ASIA_MAP.get(tz_name, tz_name) for tz_name in tz_names
+                ]
 
             # Include the aliases in the map, too
             for name in tz_names:
@@ -302,28 +316,30 @@ class TroutData(object):
                 elif name not in tz_name_ids:
                     tz_name_ids[name] = [id]
 
-            stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
-            stdout.flush()
-
-        file = open(TZ_NAME_TO_TZ_IDS_MAP_PATH, 'w')
-        file.write(json.dumps(tz_name_ids))
-        file.close()
+        _dump_json_data(TZ_NAME_TO_TZ_IDS_MAP_PATH, tz_name_ids)
 
     def generate_offset_to_tz_id_map(self):
         """ Generate the map of UTC offsets to time zone identifiers.
         """
         offset_tz_ids = defaultdict(list)
-        tzs_len = len(pytz.common_timezones)
-        for cnt, id in enumerate(pytz.common_timezones):
+        for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
             offsets = self._get_latest_offsets(tz)
             for offset in offsets:
                 offset_tz_ids[offset].append(id)
 
-            stdout.write('\r%d/%d' % (cnt + 1, tzs_len))
-            stdout.flush()
+        _dump_json_data(OFFSET_TO_TZ_IDS_MAP_PATH, offset_tz_ids)
 
-        file = open(OFFSET_TO_TZ_IDS_MAP_PATH, 'w')
-        file.write(json.dumps(offset_tz_ids))
-        file.close()
+
+def _progressbar(lst):
+    l = len(lst)
+    for cnt, elem in enumerate(lst):
+        yield elem
+        stdout.write('\r%d/%d' % (cnt + 1, l))
+        stdout.flush()
+
+
+def _dump_json_data(path, data):
+    with open(path, 'w') as f:
+        json.dump(data, f, indent=2, sort_keys=True, separators=(',', ': '))
 
