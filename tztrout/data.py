@@ -277,11 +277,9 @@ class TroutData(object):
 
             tz_ids_to_zips[ids].append(zip.zip)
 
-        zips_to_tz_ids = {tuple(zips): json.dumps(ids) for ids, zips in tz_ids_to_zips.iteritems()}
+        zips_to_tz_ids = {zip: ids for ids, zips in tz_ids_to_zips.iteritems() for zip in zips}
 
-        file = open(US_ZIPS_TO_TZ_IDS_MAP_PATH , 'w')
-        file.write(pickle.dumps(zips_to_tz_ids))
-        file.close()
+        _dump_json_data(US_ZIPS_TO_TZ_IDS_MAP_PATH, zips_to_tz_ids)
 
     def generate_tz_name_to_tz_id_map(self):
         """ Generate the map of timezone names to time zone identifiers.
@@ -328,8 +326,9 @@ def _progressbar(lst):
     l = len(lst)
     for cnt, elem in enumerate(lst):
         yield elem
-        stdout.write('\r%d/%d' % (cnt + 1, l))
-        stdout.flush()
+        if cnt % 10 == 9:
+            stdout.write('\r%d/%d' % (cnt + 1, l))
+            stdout.flush()
 
 
 def _dump_json_data(path, data):
