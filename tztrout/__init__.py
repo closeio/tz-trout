@@ -138,7 +138,7 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
             # only use the first part
             zipcode = zipcode.split('-')[0]
 
-            return list(td.us_zip_to_tz_ids.get(zipcode))
+            return list(td.us_zip_to_tz_ids.get(zipcode, []))
         elif state or city:
             if city and 'city:%s' % city.lower() in data_exceptions:
                 return data_exceptions['city:%s' % city.lower()]['include']
@@ -146,12 +146,12 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
                 state = td.normalized_states['US'].get(state.lower(), state)
             code = ZIP_DATA.find_zip(city=city, state=state)
             if code:
-                return list(td.us_zip_to_tz_ids.get(code))
+                return list(td.us_zip_to_tz_ids.get(code, []))
             elif city and state:
                 # Couldn't find by city+state, try ignoring city
                 code = ZIP_DATA.find_zip(state=state)
                 if code:
-                    return list(td.us_zip_to_tz_ids.get(code))
+                    return list(td.us_zip_to_tz_ids.get(code, []))
     elif country == 'CA' and state:
         if len(state) != 2:
             state = td.normalized_states['CA'].get(state.lower(), state)
