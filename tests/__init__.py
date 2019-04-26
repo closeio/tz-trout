@@ -86,6 +86,10 @@ class TZTroutTestCase(unittest.TestCase):
         ids = tztrout.tz_ids_for_address('US', zipcode='94041-1191')
         self.assertEqual(ids, ['America/Los_Angeles'])
 
+        # Invalid zipcode returns empty list
+        ids = tztrout.tz_ids_for_address('US', zipcode='0000')
+        self.assertEqual(ids, [])
+
     def test_city_empty_string(self):
         ids = tztrout.tz_ids_for_address('US', state='California', city='')
         self.assertEqual(ids, ['America/Los_Angeles'])
