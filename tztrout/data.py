@@ -144,7 +144,6 @@ class TroutData(object):
 
         # flatten the values of all tz name aliases (needed to identify which
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
-        print([v for v in self.tz_name_aliases.values()])
         self.aliases = {alias for v in self.tz_name_aliases.values() for alias in v}
 
     def _load_data(self, name, path):
