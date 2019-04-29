@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tz-trout',
-    version='0.2.1',
+    version='0.2.2',
     url='http://github.com/closeio/tz-trout',
     license='MIT',
     author='Close.io',
