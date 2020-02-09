@@ -59,10 +59,9 @@ class TestTZTrout:
                 assert tz_id in ids
         else:
             assert tz_ids == ids
-
-class TZTroutTestCase(unittest.TestCase):
-
-    def test_ids_for_tz_name(self):
+    
+    @pytest.mark.parametrize('tz_name', ['PT', 'PACIFIC'])
+    def test_ids_for_tz_name(self, tz_name):
         pacific_ids = [
             u'America/Dawson',
             u'America/Fort_Nelson',
@@ -74,10 +73,10 @@ class TZTroutTestCase(unittest.TestCase):
             u'Canada/Pacific',
             u'US/Pacific'
         ]
-        ids = tztrout.tz_ids_for_tz_name('PT')
-        self.assertEqual(ids, pacific_ids)
-        ids = tztrout.tz_ids_for_tz_name('PACIFIC')
-        self.assertEqual(ids, pacific_ids)
+        ids = tztrout.tz_ids_for_tz_name(tz_name)
+        assert ids == pacific_ids
+
+class TZTroutTestCase(unittest.TestCase):
 
     def test_non_dst_offsets_for_phone(self):
         offsets = tztrout.non_dst_offsets_for_phone('+1 650 333 4444')
