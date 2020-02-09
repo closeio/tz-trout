@@ -75,15 +75,16 @@ class TestTZTrout:
         ]
         ids = tztrout.tz_ids_for_tz_name(tz_name)
         assert ids == pacific_ids
+    
+    @pytest.mark.parametrize('phone, result', [
+        ('+1 650 333 4444', [-8 * 60]),
+        ('+1 212 333 4444', [-5 * 60])
+    ])
+    def test_non_dst_offsets_for_phone(self, phone, result):
+        offsets = tztrout.non_dst_offsets_for_phone(phone)
+        assert offsets == result
 
 class TZTroutTestCase(unittest.TestCase):
-
-    def test_non_dst_offsets_for_phone(self):
-        offsets = tztrout.non_dst_offsets_for_phone('+1 650 333 4444')
-        self.assertEqual(offsets, [-8 * 60])
-
-        offsets = tztrout.non_dst_offsets_for_phone('+1 212 333 4444')
-        self.assertEqual(offsets, [-5 * 60])
 
     def test_non_dst_offsets_for_address(self):
         offsets = tztrout.non_dst_offsets_for_address('US', state='CA')
