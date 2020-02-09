@@ -19,14 +19,16 @@ class FakeDateTime(datetime.datetime):
     def set_utcnow(cls, dt):
         cls.dt = dt
 
+class TestTZTrout:
+    @pytest.mark.parametrize('phone, tz_ids', [
+        ('+1 (650) 333 4444', ['America/Los_Angeles']),
+        ('+48 601 941 311', ['Europe/Warsaw'])
+    ])
+    def test_ids_for_phone(self, phone, tz_ids):
+        ids = tztrout.tz_ids_for_phone(phone)
+        assert ids == tz_ids
 
 class TZTroutTestCase(unittest.TestCase):
-
-    def test_ids_for_phone(self):
-        ids = tztrout.tz_ids_for_phone('+1 (650) 333 4444')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_phone('+48 601 941 311')
-        self.assertEqual(ids, ['Europe/Warsaw'])
 
     def test_ids_for_address(self):
         ids = tztrout.tz_ids_for_address('US', state='California')
