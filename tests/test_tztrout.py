@@ -27,53 +27,35 @@ class TestTZTrout:
     def test_ids_for_phone(self, phone, tz_ids):
         ids = tztrout.tz_ids_for_phone(phone)
         assert ids == tz_ids
+    
+    @pytest.mark.parametrize('country, state, city, zipcode, tz_ids, assume_any_tz', [
+        ('US', 'California', None, None, ['America/Los_Angeles'], False),
+        ('US', 'CA', None, None, ['America/Los_Angeles'], False),
+        ('US', 'CA', '', None, ['America/Los_Angeles'], False),
+        ('US', 'CA', 'Palo Alto', None, ['America/Los_Angeles'], False),
+        ('US', '', 'Palo Alto', None, ['America/Los_Angeles'], False),
+        ('US', None, 'Palo Alto', None, ['America/Los_Angeles'], False),
+        ('US', '', '', None, ['America/Los_Angeles', 'America/New_York'], True),
+        ('US', None, None, None, ['America/Los_Angeles', 'America/New_York'], True),
+        ('PL', None, None, None, ['Europe/Warsaw'], False),
+        # Invalid state, assume any US tz
+        ('US', 'XX', None, None, ['America/Los_Angeles', 'America/New_York'], True),
+        ('US', 'XX', '', None, ['America/Los_Angeles', 'America/New_York'], True),
+        # Invalid city with state, ignore city
+        ('US', 'CA', 'XX', None, ['America/Los_Angeles'], False),
+        # Invalid city without state, assume any US tz
+        ('US', '', 'XX', None, ['America/Los_Angeles', 'America/New_York'], True),
+        ('US', None, 'XX', None, ['America/Los_Angeles', 'America/New_York'], True),    
+    ])
+    def test_ids_for_address(self, country, state, city, zipcode, tz_ids, assume_any_tz):
+        ids = tztrout.tz_ids_for_address(country, state=state, city=city, zipcode=zipcode)
+        if assume_any_tz:
+            for tz_id in tz_ids:
+                assert tz_id in ids
+        else:
+            assert tz_ids == ids
 
 class TZTroutTestCase(unittest.TestCase):
-
-    def test_ids_for_address(self):
-        ids = tztrout.tz_ids_for_address('US', state='California')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_address('US', state='CA')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_address('US', state='CA', city='')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_address('US', state='CA', city='Palo Alto')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_address('US', state='', city='Palo Alto')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_address('US', city='Palo Alto')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-
-        ids = tztrout.tz_ids_for_address('US', state='', city='')
-        self.assertTrue('America/Los_Angeles' in ids)
-        self.assertTrue('America/New_York' in ids)
-
-        ids = tztrout.tz_ids_for_address('US')
-        self.assertTrue('America/Los_Angeles' in ids)
-        self.assertTrue('America/New_York' in ids)
-
-        ids = tztrout.tz_ids_for_address('PL')
-        self.assertEqual(ids, ['Europe/Warsaw'])
-
-        # Invalid state, assume any US tz
-        ids = tztrout.tz_ids_for_address('US', state='XX')
-        self.assertTrue('America/Los_Angeles' in ids)
-        self.assertTrue('America/New_York' in ids)
-        ids = tztrout.tz_ids_for_address('US', state='XX', city='')
-        self.assertTrue('America/Los_Angeles' in ids)
-        self.assertTrue('America/New_York' in ids)
-
-        # Invalid city with state, ignore city
-        ids = tztrout.tz_ids_for_address('US', state='CA', city='XX')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-
-        # Invalid city without state, assume any US tz
-        ids = tztrout.tz_ids_for_address('US', state='', city='XX')
-        self.assertTrue('America/Los_Angeles' in ids)
-        self.assertTrue('America/New_York' in ids)
-        ids = tztrout.tz_ids_for_address('US', city='XX')
-        self.assertTrue('America/Los_Angeles' in ids)
-        self.assertTrue('America/New_York' in ids)
 
     def test_ids_for_address_with_zipcode(self):
         ids = tztrout.tz_ids_for_address('US', state='California', zipcode='94041')
