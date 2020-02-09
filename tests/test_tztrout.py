@@ -45,7 +45,12 @@ class TestTZTrout:
         ('US', 'CA', 'XX', None, ['America/Los_Angeles'], False),
         # Invalid city without state, assume any US tz
         ('US', '', 'XX', None, ['America/Los_Angeles', 'America/New_York'], True),
-        ('US', None, 'XX', None, ['America/Los_Angeles', 'America/New_York'], True),    
+        ('US', None, 'XX', None, ['America/Los_Angeles', 'America/New_York'], True),
+        ('US', 'California', None, '94041', ['America/Los_Angeles'], False),
+        ('US', None, None, '94041', ['America/Los_Angeles'], False),
+        ('US', None, None, 94041, ['America/Los_Angeles'], False),
+        ('US', None, None, '94041-1191', ['America/Los_Angeles'], False),
+        ('US', None, None, '0000', [], False),
     ])
     def test_ids_for_address(self, country, state, city, zipcode, tz_ids, assume_any_tz):
         ids = tztrout.tz_ids_for_address(country, state=state, city=city, zipcode=zipcode)
@@ -56,24 +61,6 @@ class TestTZTrout:
             assert tz_ids == ids
 
 class TZTroutTestCase(unittest.TestCase):
-
-    def test_ids_for_address_with_zipcode(self):
-        ids = tztrout.tz_ids_for_address('US', state='California', zipcode='94041')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-        ids = tztrout.tz_ids_for_address('US', zipcode='94041')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-
-        # make sure passing an int works, too
-        ids = tztrout.tz_ids_for_address('US', zipcode=94041)
-        self.assertEqual(ids, ['America/Los_Angeles'])
-
-        # make sure passing an extended zipcode works as well
-        ids = tztrout.tz_ids_for_address('US', zipcode='94041-1191')
-        self.assertEqual(ids, ['America/Los_Angeles'])
-
-        # Invalid zipcode returns empty list
-        ids = tztrout.tz_ids_for_address('US', zipcode='0000')
-        self.assertEqual(ids, [])
 
     def test_city_empty_string(self):
         ids = tztrout.tz_ids_for_address('US', state='California', city='')
