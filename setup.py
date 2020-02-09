@@ -31,6 +31,5 @@ setup(
         'pytz',
         'pyzipcode',
     ],
-    test_suite='tests',
-    tests_require=['mock'],
+    tests_require=['mock', 'pytest', 'pytest-cov'],
 )
