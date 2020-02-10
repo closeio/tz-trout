@@ -17,8 +17,8 @@ Vocabulary used in this library:
 #### Examples
 
 ```
->>> import tz_trout
->>> tz_trout.tz_ids_for_tz_name('PDT')  # ran during DST
+>>> import tztrout
+>>> tztrout.tz_ids_for_tz_name('PDT')  # ran during DST
 [
     u'America/Dawson',
     u'America/Los_Angeles',
@@ -29,23 +29,23 @@ Vocabulary used in this library:
     u'Canada/Pacific',
     u'US/Pacific'
 ]
->>> tz_trout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
+>>> tztrout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
 []
 ```
 
 ```
->>> tz_trout.tz_ids_for_phone('+16503334444')
+>>> tztrout.tz_ids_for_phone('+16503334444')
 [u'America/Los_Angeles']
->>> tz_trout.tz_ids_for_phone('+49 (0)711 400 40990')
+>>> tztrout.tz_ids_for_phone('+49 (0)711 400 40990')
 [u'Europe/Berlin', u'Europe/Busingen']
 ```
 
 ```
->>> tz_trout.tz_ids_for_address('US', state='CA')
+>>> tztrout.tz_ids_for_address('US', state='CA')
 [u'America/Los_Angeles']
->>> tz_trout.tz_ids_for_address('PL')
+>>> tztrout.tz_ids_for_address('PL')
 [u'Europe/Warsaw']
->>> tz_trout.tz_ids_for_address('CN')
+>>> tztrout.tz_ids_for_address('CN')
 [
     u'Asia/Shanghai',
     u'Asia/Harbin',
@@ -56,22 +56,22 @@ Vocabulary used in this library:
 ```
 
 ```
->>> tz_trout.local_time_for_phone('+1 (650) 333-4444')
+>>> tztrout.local_time_for_phone('+1 (650) 333-4444')
 datetime.datetime(2013, 9, 16, 17, 45, 43, 0000000, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
 
->>> tz_trout.local_time_for_phone('+48 601 941 311)
+>>> tztrout.local_time_for_phone('+48 601 941 311)
 datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/Warsaw' CEST+2:00:00 DST>)
 ```
 
 ```
->>> tz_trout.local_time_for_address('US', state='CA')
+>>> tztrout.local_time_for_address('US', state='CA')
 datetime.datetime(2013, 9, 16, 17, 45, 43, 0000000, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
->>> tz_trout.local_time_for_address('PL')
+>>> tztrout.local_time_for_address('PL')
 datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/Warsaw' CEST+2:00:00 DST>)
 ```
 
 ```
->>> tz_trout.tz_ids_for_offset(-7 * 60)  # during DST
+>>> tztrout.tz_ids_for_offset(-7 * 60)  # during DST
 [
     u'America/Creston',
     u'America/Dawson',
@@ -87,7 +87,7 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
     u'US/Arizona',
     u'US/Pacific'
 ]
->>> tz_trout.tz_ids_for_offset(+2 * 60)  # during DST
+>>> tztrout.tz_ids_for_offset(+2 * 60)  # during DST
 [
     "Africa/Blantyre",
     "Africa/Bujumbura",
@@ -141,7 +141,7 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
 
 #### Testing
 
-Just run `python tests/__init__.py`
+Just run `pytest`
 
 #### Updates
 
