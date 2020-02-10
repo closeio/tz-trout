@@ -207,6 +207,18 @@ class TestTZTrout:
             else:
                 self.assert_only_one_tz(ids2, tz_name, us_ca_tz_names)
         self.assert_only_one_tz(ids, tz_name, us_ca_tz_names)
+    
+    def test_canada_without_state_info(self):
+        ids = tztrout.tz_ids_for_address('CA')
+        print(ids)
+        expected_ids = [
+            "America/Whitehorse", "America/Vancouver", "America/Yellowknife",
+            "America/Edmonton", "America/Regina", "America/Winnipeg",
+            "America/Iqaluit", "America/Toronto", #"America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
+            "America/Moncton", "America/Halifax", "America/St_Johns"
+        ]
+        for tz_id in expected_ids:
+            assert tz_id in ids
         
 
 class TZTroutTestCase(unittest.TestCase):
@@ -221,17 +233,6 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
         for other_name in tz_names:
             self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-
-    def test_canada_without_state_info(self):
-        ids = tztrout.tz_ids_for_address('CA')
-        expected_ids = [
-            "America/Whitehorse", "America/Vancouver", "America/Yellowknife",
-            "America/Edmonton", "America/Regina", "America/Winnipeg",
-            "America/Iqaluit", "America/Toronto", #"America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
-            "America/Moncton", "America/Halifax", "America/St_Johns"
-        ]
-        for tz_id in expected_ids:
-            self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
 
     def assert_only_one_au_tz(self, ids, tz_name):
         """ Assert that a given set of timezone ids only matches one tz name
