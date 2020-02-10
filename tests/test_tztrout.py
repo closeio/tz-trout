@@ -20,6 +20,25 @@ class FakeDateTime(datetime.datetime):
         cls.dt = dt
 
 class TestTZTrout:
+    
+    def assert_only_one_tz(self, ids, tz_name, tz_names):
+         """ Assert that a given set of timezone ids only matches one tz name
+         in a given set of tz names
+         """
+         assert tz_name in tz_names
+         tz_names.remove(tz_name)
+         assert (set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
+         for other_name in tz_names:
+             assert not (set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
+
+    @pytest.fixture
+    def us_ca_tz_names(self):
+        return ['PT', 'MT', 'CT', 'ET', 'AT']
+    
+    @pytest.fixture 
+    def au_tz_names(self):
+        return ['AWT', 'ACT', 'AET']
+        
     @pytest.mark.parametrize('phone, tz_ids', [
         ('+1 (650) 333 4444', ['America/Los_Angeles']),
         ('+48 601 941 311', ['Europe/Warsaw'])
@@ -137,19 +156,22 @@ class TestTZTrout:
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
         offset_ranges = tztrout.offset_ranges_for_local_time(range_start, range_end)
         assert offset_ranges == result
+    
+    @pytest.mark.parametrize('country, state, city, phones, tz_name', [
+        # United States -- Special cases to make sure ET is not counted as part of state timezone
+        ('US', 'WI', None, ['+14143334444'], 'CT'),
+        ('US', 'TX', None, ['+12143334444'], 'CT')
+        
+    ])
+    def test_major_cities_us_ca(self, country, state, city, phones, tz_name, us_ca_tz_names):
+        ids = tztrout.tz_ids_for_address(country, state=state, city=city)
+        for phone in phones:
+            ids2 = tztrout.tz_ids_for_phone(phone)
+            assert ids == ids2
+        self.assert_only_one_tz(ids, tz_name, us_ca_tz_names)
+        
 
 class TZTroutTestCase(unittest.TestCase):
-
-    def test_wisconsin(self):
-        """ Make sure WI is not counted as part of ET. """
-
-        ids = tztrout.tz_ids_for_address('US', state='WI')
-        ids2 = tztrout.tz_ids_for_address('US', state='Wisconsin')
-        ids3 = tztrout.tz_ids_for_phone('+14143334444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
-        self.assert_only_one_us_tz(ids, 'CT')
 
     def assert_only_one_us_tz(self, ids, tz_name):
         """ Assert that a given set of timezone ids only matches one tz name
@@ -161,17 +183,6 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
         for other_name in tz_names:
             self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-
-    def test_texas(self):
-        """ Make sure TX is not counted as part of ET. """
-
-        ids = tztrout.tz_ids_for_address('US', state='TX')
-        ids2 = tztrout.tz_ids_for_address('US', state='Texas')
-        ids3 = tztrout.tz_ids_for_phone('+12143334444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertTrue(all(['Indiana' not in tz_id for tz_id in ids]))
-        self.assert_only_one_us_tz(ids, 'CT')
 
     def test_major_cities_us(self):
         """ Make sure all the major cities match the right time zone (and the
