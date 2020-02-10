@@ -91,81 +91,54 @@ class TestTZTrout:
     def test_non_dst_offsets_for_address(self, state, result):
         offsets = tztrout.non_dst_offsets_for_address('US', state=state)
         assert offsets == result
-
-class TZTroutTestCase(unittest.TestCase):
-
+    
     @patch('datetime.datetime', FakeDateTime)
-    def test_offset_ranges_for_9_to_5(self):
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
+    @pytest.mark.parametrize('hour_now, range_start, range_end, result', [
+        (20, datetime.time(9), datetime.time(17), [
             [-11 * 60, -3 * 60],
             [13 * 60, 14 * 60]
-        ])
-
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1))  # 12am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (0, datetime.time(9), datetime.time(17), [
             [9 * 60, 14 * 60],
             [-14 * 60, -7 * 60]
-        ])
-
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 4))  # 4am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (4, datetime.time(9), datetime.time(17), [
             [5 * 60, 13 * 60],
             [-14 * 60, -11 * 60]
-        ])
-
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 7))  # 7am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (7, datetime.time(9), datetime.time(17), [
             [2 * 60, 10 * 60],
-        ])
-
-    @patch('datetime.datetime', FakeDateTime)
-    def test_offset_ranges_for_5_to_9(self):
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (20, datetime.time(17), datetime.time(9), [
             [-3 * 60, 13 * 60],
             [-14 * 60, -11 * 60]
-        ])
-
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1))  # 12am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (0, datetime.time(17), datetime.time(9), [
             [-7 * 60, 9 * 60],
-        ])
-
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 4))  # 4am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (4, datetime.time(17), datetime.time(9), [
             [13 * 60, 14 * 60],
             [-11 * 60, 5 * 60]
-        ])
-
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 7))  # 7am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
+        ]),
+        (7, datetime.time(17), datetime.time(9), [
             [10 * 60, 14 * 60],
             [-14 * 60, 2 * 60]
-        ])
-
-    @patch('datetime.datetime', FakeDateTime)
-    def test_offset_ranges_for_parsed_time(self):
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time('9am', '5 pm')
-        self.assertEqual(offset_ranges, [
+        ]),
+        (20, '9am', '5pm', [
+            [-11 * 60, -3 * 60],
+            [13 * 60, 14 * 60]
+        ]),
+        (20, '9:00', '17:00', [
             [-11 * 60, -3 * 60],
             [13 * 60, 14 * 60]
         ])
+    ])
+    def test_offset_ranges(self, hour_now, range_start, range_end, result):
+        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
+        offset_ranges = tztrout.offset_ranges_for_local_time(range_start, range_end)
+        assert offset_ranges == result
 
-        offset_ranges = tztrout.offset_ranges_for_local_time('9:00', '17:00')
-        self.assertEqual(offset_ranges, [
-            [-11 * 60, -3 * 60],
-            [13 * 60, 14 * 60]
-        ])
+class TZTroutTestCase(unittest.TestCase):
 
     def test_wisconsin(self):
         """ Make sure WI is not counted as part of ET. """
