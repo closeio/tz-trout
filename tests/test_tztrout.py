@@ -185,6 +185,7 @@ class TestTZTrout:
         ('US', 'TN', 'Memphis', ['+19013334444'], 'CT', False),
         ('US', 'CO', 'Denver', ['+13033334444'], 'MT', True),
         ('US', 'DC', 'Washington', ['+12023334444'], 'ET', False),
+        # Canada
         ('CA', 'ON', 'Toronto', ['+14163334444'], 'ET', False),
         ('CA', 'QC', 'Montreal', ['+15143334444'], 'ET', False),
         ('CA', 'AB', 'Calgary', ['+14033334444'], 'MT', False),
@@ -197,7 +198,7 @@ class TestTZTrout:
         ('CA', 'SK', 'Saskatoon', ['+13063334444'], 'CT', False), 
     ])
     def test_major_cities_us_ca(self, country, state, city, phones, tz_name, assert_ids_equal, us_ca_tz_names):
-        """ Make sure all the major cities in the United States and Canada the right time zone 
+        """ Make sure all the major cities in the United States and Canada match the right time zone 
         (and the right time zone only). """
         ids = tztrout.tz_ids_for_address(country, state=state, city=city)
         for phone in phones:
@@ -220,6 +221,36 @@ class TestTZTrout:
         for tz_id in expected_ids:
             assert tz_id in ids
     
+    @pytest.mark.parametrize('state, city, phones, tz_name', [
+    
+        # NSW - New South Wales
+        # WA - Western Australia
+        # NT - Northern Territory
+        # SA - South Australia
+        # TAS - Tasmania
+        # VIC - Victoria
+        # ACT - Australian Capital Territory
+        # QLD - Queensland
+        
+        ('NSW', 'Sydney', ['+61 27 333 4444', '+61 28 333 4444', '+61 29 333 4444'], 'AET'),
+        ('WA', 'Perth', ['+61 852 22 4444', '+61 853 22 4444', '+61 854 22 4444', '+61 861 22 4444', '+61 862 22 4444', '+61 863 22 4444', '+61 864 22 4444', '+61 865 22 4444'], 'AWT'),
+        ('NT', 'Darwin', ['+61 879 22 4444', '+61 889 22 4444'], 'ACT'),
+        ('SA', 'Adelaide', ['+61 870 22 4444', '+61 871 22 4444', '+61 872 22 4444', '+61 873 22 4444', '+61 874 22 4444', '+61 881 22 4444', '+61 882 22 4444', '+61 883 22 4444', '+61 884 22 4444'], 'ACT'),
+        ('TAS', 'Hobart', ['+61 361 22 4444', '+61 362 22 4444'], 'AET'),
+        ('VIC', 'Melbourne', ['+61 37 333 4444', '+61 38 333 4444', '+61 39 333 4444'], 'AET'),
+        ('ACT', 'Canberra', ['+61 251 22 4444', '+61 252 22 4444', '+61 261 22 4444', '+61 262 22 4444'], 'AET'),
+        ('QLD', 'Brisbane', ['+61 72 333 4444', '+61 73 333 4444'], 'AET'),
+        ('QLD', 'Townsville', ['+61 744 22 4444', '+61 745 22 4444', '+61 777 22 4444'], 'AET'),
+    ])
+    def test_major_cities_australia(self, state, city, phones, tz_name, au_tz_names):
+        """ Make sure all the major cities in Australia match the right time zone 
+        (and the right time zone only). """
+        ids = tztrout.tz_ids_for_address('AU', state=state, city=city)
+        for phone in phones:
+            ids2 = tztrout.tz_ids_for_phone(phone)
+            assert ids == ids2
+        self.assert_only_one_tz(ids, tz_name, au_tz_names)
+        
     def test_australia_without_state_info(self):
         ids = tztrout.tz_ids_for_address('AU')
         expected_ids = ["Australia/Sydney", "Australia/Perth", "Australia/Darwin",
@@ -232,153 +263,6 @@ class TestTZTrout:
         
 
 class TZTroutTestCase(unittest.TestCase):
-
-    def assert_only_one_us_tz(self, ids, tz_name):
-        """ Assert that a given set of timezone ids only matches one tz name
-        in North America.
-        """
-        tz_names = ['PT', 'MT', 'CT', 'ET', 'AT']
-        self.assertTrue(tz_name in tz_names)
-        tz_names.remove(tz_name)
-        self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
-        for other_name in tz_names:
-            self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-
-    def assert_only_one_au_tz(self, ids, tz_name):
-        """ Assert that a given set of timezone ids only matches one tz name
-        in Australia.
-        """
-        tz_names = ['AWT', 'ACT', 'AET']
-        self.assertTrue(tz_name in tz_names)
-        tz_names.remove(tz_name)
-        self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
-        for other_name in tz_names:
-            self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-
-    def test_major_cities_australia(self):
-
-        # NSW - New South Wales
-        # WA - Western Australia
-        # NT - Northern Territory
-        # SA - South Australia
-        # TAS - Tasmania
-        # VIC - Victoria
-        # ACT - Australian Capital Territory
-        # QLD - Queensland
-
-        # Sydney, NSW
-        ids = tztrout.tz_ids_for_address('AU', state='NSW', city='Sydney')
-        ids2 = tztrout.tz_ids_for_phone('+61 27 333 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 28 333 4444')
-        ids4 = tztrout.tz_ids_for_phone('+61 29 333 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertEqual(ids, ids4)
-        self.assert_only_one_au_tz(ids, 'AET')
-
-        # Perth, WA
-        ids = tztrout.tz_ids_for_address('AU', state='WA', city='Perth')
-        ids2 = tztrout.tz_ids_for_phone('+61 852 22 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 853 22 4444')
-        ids4 = tztrout.tz_ids_for_phone('+61 854 22 4444')
-        ids5 = tztrout.tz_ids_for_phone('+61 861 22 4444')
-        ids6 = tztrout.tz_ids_for_phone('+61 862 22 4444')
-        ids7 = tztrout.tz_ids_for_phone('+61 863 22 4444')
-        ids8 = tztrout.tz_ids_for_phone('+61 864 22 4444')
-        ids9 = tztrout.tz_ids_for_phone('+61 865 22 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertEqual(ids, ids4)
-        self.assertEqual(ids, ids5)
-        self.assertEqual(ids, ids6)
-        self.assertEqual(ids, ids7)
-        self.assertEqual(ids, ids8)
-        self.assertEqual(ids, ids9)
-        self.assert_only_one_au_tz(ids, 'AWT')
-
-        # Darwin, NT
-        ids = tztrout.tz_ids_for_address('AU', state='NT', city='Darwin')
-        ids2 = tztrout.tz_ids_for_phone('+61 879 22 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 889 22 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assert_only_one_au_tz(ids, 'ACT')
-
-        # Eucla, WA - ignore for now
-        # "Eucla and the surrounding area, notably Mundrabilla and Madura, use
-        # the Central Western Time Zone of UTC+8:45. Although it has no official
-        # sanction, it is universally observed in this area, stopping just to
-        # the east of Caiguna.
-
-        # Adelaide, SA
-        ids = tztrout.tz_ids_for_address('AU', state='SA', city='Adelaide')
-        ids2 = tztrout.tz_ids_for_phone('+61 870 22 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 871 22 4444')
-        ids4 = tztrout.tz_ids_for_phone('+61 872 22 4444')
-        ids5 = tztrout.tz_ids_for_phone('+61 873 22 4444')
-        ids6 = tztrout.tz_ids_for_phone('+61 874 22 4444')
-        ids7 = tztrout.tz_ids_for_phone('+61 881 22 4444')
-        ids8 = tztrout.tz_ids_for_phone('+61 882 22 4444')
-        ids9 = tztrout.tz_ids_for_phone('+61 883 22 4444')
-        ids10 = tztrout.tz_ids_for_phone('+61 884 22 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertEqual(ids, ids4)
-        self.assertEqual(ids, ids5)
-        self.assertEqual(ids, ids6)
-        self.assertEqual(ids, ids7)
-        self.assertEqual(ids, ids8)
-        self.assertEqual(ids, ids9)
-        self.assertEqual(ids, ids10)
-        self.assert_only_one_au_tz(ids, 'ACT')
-
-        # Hobart, TAS
-        ids = tztrout.tz_ids_for_address('AU', state='TAS', city='Hobart')
-        ids2 = tztrout.tz_ids_for_phone('+61 361 22 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 362 22 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assert_only_one_au_tz(ids, 'AET')
-
-        # Melbourne, VIC
-        ids = tztrout.tz_ids_for_address('AU', state='VIC', city='Melbourne')
-        ids2 = tztrout.tz_ids_for_phone('+61 37 333 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 38 333 4444')
-        ids4 = tztrout.tz_ids_for_phone('+61 39 333 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertEqual(ids, ids4)
-        self.assert_only_one_au_tz(ids, 'AET')
-
-        # Canberra, ACT
-        ids = tztrout.tz_ids_for_address('AU', state='ACT', city='Canberra')
-        ids2 = tztrout.tz_ids_for_phone('+61 251 22 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 252 22 4444')
-        ids4 = tztrout.tz_ids_for_phone('+61 261 22 4444')
-        ids5 = tztrout.tz_ids_for_phone('+61 262 22 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertEqual(ids, ids4)
-        self.assertEqual(ids, ids5)
-        self.assert_only_one_au_tz(ids, 'AET')
-
-        # Brisbane, QLD
-        ids = tztrout.tz_ids_for_address('AU', state='QLD', city='Brisbane')
-        ids2 = tztrout.tz_ids_for_phone('+61 72 333 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 73 333 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assert_only_one_au_tz(ids, 'AET')
-
-        # Townsville, QLD
-        ids = tztrout.tz_ids_for_address('AU', state='QLD', city='Brisbane')
-        ids2 = tztrout.tz_ids_for_phone('+61 744 22 4444')
-        ids3 = tztrout.tz_ids_for_phone('+61 745 22 4444')
-        ids4 = tztrout.tz_ids_for_phone('+61 777 22 4444')
-        self.assertEqual(ids, ids2)
-        self.assertEqual(ids, ids3)
-        self.assertEqual(ids, ids4)
-        self.assert_only_one_au_tz(ids, 'AET')
 
     @patch('datetime.datetime', FakeDateTime)
     def test_local_time_in_spain(self):
