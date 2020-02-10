@@ -303,7 +303,6 @@ class TestTZTrout:
 
     def test_canada_without_state_info(self):
         ids = tztrout.tz_ids_for_address('CA')
-        print(ids)
         expected_ids = [
             "America/Whitehorse",
             "America/Vancouver",
