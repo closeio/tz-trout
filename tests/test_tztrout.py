@@ -184,7 +184,17 @@ class TestTZTrout:
         ('US', 'TX', 'El Paso', ['+19153334444'], 'MT', False),
         ('US', 'TN', 'Memphis', ['+19013334444'], 'CT', False),
         ('US', 'CO', 'Denver', ['+13033334444'], 'MT', True),
-        ('US', 'DC', 'Washington', ['+12023334444'], 'ET', False),    
+        ('US', 'DC', 'Washington', ['+12023334444'], 'ET', False),
+        ('CA', 'ON', 'Toronto', ['+14163334444'], 'ET', False),
+        ('CA', 'QC', 'Montreal', ['+15143334444'], 'ET', False),
+        ('CA', 'AB', 'Calgary', ['+14033334444'], 'MT', False),
+        ('CA', 'ON', 'Ottawa', ['+13433334444', '+16133334444'], 'ET', False),
+        ('CA', 'AB', 'Edmonton', ['+17803334444'], 'MT', False),
+        ('CA', 'ON', 'Mississauga', ['+12893334444'], 'ET', False),
+        ('CA', 'MB', 'Winnipeg', ['+14313334444'], 'CT', False),
+        ('CA', 'BC', 'Vancouver', ['+16043334444'], 'PT', False),
+        ('CA', 'NS', 'Halifax', ['+19023334444'], 'AT', False),
+        ('CA', 'SK', 'Saskatoon', ['+13063334444'], 'CT', False), 
     ])
     def test_major_cities_us_ca(self, country, state, city, phones, tz_name, assert_ids_equal, us_ca_tz_names):
         """ Make sure all the major cities in the United States and Canada the right time zone 
@@ -211,72 +221,6 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
         for other_name in tz_names:
             self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-
-    def test_major_cities_canada(self):
-        """ Make sure all the major cities match the right time zone (and the
-        right time zone only). """
-
-        # Toronto, Ontario
-        ids = tztrout.tz_ids_for_address('CA', state='ON', city='Toronto')
-        ids2 = tztrout.tz_ids_for_phone('+14163334444')
-        self.assert_only_one_us_tz(ids, 'ET')
-        self.assert_only_one_us_tz(ids2, 'ET')
-
-        # Montreal, Quebec
-        ids = tztrout.tz_ids_for_address('CA', state='QC', city='Montreal')
-        ids2 = tztrout.tz_ids_for_phone('+15143334444')
-        self.assert_only_one_us_tz(ids, 'ET')
-        self.assert_only_one_us_tz(ids2, 'ET')
-
-        # Calgary, Alberta
-        ids = tztrout.tz_ids_for_address('CA', state='AB', city='Calgary')
-        ids2 = tztrout.tz_ids_for_phone('+14033334444')
-        self.assert_only_one_us_tz(ids, 'MT')
-        self.assert_only_one_us_tz(ids2, 'MT')
-
-        # Ottawa, Ontario
-        ids = tztrout.tz_ids_for_address('CA', state='ON', city='Ottawa')
-        ids2 = tztrout.tz_ids_for_phone('+13433334444')
-        ids3 = tztrout.tz_ids_for_phone('+16133334444')
-        self.assert_only_one_us_tz(ids, 'ET')
-        self.assert_only_one_us_tz(ids2, 'ET')
-        self.assert_only_one_us_tz(ids3, 'ET')
-
-        # Edmonton, Alberta
-        ids = tztrout.tz_ids_for_address('CA', state='AB', city='Edmonton')
-        ids2 = tztrout.tz_ids_for_phone('+17803334444')
-        self.assert_only_one_us_tz(ids, 'MT')
-        self.assert_only_one_us_tz(ids2, 'MT')
-
-        # Mississauga, Ontario
-        ids = tztrout.tz_ids_for_address('CA', state='ON', city='Mississauga')
-        ids2 = tztrout.tz_ids_for_phone('+12893334444')
-        self.assert_only_one_us_tz(ids, 'ET')
-        self.assert_only_one_us_tz(ids2, 'ET')
-
-        # Winnipeg, Manitoba
-        ids = tztrout.tz_ids_for_address('CA', state='MB', city='Winnipeg')
-        ids2 = tztrout.tz_ids_for_phone('+14313334444')
-        self.assert_only_one_us_tz(ids, 'CT')
-        self.assert_only_one_us_tz(ids2, 'CT')
-
-        # Vancouver, British Columbia
-        ids = tztrout.tz_ids_for_address('CA', state='BC', city='Vancouver')
-        ids2 = tztrout.tz_ids_for_phone('+16043334444')
-        self.assert_only_one_us_tz(ids, 'PT')
-        self.assert_only_one_us_tz(ids2, 'PT')
-
-        # Halifax, Nova Scotia
-        ids = tztrout.tz_ids_for_address('CA', state='NS', city='Halifax')
-        ids2 = tztrout.tz_ids_for_phone('+19023334444')
-        self.assert_only_one_us_tz(ids, 'AT')
-        self.assert_only_one_us_tz(ids2, 'AT')
-
-        # Saskatoon, Saskatchewan - CT that doesn't observe DST
-        ids = tztrout.tz_ids_for_address('CA', state='SK', city='Saskatoon')
-        ids2 = tztrout.tz_ids_for_phone('+13063334444')
-        self.assert_only_one_us_tz(ids, 'CT')
-        self.assert_only_one_us_tz(ids2, 'CT')
 
     def test_canada_without_state_info(self):
         ids = tztrout.tz_ids_for_address('CA')
