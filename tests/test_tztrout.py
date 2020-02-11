@@ -36,22 +36,6 @@ class TestTZTrout:
         for other_name in tz_names_copy:
             assert not (set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
 
-    @pytest.mark.parametrize('tz_name', ['PT', 'PACIFIC'])
-    def test_ids_for_tz_name(self, tz_name):
-        pacific_ids = [
-            u'America/Dawson',
-            u'America/Fort_Nelson',
-            u'America/Los_Angeles',
-            u'America/Metlakatla',
-            u'America/Tijuana',
-            u'America/Vancouver',
-            u'America/Whitehorse',
-            u'Canada/Pacific',
-            u'US/Pacific',
-        ]
-        ids = tztrout.tz_ids_for_tz_name(tz_name)
-        assert ids == pacific_ids
-
     @pytest.mark.parametrize(
         'country, state, city, phones, tz_name, assert_ids_equal',
         [
@@ -214,7 +198,6 @@ class TestTZTrout:
             ids2 = tztrout.tz_ids_for_phone(phone)
             assert ids == ids2
         self.assert_only_one_tz(ids, tz_name, au_tz_names)
-
     
 class TestTZIdsForPhone:
     @pytest.mark.parametrize(
@@ -352,8 +335,26 @@ class TestTZIdsForAddress:
         ]
         for tz_id in expected_ids:
             assert tz_id in ids
-            
-            
+
+
+class TestTZIdsForTZName:
+    @pytest.mark.parametrize('tz_name', ['PT', 'PACIFIC'])
+    def test_ids_for_tz_name(self, tz_name):
+        pacific_ids = [
+            u'America/Dawson',
+            u'America/Fort_Nelson',
+            u'America/Los_Angeles',
+            u'America/Metlakatla',
+            u'America/Tijuana',
+            u'America/Vancouver',
+            u'America/Whitehorse',
+            u'Canada/Pacific',
+            u'US/Pacific',
+        ]
+        ids = tztrout.tz_ids_for_tz_name(tz_name)
+        assert ids == pacific_ids
+        
+        
 class TestLocalTimeForAddress:
     @patch('datetime.datetime', FakeDateTime)
     def test_local_time_in_spain(self):
