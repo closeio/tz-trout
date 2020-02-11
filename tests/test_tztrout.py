@@ -128,24 +128,6 @@ class TestTZTrout:
                 self.assert_only_one_tz(ids2, tz_name, us_ca_tz_names)
         self.assert_only_one_tz(ids, tz_name, us_ca_tz_names)
 
-    def test_canada_without_state_info(self):
-        ids = tztrout.tz_ids_for_address('CA')
-        expected_ids = [
-            "America/Whitehorse",
-            "America/Vancouver",
-            "America/Yellowknife",
-            "America/Edmonton",
-            "America/Regina",
-            "America/Winnipeg",
-            "America/Iqaluit",
-            "America/Toronto",  # "America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
-            "America/Moncton",
-            "America/Halifax",
-            "America/St_Johns",
-        ]
-        for tz_id in expected_ids:
-            assert tz_id in ids
-
     @pytest.mark.parametrize(
         'state, city, phones, tz_name',
         [
@@ -233,23 +215,7 @@ class TestTZTrout:
             assert ids == ids2
         self.assert_only_one_tz(ids, tz_name, au_tz_names)
 
-    def test_australia_without_state_info(self):
-        ids = tztrout.tz_ids_for_address('AU')
-        expected_ids = [
-            "Australia/Sydney",
-            "Australia/Perth",
-            "Australia/Darwin",
-            "Australia/Adelaide",
-            "Australia/Darwin",
-            "Australia/Adelaide",
-            "Australia/Hobart",
-            "Australia/Melbourne",
-            "Australia/Sydney",
-            "Australia/Brisbane",
-        ]
-        for tz_id in expected_ids:
-            assert tz_id in ids
-
+    
 class TestTZIdsForPhone:
     @pytest.mark.parametrize(
         'phone, tz_ids',
@@ -262,7 +228,8 @@ class TestTZIdsForPhone:
         ids = tztrout.tz_ids_for_phone(phone)
         assert ids == tz_ids
 
-class  TestTZIdsForAddress:
+
+class TestTZIdsForAddress:
     @pytest.mark.parametrize(
         'country, state, city, zipcode, expected_tz_ids, is_exact_match',
         [
@@ -350,7 +317,43 @@ class  TestTZIdsForAddress:
         else:
             for tz_id in expected_tz_ids:
                 assert tz_id in ids
+    
+    def test_australia_without_state_info(self):
+        ids = tztrout.tz_ids_for_address('AU')
+        expected_ids = [
+            "Australia/Sydney",
+            "Australia/Perth",
+            "Australia/Darwin",
+            "Australia/Adelaide",
+            "Australia/Darwin",
+            "Australia/Adelaide",
+            "Australia/Hobart",
+            "Australia/Melbourne",
+            "Australia/Sydney",
+            "Australia/Brisbane",
+        ]
+        for tz_id in expected_ids:
+            assert tz_id in ids
 
+    def test_canada_without_state_info(self):
+        ids = tztrout.tz_ids_for_address('CA')
+        expected_ids = [
+            "America/Whitehorse",
+            "America/Vancouver",
+            "America/Yellowknife",
+            "America/Edmonton",
+            "America/Regina",
+            "America/Winnipeg",
+            "America/Iqaluit",
+            "America/Toronto",  # "America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
+            "America/Moncton",
+            "America/Halifax",
+            "America/St_Johns",
+        ]
+        for tz_id in expected_ids:
+            assert tz_id in ids
+            
+            
 class TestLocalTimeForAddress:
     @patch('datetime.datetime', FakeDateTime)
     def test_local_time_in_spain(self):
@@ -360,6 +363,7 @@ class TestLocalTimeForAddress:
         )  # 15:15 PT / 22:15 UTC / 00:15 CEST
         local_time = tztrout.local_time_for_address('ES', city='Barcelona')
         assert str(local_time) == '2016-09-14 00:15:00+02:00'
+
 
 class TestOffsetRangesForLocalTime:
     @patch('datetime.datetime', FakeDateTime)
@@ -415,6 +419,7 @@ class TestOffsetRangesForLocalTime:
         )
         assert offset_ranges == result
 
+
 class TestNonDSTOffsetsForPhone:
     @pytest.mark.parametrize(
         'phone, result',
@@ -423,6 +428,7 @@ class TestNonDSTOffsetsForPhone:
     def test_non_dst_offsets_for_phone(self, phone, result):
         offsets = tztrout.non_dst_offsets_for_phone(phone)
         assert offsets == result
+
 
 class TestNonDSTOffsetsForAddress:
     @pytest.mark.parametrize(
