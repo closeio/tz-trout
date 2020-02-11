@@ -417,6 +417,7 @@ class TestTZTrout:
         for tz_id in expected_ids:
             assert tz_id in ids
 
+class TestLocalTimeForAddress:
     @patch('datetime.datetime', FakeDateTime)
     def test_local_time_in_spain(self):
         """Make sure local time is properly calculated for Spain."""
