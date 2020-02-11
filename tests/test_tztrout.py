@@ -36,105 +36,6 @@ class TestTZTrout:
         for other_name in tz_names_copy:
             assert not (set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
 
-    @pytest.mark.parametrize(
-        'phone, tz_ids',
-        [
-            ('+1 (650) 333 4444', ['America/Los_Angeles']),
-            ('+48 601 941 311', ['Europe/Warsaw']),
-        ],
-    )
-    def test_ids_for_phone(self, phone, tz_ids):
-        ids = tztrout.tz_ids_for_phone(phone)
-        assert ids == tz_ids
-
-    @pytest.mark.parametrize(
-        'country, state, city, zipcode, tz_ids, assume_any_tz',
-        [
-            ('US', 'California', None, None, ['America/Los_Angeles'], False),
-            ('US', 'CA', None, None, ['America/Los_Angeles'], False),
-            ('US', 'CA', '', None, ['America/Los_Angeles'], False),
-            ('US', 'CA', 'Palo Alto', None, ['America/Los_Angeles'], False),
-            ('US', '', 'Palo Alto', None, ['America/Los_Angeles'], False),
-            ('US', None, 'Palo Alto', None, ['America/Los_Angeles'], False),
-            (
-                'US',
-                '',
-                '',
-                None,
-                ['America/Los_Angeles', 'America/New_York'],
-                True,
-            ),
-            (
-                'US',
-                None,
-                None,
-                None,
-                ['America/Los_Angeles', 'America/New_York'],
-                True,
-            ),
-            ('PL', None, None, None, ['Europe/Warsaw'], False),
-            # Invalid state, assume any US tz
-            (
-                'US',
-                'XX',
-                None,
-                None,
-                ['America/Los_Angeles', 'America/New_York'],
-                True,
-            ),
-            (
-                'US',
-                'XX',
-                '',
-                None,
-                ['America/Los_Angeles', 'America/New_York'],
-                True,
-            ),
-            # Invalid city with state, ignore city
-            ('US', 'CA', 'XX', None, ['America/Los_Angeles'], False),
-            # Invalid city without state, assume any US tz
-            (
-                'US',
-                '',
-                'XX',
-                None,
-                ['America/Los_Angeles', 'America/New_York'],
-                True,
-            ),
-            (
-                'US',
-                None,
-                'XX',
-                None,
-                ['America/Los_Angeles', 'America/New_York'],
-                True,
-            ),
-            (
-                'US',
-                'California',
-                None,
-                '94041',
-                ['America/Los_Angeles'],
-                False,
-            ),
-            ('US', None, None, '94041', ['America/Los_Angeles'], False),
-            ('US', None, None, 94041, ['America/Los_Angeles'], False),
-            ('US', None, None, '94041-1191', ['America/Los_Angeles'], False),
-            ('US', None, None, '0000', [], False),
-        ],
-    )
-    def test_ids_for_address(
-        self, country, state, city, zipcode, tz_ids, assume_any_tz
-    ):
-        ids = tztrout.tz_ids_for_address(
-            country, state=state, city=city, zipcode=zipcode
-        )
-        if assume_any_tz:
-            for tz_id in tz_ids:
-                assert tz_id in ids
-        else:
-            assert tz_ids == ids
-
     @pytest.mark.parametrize('tz_name', ['PT', 'PACIFIC'])
     def test_ids_for_tz_name(self, tz_name):
         pacific_ids = [
@@ -348,6 +249,107 @@ class TestTZTrout:
         ]
         for tz_id in expected_ids:
             assert tz_id in ids
+
+class TestTZIdsForPhone:
+    @pytest.mark.parametrize(
+        'phone, tz_ids',
+        [
+            ('+1 (650) 333 4444', ['America/Los_Angeles']),
+            ('+48 601 941 311', ['Europe/Warsaw']),
+        ],
+    )
+    def test_ids_for_phone(self, phone, tz_ids):
+        ids = tztrout.tz_ids_for_phone(phone)
+        assert ids == tz_ids
+
+class  TestTZIdsForAddress:
+    @pytest.mark.parametrize(
+        'country, state, city, zipcode, expected_tz_ids, is_exact_match',
+        [
+            ('US', 'California', None, None, ['America/Los_Angeles'], True),
+            ('US', 'CA', None, None, ['America/Los_Angeles'], True),
+            ('US', 'CA', '', None, ['America/Los_Angeles'], True),
+            ('US', 'CA', 'Palo Alto', None, ['America/Los_Angeles'], True),
+            ('US', '', 'Palo Alto', None, ['America/Los_Angeles'], True),
+            ('US', None, 'Palo Alto', None, ['America/Los_Angeles'], True),
+            (
+                'US',
+                '',
+                '',
+                None,
+                ['America/Los_Angeles', 'America/New_York'],
+                False,
+            ),
+            (
+                'US',
+                None,
+                None,
+                None,
+                ['America/Los_Angeles', 'America/New_York'],
+                False,
+            ),
+            ('PL', None, None, None, ['Europe/Warsaw'], True),
+            # Invalid state, assume any US tz
+            (
+                'US',
+                'XX',
+                None,
+                None,
+                ['America/Los_Angeles', 'America/New_York'],
+                False,
+            ),
+            (
+                'US',
+                'XX',
+                '',
+                None,
+                ['America/Los_Angeles', 'America/New_York'],
+                False,
+            ),
+            # Invalid city with state, ignore city
+            ('US', 'CA', 'XX', None, ['America/Los_Angeles'], True),
+            # Invalid city without state, assume any US tz
+            (
+                'US',
+                '',
+                'XX',
+                None,
+                ['America/Los_Angeles', 'America/New_York'],
+                False,
+            ),
+            (
+                'US',
+                None,
+                'XX',
+                None,
+                ['America/Los_Angeles', 'America/New_York'],
+                False,
+            ),
+            (
+                'US',
+                'California',
+                None,
+                '94041',
+                ['America/Los_Angeles'],
+                True,
+            ),
+            ('US', None, None, '94041', ['America/Los_Angeles'], True),
+            ('US', None, None, 94041, ['America/Los_Angeles'], True),
+            ('US', None, None, '94041-1191', ['America/Los_Angeles'], True),
+            ('US', None, None, '0000', [], True),
+        ],
+    )
+    def test_ids_for_address(
+        self, country, state, city, zipcode, expected_tz_ids, is_exact_match
+    ):
+        ids = tztrout.tz_ids_for_address(
+            country, state=state, city=city, zipcode=zipcode
+        )
+        if is_exact_match:
+            assert expected_tz_ids == ids
+        else:
+            for tz_id in expected_tz_ids:
+                assert tz_id in ids
 
 class TestLocalTimeForAddress:
     @patch('datetime.datetime', FakeDateTime)
