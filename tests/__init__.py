@@ -1,8 +1,9 @@
 import datetime
-import tztrout
 import unittest
 
 from mock import patch
+
+import tztrout
 
 
 class FakeDateTime(datetime.datetime):
@@ -12,7 +13,9 @@ class FakeDateTime(datetime.datetime):
     def utcnow(cls, *args, **kwargs):
         if hasattr(cls, 'dt'):
             return cls.dt
-        raise NotImplementedError('use FakeDateTime.set_utcnow(datetime) first')
+        raise NotImplementedError(
+            'use FakeDateTime.set_utcnow(datetime) first'
+        )
 
     @classmethod
     def set_utcnow(cls, dt):
@@ -20,7 +23,6 @@ class FakeDateTime(datetime.datetime):
 
 
 class TZTroutTestCase(unittest.TestCase):
-
     def test_ids_for_phone(self):
         ids = tztrout.tz_ids_for_phone('+1 (650) 333 4444')
         self.assertEqual(ids, ['America/Los_Angeles'])
@@ -73,7 +75,9 @@ class TZTroutTestCase(unittest.TestCase):
         self.assertTrue('America/New_York' in ids)
 
     def test_ids_for_address_with_zipcode(self):
-        ids = tztrout.tz_ids_for_address('US', state='California', zipcode='94041')
+        ids = tztrout.tz_ids_for_address(
+            'US', state='California', zipcode='94041'
+        )
         self.assertEqual(ids, ['America/Los_Angeles'])
         ids = tztrout.tz_ids_for_address('US', zipcode='94041')
         self.assertEqual(ids, ['America/Los_Angeles'])
@@ -104,7 +108,7 @@ class TZTroutTestCase(unittest.TestCase):
             u'America/Vancouver',
             u'America/Whitehorse',
             u'Canada/Pacific',
-            u'US/Pacific'
+            u'US/Pacific',
         ]
         ids = tztrout.tz_ids_for_tz_name('PT')
         self.assertEqual(ids, pacific_ids)
@@ -128,75 +132,79 @@ class TZTroutTestCase(unittest.TestCase):
     @patch('datetime.datetime', FakeDateTime)
     def test_offset_ranges_for_9_to_5(self):
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
-            [-11 * 60, -3 * 60],
-            [13 * 60, 14 * 60]
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(9), datetime.time(17)
+        )
+        self.assertEqual(
+            offset_ranges, [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]
+        )
 
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1))  # 12am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
-            [9 * 60, 14 * 60],
-            [-14 * 60, -7 * 60]
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(9), datetime.time(17)
+        )
+        self.assertEqual(
+            offset_ranges, [[9 * 60, 14 * 60], [-14 * 60, -7 * 60]]
+        )
 
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 4))  # 4am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
-            [5 * 60, 13 * 60],
-            [-14 * 60, -11 * 60]
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(9), datetime.time(17)
+        )
+        self.assertEqual(
+            offset_ranges, [[5 * 60, 13 * 60], [-14 * 60, -11 * 60]]
+        )
 
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 7))  # 7am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))
-        self.assertEqual(offset_ranges, [
-            [2 * 60, 10 * 60],
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(9), datetime.time(17)
+        )
+        self.assertEqual(offset_ranges, [[2 * 60, 10 * 60],])
 
     @patch('datetime.datetime', FakeDateTime)
     def test_offset_ranges_for_5_to_9(self):
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
-            [-3 * 60, 13 * 60],
-            [-14 * 60, -11 * 60]
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(17), datetime.time(9)
+        )
+        self.assertEqual(
+            offset_ranges, [[-3 * 60, 13 * 60], [-14 * 60, -11 * 60]]
+        )
 
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1))  # 12am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
-            [-7 * 60, 9 * 60],
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(17), datetime.time(9)
+        )
+        self.assertEqual(offset_ranges, [[-7 * 60, 9 * 60],])
 
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 4))  # 4am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
-            [13 * 60, 14 * 60],
-            [-11 * 60, 5 * 60]
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(17), datetime.time(9)
+        )
+        self.assertEqual(
+            offset_ranges, [[13 * 60, 14 * 60], [-11 * 60, 5 * 60]]
+        )
 
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 7))  # 7am UTC
-        offset_ranges = tztrout.offset_ranges_for_local_time(datetime.time(17), datetime.time(9))
-        self.assertEqual(offset_ranges, [
-            [10 * 60, 14 * 60],
-            [-14 * 60, 2 * 60]
-        ])
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            datetime.time(17), datetime.time(9)
+        )
+        self.assertEqual(
+            offset_ranges, [[10 * 60, 14 * 60], [-14 * 60, 2 * 60]]
+        )
 
     @patch('datetime.datetime', FakeDateTime)
     def test_offset_ranges_for_parsed_time(self):
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, 20))  # 8 pm UTC
         offset_ranges = tztrout.offset_ranges_for_local_time('9am', '5 pm')
-        self.assertEqual(offset_ranges, [
-            [-11 * 60, -3 * 60],
-            [13 * 60, 14 * 60]
-        ])
+        self.assertEqual(
+            offset_ranges, [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]
+        )
 
         offset_ranges = tztrout.offset_ranges_for_local_time('9:00', '17:00')
-        self.assertEqual(offset_ranges, [
-            [-11 * 60, -3 * 60],
-            [13 * 60, 14 * 60]
-        ])
+        self.assertEqual(
+            offset_ranges, [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]
+        )
 
     def test_wisconsin(self):
         """ Make sure WI is not counted as part of ET. """
@@ -218,7 +226,9 @@ class TZTroutTestCase(unittest.TestCase):
         tz_names.remove(tz_name)
         self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
         for other_name in tz_names:
-            self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
+            self.assertFalse(
+                set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids)
+            )
 
     def test_texas(self):
         """ Make sure TX is not counted as part of ET. """
@@ -316,7 +326,9 @@ class TZTroutTestCase(unittest.TestCase):
         self.assert_only_one_us_tz(ids, 'ET')
 
         # San Francisco
-        ids = tztrout.tz_ids_for_address('US', state='CA', city='San Francisco')
+        ids = tztrout.tz_ids_for_address(
+            'US', state='CA', city='San Francisco'
+        )
         ids2 = tztrout.tz_ids_for_phone('+14153334444')
         self.assertEqual(ids, ids2)
         self.assert_only_one_us_tz(ids, 'PT')
@@ -438,13 +450,22 @@ class TZTroutTestCase(unittest.TestCase):
     def test_canada_without_state_info(self):
         ids = tztrout.tz_ids_for_address('CA')
         expected_ids = [
-            "America/Whitehorse", "America/Vancouver", "America/Yellowknife",
-            "America/Edmonton", "America/Regina", "America/Winnipeg",
-            "America/Iqaluit", "America/Toronto", #"America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
-            "America/Moncton", "America/Halifax", "America/St_Johns"
+            "America/Whitehorse",
+            "America/Vancouver",
+            "America/Yellowknife",
+            "America/Edmonton",
+            "America/Regina",
+            "America/Winnipeg",
+            "America/Iqaluit",
+            "America/Toronto",  # "America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
+            "America/Moncton",
+            "America/Halifax",
+            "America/St_Johns",
         ]
         for tz_id in expected_ids:
-            self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
+            self.assertTrue(
+                tz_id in ids, tz_id + ' not present in the expected ids set'
+            )
 
     def assert_only_one_au_tz(self, ids, tz_name):
         """ Assert that a given set of timezone ids only matches one tz name
@@ -455,7 +476,9 @@ class TZTroutTestCase(unittest.TestCase):
         tz_names.remove(tz_name)
         self.assertTrue(set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids))
         for other_name in tz_names:
-            self.assertFalse(set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
+            self.assertFalse(
+                set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids)
+            )
 
     def test_major_cities_australia(self):
 
@@ -584,22 +607,32 @@ class TZTroutTestCase(unittest.TestCase):
 
     def test_australia_without_state_info(self):
         ids = tztrout.tz_ids_for_address('AU')
-        expected_ids = ["Australia/Sydney", "Australia/Perth", "Australia/Darwin",
-            "Australia/Adelaide", "Australia/Darwin", "Australia/Adelaide",
-            "Australia/Hobart", "Australia/Melbourne", "Australia/Sydney",
-            "Australia/Brisbane"
+        expected_ids = [
+            "Australia/Sydney",
+            "Australia/Perth",
+            "Australia/Darwin",
+            "Australia/Adelaide",
+            "Australia/Darwin",
+            "Australia/Adelaide",
+            "Australia/Hobart",
+            "Australia/Melbourne",
+            "Australia/Sydney",
+            "Australia/Brisbane",
         ]
         for tz_id in expected_ids:
-            self.assertTrue(tz_id in ids, tz_id + ' not present in the expected ids set')
+            self.assertTrue(
+                tz_id in ids, tz_id + ' not present in the expected ids set'
+            )
 
     @patch('datetime.datetime', FakeDateTime)
     def test_local_time_in_spain(self):
         """Make sure local time is properly calculated for Spain."""
-        FakeDateTime.set_utcnow(datetime.datetime(2016, 9, 13, 22, 15))  # 15:15 PT / 22:15 UTC / 00:15 CEST
+        FakeDateTime.set_utcnow(
+            datetime.datetime(2016, 9, 13, 22, 15)
+        )  # 15:15 PT / 22:15 UTC / 00:15 CEST
         local_time = tztrout.local_time_for_address('ES', city='Barcelona')
         self.assertEqual(str(local_time), '2016-09-14 00:15:00+02:00')
 
 
 if __name__ == '__main__':
     unittest.main()
-

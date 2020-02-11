@@ -14,41 +14,33 @@ that's *the only* tz id to be returned for tztrout.tz_ids_for_address('US', stat
 """
 
 data_exceptions = {
-
     'all': {
-        'exclude': ['America/Indiana/Tell_City', 'America/Indiana/Knox',
-                    'America/North_Dakota/Beulah', 'America/Indiana/Winamac',
-                    'America/Indiana/Petersburg', 'America/Indiana/Vincennes']
+        'exclude': [
+            'America/Indiana/Tell_City',
+            'America/Indiana/Knox',
+            'America/North_Dakota/Beulah',
+            'America/Indiana/Winamac',
+            'America/Indiana/Petersburg',
+            'America/Indiana/Vincennes',
+        ]
     },
-
     'state:NY': {
-        'exclude': [u'America/Indiana/Winamac', u'America/Indiana/Petersburg',
-                    u'America/Indiana/Vincennes']
+        'exclude': [
+            u'America/Indiana/Winamac',
+            u'America/Indiana/Petersburg',
+            u'America/Indiana/Vincennes',
+        ]
     },
-
     'state:PA': {
-        'exclude': [u'America/Indiana/Winamac', u'America/Indiana/Petersburg',
-                    u'America/Indiana/Vincennes']
+        'exclude': [
+            u'America/Indiana/Winamac',
+            u'America/Indiana/Petersburg',
+            u'America/Indiana/Vincennes',
+        ]
     },
-
-    'state:IN': {
-        'include': ['America/Indiana/Indianapolis']
-    },
-
-    'city:el paso': {
-        'include': ['America/Denver']
-    },
-
-    'areacode:915': {
-        'include': ['America/Denver']
-    },
-
-    'areacode:901': {
-        'include': ['America/Chicago']
-    },
-
-    'areacode:202': {
-        'include': ['America/New_York']
-    }
-
+    'state:IN': {'include': ['America/Indiana/Indianapolis']},
+    'city:el paso': {'include': ['America/Denver']},
+    'areacode:915': {'include': ['America/Denver']},
+    'areacode:901': {'include': ['America/Chicago']},
+    'areacode:202': {'include': ['America/New_York']},
 }
