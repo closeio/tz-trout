@@ -20,12 +20,13 @@ defaults: &defaults
   steps:
   - checkout
   - run:
-      name: Install dependencies
-      command: pip install -r requirements.txt
-  - run:
       name: Install black flake8 and isort
       command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort black==19.10b0
   - *lint
+  - run:
+      name: Install dependencies
+      command: pip install -r requirements.txt
+  
   - run:
       name: Test
       command: PYTHONPATH=. python tests/__init__.py
