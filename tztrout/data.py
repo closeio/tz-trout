@@ -1,6 +1,5 @@
 import datetime
 import json
-import operator
 import os
 from collections import defaultdict
 from sys import stdout
@@ -378,11 +377,11 @@ class TroutData(object):
 
 
 def _progressbar(lst):
-    l = len(lst)
+    list_length = len(lst)
     for cnt, elem in enumerate(lst):
         yield elem
         if cnt % 10 == 9:
-            stdout.write('\r%d/%d' % (cnt + 1, l))
+            stdout.write('\r%d/%d' % (cnt + 1, list_length))
             stdout.flush()
 
 
