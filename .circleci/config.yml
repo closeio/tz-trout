@@ -6,6 +6,14 @@ workflows:
     jobs:
       - test-3.5
 
+setup:
+  - &lint
+    run:
+      name: Run flake8
+      command: |
+        flake8
+        isort -rc -c .
+        
 defaults: &defaults
   working_directory: ~/code
   steps:
@@ -13,6 +21,10 @@ defaults: &defaults
   - run:
       name: Install dependencies
       command: pip install -r requirements.txt
+  - run:
+      name: Install flake8 and isort
+      command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort
+  - *lint
   - run:
       name: Test
       command: PYTHONPATH=. python tests/__init__.py
