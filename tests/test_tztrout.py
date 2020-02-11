@@ -152,74 +152,6 @@ class TestTZTrout:
         assert ids == pacific_ids
 
     @pytest.mark.parametrize(
-        'phone, result',
-        [('+1 650 333 4444', [-8 * 60]), ('+1 212 333 4444', [-5 * 60])],
-    )
-    def test_non_dst_offsets_for_phone(self, phone, result):
-        offsets = tztrout.non_dst_offsets_for_phone(phone)
-        assert offsets == result
-
-    @pytest.mark.parametrize(
-        'state, result', [('CA', [-8 * 60]), ('NY', [-5 * 60])]
-    )
-    def test_non_dst_offsets_for_address(self, state, result):
-        offsets = tztrout.non_dst_offsets_for_address('US', state=state)
-        assert offsets == result
-
-    @patch('datetime.datetime', FakeDateTime)
-    @pytest.mark.parametrize(
-        'hour_now, range_start, range_end, result',
-        [
-            (
-                20,
-                datetime.time(9),
-                datetime.time(17),
-                [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]],
-            ),
-            (
-                0,
-                datetime.time(9),
-                datetime.time(17),
-                [[9 * 60, 14 * 60], [-14 * 60, -7 * 60]],
-            ),
-            (
-                4,
-                datetime.time(9),
-                datetime.time(17),
-                [[5 * 60, 13 * 60], [-14 * 60, -11 * 60]],
-            ),
-            (7, datetime.time(9), datetime.time(17), [[2 * 60, 10 * 60], ]),
-            (
-                20,
-                datetime.time(17),
-                datetime.time(9),
-                [[-3 * 60, 13 * 60], [-14 * 60, -11 * 60]],
-            ),
-            (0, datetime.time(17), datetime.time(9), [[-7 * 60, 9 * 60], ]),
-            (
-                4,
-                datetime.time(17),
-                datetime.time(9),
-                [[13 * 60, 14 * 60], [-11 * 60, 5 * 60]],
-            ),
-            (
-                7,
-                datetime.time(17),
-                datetime.time(9),
-                [[10 * 60, 14 * 60], [-14 * 60, 2 * 60]],
-            ),
-            (20, '9am', '5pm', [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]),
-            (20, '9:00', '17:00', [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]),
-        ],
-    )
-    def test_offset_ranges(self, hour_now, range_start, range_end, result):
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
-        offset_ranges = tztrout.offset_ranges_for_local_time(
-            range_start, range_end
-        )
-        assert offset_ranges == result
-
-    @pytest.mark.parametrize(
         'country, state, city, phones, tz_name, assert_ids_equal',
         [
             # United States -- Special cases to make sure ET is not counted as part of state timezone
@@ -426,3 +358,74 @@ class TestLocalTimeForAddress:
         )  # 15:15 PT / 22:15 UTC / 00:15 CEST
         local_time = tztrout.local_time_for_address('ES', city='Barcelona')
         assert str(local_time) == '2016-09-14 00:15:00+02:00'
+
+class TestOffsetRangesForLocalTime:
+    @patch('datetime.datetime', FakeDateTime)
+    @pytest.mark.parametrize(
+        'hour_now, range_start, range_end, result',
+        [
+            (
+                20,
+                datetime.time(9),
+                datetime.time(17),
+                [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]],
+            ),
+            (
+                0,
+                datetime.time(9),
+                datetime.time(17),
+                [[9 * 60, 14 * 60], [-14 * 60, -7 * 60]],
+            ),
+            (
+                4,
+                datetime.time(9),
+                datetime.time(17),
+                [[5 * 60, 13 * 60], [-14 * 60, -11 * 60]],
+            ),
+            (7, datetime.time(9), datetime.time(17), [[2 * 60, 10 * 60], ]),
+            (
+                20,
+                datetime.time(17),
+                datetime.time(9),
+                [[-3 * 60, 13 * 60], [-14 * 60, -11 * 60]],
+            ),
+            (0, datetime.time(17), datetime.time(9), [[-7 * 60, 9 * 60], ]),
+            (
+                4,
+                datetime.time(17),
+                datetime.time(9),
+                [[13 * 60, 14 * 60], [-11 * 60, 5 * 60]],
+            ),
+            (
+                7,
+                datetime.time(17),
+                datetime.time(9),
+                [[10 * 60, 14 * 60], [-14 * 60, 2 * 60]],
+            ),
+            (20, '9am', '5pm', [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]),
+            (20, '9:00', '17:00', [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]),
+        ],
+    )
+    def test_offset_ranges(self, hour_now, range_start, range_end, result):
+        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
+        offset_ranges = tztrout.offset_ranges_for_local_time(
+            range_start, range_end
+        )
+        assert offset_ranges == result
+
+class TestNonDSTOffsetsForPhone:
+    @pytest.mark.parametrize(
+        'phone, result',
+        [('+1 650 333 4444', [-8 * 60]), ('+1 212 333 4444', [-5 * 60])],
+    )
+    def test_non_dst_offsets_for_phone(self, phone, result):
+        offsets = tztrout.non_dst_offsets_for_phone(phone)
+        assert offsets == result
+
+class TestNonDSTOffsetsForAddress:
+    @pytest.mark.parametrize(
+        'state, result', [('CA', [-8 * 60]), ('NY', [-5 * 60])]
+    )
+    def test_non_dst_offsets_for_address(self, state, result):
+        offsets = tztrout.non_dst_offsets_for_address('US', state=state)
+        assert offsets == result
