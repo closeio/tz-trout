@@ -131,7 +131,7 @@ ZIP_DATA = InMemoryZipData()
 
 
 class TroutData(object):
-    """ Helper class that generates the JSON data used by TZTrout """
+    """Helper class that generates the JSON data used by TZTrout"""
 
     # We don't care about the historic data - we just want to know the recent
     # state of time zones, zip codes, etc. RECENT_YEARS_START describes how
@@ -173,7 +173,7 @@ class TroutData(object):
         }
 
     def _load_data(self, name, path):
-        """ Helper method to load a data file. """
+        """Helper method to load a data file."""
         with open(path, 'r') as file:
             data = json.loads(file.read())
             setattr(self, name, data)
@@ -192,7 +192,7 @@ class TroutData(object):
             )
 
     def _get_latest_non_dst_offset(self, tz):
-        """ Get the UTC offset for a given time zone identifier. Ignore the
+        """Get the UTC offset for a given time zone identifier. Ignore the
         DST offsets.
         """
         dt = datetime.datetime.utcnow()
@@ -206,7 +206,7 @@ class TroutData(object):
             dt -= datetime.timedelta(**self.TD_STEP)
 
     def _get_latest_offsets(self, tz):
-        """ Get all the UTC offsets (in minutes) that a given time zone
+        """Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
         """
         dt = datetime.datetime.utcnow()
@@ -222,7 +222,7 @@ class TroutData(object):
         return offsets
 
     def _experiences_dst(self, tz):
-        """ Check if the time zone identifier has experienced the DST in the
+        """Check if the time zone identifier has experienced the DST in the
         recent years.
         """
         dt = datetime.datetime.utcnow()
@@ -237,7 +237,7 @@ class TroutData(object):
         return False
 
     def _get_latest_tz_names(self, tz):
-        """ Get the recent time zone names for a given time zone identifier.
+        """Get the recent time zone names for a given time zone identifier.
         """
         dt = datetime.datetime.utcnow()
         tz_names = []
@@ -255,7 +255,7 @@ class TroutData(object):
         return tz_names
 
     def _get_tz_identifiers_for_offset(self, country, offset):
-        """ Get all the possible time zone identifiers for a given UTC offset.
+        """Get all the possible time zone identifiers for a given UTC offset.
         Ignore the DST offsets.
         """
         identifiers = pytz.country_timezones.get(country)
@@ -268,7 +268,7 @@ class TroutData(object):
         return ids
 
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
-        """ Get all the possible identifiers for a given US zip code.
+        """Get all the possible identifiers for a given US zip code.
         """
         if not isinstance(zipcode, ZipCode):
             zipcode = ZipCodeDatabase().get(zipcode)
@@ -293,7 +293,7 @@ class TroutData(object):
         return ret_ids
 
     def generate_zip_to_tz_id_map(self):
-        """ Generate the map of US zip codes to time zone identifiers. The
+        """Generate the map of US zip codes to time zone identifiers. The
         method finds all the possible time zone identifiers for each zip code
         based on a UTC offset stored for that zip in pyzipcode.ZipCodeDatabase.
         """
@@ -336,7 +336,7 @@ class TroutData(object):
         _dump_json_data(US_ZIPS_TO_TZ_IDS_MAP_PATH, zips_to_tz_ids)
 
     def generate_tz_name_to_tz_id_map(self):
-        """ Generate the map of timezone names to time zone identifiers.
+        """Generate the map of timezone names to time zone identifiers.
         """
         tz_name_ids = {}
         for id in _progressbar(pytz.common_timezones):
@@ -364,7 +364,7 @@ class TroutData(object):
         _dump_json_data(TZ_NAME_TO_TZ_IDS_MAP_PATH, tz_name_ids)
 
     def generate_offset_to_tz_id_map(self):
-        """ Generate the map of UTC offsets to time zone identifiers.
+        """Generate the map of UTC offsets to time zone identifiers.
         """
         offset_tz_ids = defaultdict(list)
         for id in _progressbar(pytz.common_timezones):

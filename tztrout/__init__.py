@@ -13,13 +13,13 @@ td = TroutData()
 
 
 def _dedupe_preserve_ord(lst):
-    """ Dedupe a list and preserve the order of its items. """
+    """Dedupe a list and preserve the order of its items."""
     seen = set()
     return [x for x in lst if x not in seen and not seen.add(x)]
 
 
 def tz_ids_for_tz_name(tz_name):
-    """ Get the TZ identifiers that are currently in a specific time zone, e.g.
+    """Get the TZ identifiers that are currently in a specific time zone, e.g.
 
     >>> tztrout.tz_ids_for_tz_name('PDT')  # ran during DST
     [
@@ -56,7 +56,7 @@ def tz_ids_for_tz_name(tz_name):
 
 
 def tz_ids_for_phone(phone, country='US'):
-    """ Get the TZ identifiers that a phone number might be related to, e.g.
+    """Get the TZ identifiers that a phone number might be related to, e.g.
 
     >>> tztrout.tz_ids_for_phone('+16503334444')
     [u'America/Los_Angeles']
@@ -117,7 +117,7 @@ def tz_ids_for_phone(phone, country='US'):
 
 
 def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
-    """ Get the TZ identifiers for a given address, e.g.:
+    """Get the TZ identifiers for a given address, e.g.:
 
     >>> tztrout.tz_ids_for_address('US', state='CA', city='Palo Alto')
     [u'America/Los_Angeles']
@@ -169,7 +169,7 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
 
 
 def tz_ids_for_offset(offset_in_minutes):
-    """ Get the TZ identifiers for a given UTC offset (in minutes), e.g.
+    """Get the TZ identifiers for a given UTC offset (in minutes), e.g.
 
     >>> tztrout.tz_ids_for_offset(-7 * 60)  # during DST
     [
@@ -204,7 +204,7 @@ def tz_ids_for_offset(offset_in_minutes):
 
 
 def local_time_for_phone(phone, country='US'):
-    """ Get the local time for a given phone number, e.g.
+    """Get the local time for a given phone number, e.g.
 
     >>> datetime.datetime.utcnow()
     datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
@@ -219,7 +219,7 @@ def local_time_for_phone(phone, country='US'):
 def local_time_for_address(
     country, state=None, city=None, zipcode=None, **kwargs
 ):
-    """ Get the local time for a given address, e.g.
+    """Get the local time for a given address, e.g.
 
     >>> datetime.datetime.utcnow()
     datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
@@ -232,7 +232,7 @@ def local_time_for_address(
 
 
 def offset_ranges_for_local_time(local_start, local_end):
-    """ Return a list of UTC offset ranges where the local time is between
+    """Return a list of UTC offset ranges where the local time is between
     local_start and local_end, e.g.
 
     >>> tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))  # ran at 8pm UTC
@@ -309,7 +309,7 @@ def offset_ranges_for_local_time(local_start, local_end):
 
 
 def tz_ids_for_offset_range(offset_start, offset_end):
-    """ Return all the time zone identifiers which offsets are within the
+    """Return all the time zone identifiers which offsets are within the
     (offset_start, offset_end) range. The arguments should be integers
     (UTC offsets in minutes).
 
@@ -341,7 +341,7 @@ def tz_ids_for_offset_range(offset_start, offset_end):
 
 
 def non_dst_offsets_for_phone(phone):
-    """ Return the non-DST offsets (in minutes) for a given phone, e.g.
+    """Return the non-DST offsets (in minutes) for a given phone, e.g.
 
     >>> tztrout.non_dst_offsets_for_phone('+1 650 248 6188')
     [-480]
@@ -359,7 +359,7 @@ def non_dst_offsets_for_phone(phone):
 def non_dst_offsets_for_address(
     country, state=None, city=None, zipcode=None, **kwargs
 ):
-    """ Return the non-DST offsets (in minutes) for a given address, e.g.
+    """Return the non-DST offsets (in minutes) for a given address, e.g.
 
     >>> tztrout.non_dst_offsets_for_address('US', state='CA')
     [-480]

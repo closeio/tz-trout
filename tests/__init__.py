@@ -7,7 +7,7 @@ import tztrout
 
 
 class FakeDateTime(datetime.datetime):
-    "A datetime replacement that lets you set utcnow()"
+    """A datetime replacement that lets you set utcnow()"""
 
     @classmethod
     def utcnow(cls, *args, **kwargs):
@@ -207,7 +207,7 @@ class TZTroutTestCase(unittest.TestCase):
         )
 
     def test_wisconsin(self):
-        """ Make sure WI is not counted as part of ET. """
+        """Make sure WI is not counted as part of ET."""
 
         ids = tztrout.tz_ids_for_address('US', state='WI')
         ids2 = tztrout.tz_ids_for_address('US', state='Wisconsin')
@@ -218,7 +218,7 @@ class TZTroutTestCase(unittest.TestCase):
         self.assert_only_one_us_tz(ids, 'CT')
 
     def assert_only_one_us_tz(self, ids, tz_name):
-        """ Assert that a given set of timezone ids only matches one tz name
+        """Assert that a given set of timezone ids only matches one tz name
         in North America.
         """
         tz_names = ['PT', 'MT', 'CT', 'ET', 'AT']
@@ -231,7 +231,7 @@ class TZTroutTestCase(unittest.TestCase):
             )
 
     def test_texas(self):
-        """ Make sure TX is not counted as part of ET. """
+        """Make sure TX is not counted as part of ET."""
 
         ids = tztrout.tz_ids_for_address('US', state='TX')
         ids2 = tztrout.tz_ids_for_address('US', state='Texas')
@@ -242,8 +242,9 @@ class TZTroutTestCase(unittest.TestCase):
         self.assert_only_one_us_tz(ids, 'CT')
 
     def test_major_cities_us(self):
-        """ Make sure all the major cities match the right time zone (and the
-        right time zone only). """
+        """Make sure all the major cities match the right time zone (and the
+        right time zone only).
+        """
 
         # New York
         ids = tztrout.tz_ids_for_address('US', state='NY', city='New York')
@@ -382,8 +383,9 @@ class TZTroutTestCase(unittest.TestCase):
         self.assert_only_one_us_tz(ids2, 'ET')
 
     def test_major_cities_canada(self):
-        """ Make sure all the major cities match the right time zone (and the
-        right time zone only). """
+        """Make sure all the major cities match the right time zone (and the
+        right time zone only).
+        """
 
         # Toronto, Ontario
         ids = tztrout.tz_ids_for_address('CA', state='ON', city='Toronto')
@@ -468,7 +470,7 @@ class TZTroutTestCase(unittest.TestCase):
             )
 
     def assert_only_one_au_tz(self, ids, tz_name):
-        """ Assert that a given set of timezone ids only matches one tz name
+        """Assert that a given set of timezone ids only matches one tz name
         in Australia.
         """
         tz_names = ['AWT', 'ACT', 'AET']
