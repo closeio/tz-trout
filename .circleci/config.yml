@@ -4,13 +4,14 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - test-3.5
+      - test-3.6
 
 setup:
   - &lint
     run:
       name: Run flake8
       command: |
+        black --check .
         flake8
         isort -rc -c .
         
@@ -22,15 +23,15 @@ defaults: &defaults
       name: Install dependencies
       command: pip install -r requirements.txt
   - run:
-      name: Install flake8 and isort
-      command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort
+      name: Install black flake8 and isort
+      command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort black==19.10b0
   - *lint
   - run:
       name: Test
       command: PYTHONPATH=. python tests/__init__.py
 
 jobs:
-  test-3.5:
+  test-3.6:
     <<: *defaults
     docker:
-    - image: circleci/python:3.5
+    - image: circleci/python:3.6
