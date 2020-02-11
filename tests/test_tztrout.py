@@ -5,6 +5,9 @@ import tztrout
 from mock import patch
 
 
+us_ca_tz_names = ['PT', 'MT', 'CT', 'ET', 'AT']
+au_tz_names = ['AWT', 'ACT', 'AET']
+
 class FakeDateTime(datetime.datetime):
     "A datetime replacement that lets you set utcnow()"
 
@@ -32,14 +35,6 @@ class TestTZTrout:
         assert set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids)
         for other_name in tz_names_copy:
             assert not (set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-
-    @pytest.fixture
-    def us_ca_tz_names(self):
-        return ['PT', 'MT', 'CT', 'ET', 'AT']
-
-    @pytest.fixture
-    def au_tz_names(self):
-        return ['AWT', 'ACT', 'AET']
 
     @pytest.mark.parametrize(
         'phone, tz_ids',
@@ -288,7 +283,6 @@ class TestTZTrout:
         phones,
         tz_name,
         assert_ids_equal,
-        us_ca_tz_names,
     ):
         """ Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only). """
@@ -396,7 +390,7 @@ class TestTZTrout:
         ],
     )
     def test_major_cities_australia(
-        self, state, city, phones, tz_name, au_tz_names
+        self, state, city, phones, tz_name
     ):
         """ Make sure all the major cities in Australia match the right time zone
         (and the right time zone only). """
