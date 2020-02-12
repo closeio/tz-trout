@@ -522,7 +522,7 @@ class TestLocalTimeForAddress:
 class TestOffsetRangesForLocalTime:
     @patch('datetime.datetime', FakeDateTime)
     @pytest.mark.parametrize(
-        'hour_now, range_start, range_end, result',
+        'hour, local_time_start, local_time_end, expected_offset_results',
         [
             (
                 20,
@@ -566,12 +566,16 @@ class TestOffsetRangesForLocalTime:
             (20, '9:00', '17:00', [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]),
         ],
     )
-    def test_offset_ranges(self, hour_now, range_start, range_end, result):
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
+    def test_offset_ranges(self, hour, local_time_start, local_time_end, expected_offset_results):
+        """Make sure that a list of UTC offset ranges where the local time is between local_time_start and
+        local_time_end generates correctly for different hours of the same day, using both integers and
+        strings.
+        """
+        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour))
         offset_ranges = tztrout.offset_ranges_for_local_time(
-            range_start, range_end
+            local_time_start, local_time_end
         )
-        assert offset_ranges == result
+        assert offset_ranges == expected_offset_results
 
 
 class TestNonDSTOffsetsForPhone:
