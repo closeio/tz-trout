@@ -8,6 +8,36 @@ from mock import patch
 us_ca_tz_names = ['PT', 'MT', 'CT', 'ET', 'AT']
 au_tz_names = ['AWT', 'ACT', 'AET']
 
+def assert_only_one_tz(ids, expected_tz_name, tz_names):
+    """Assert that a set of timezone identifiers exists in only one expected timezone across
+    a given list of timezones.
+    
+    assert_only_one_tz(['America/New_York', America/Detroit'], 'ET', ['CT', 'ET', 'PT'])
+    would pass because both 'America/New_York' and 'America/Detroit' are in the 'ET' timezone.
+    
+    assert_only_one_tz(['America/New_York', America/Los_Angeles'], 'ET', ['CT', 'ET', 'PT'])
+    would fail because 'America/New_York' is in the ET timezone and 'America/Los_Angeles' is
+    in the 'PT' timezone.
+    """
+    
+    assert expected_tz_name in tz_names
+    expected_tz_ids = set(tztrout.tz_ids_for_tz_name(expected_tz_name))
+    
+    # The given set of timezone ids should have a least one timezone id in commmon
+    # with the expected timezone's timezone ids.
+    ids = set(ids)
+    assert ids & expected_tz_ids
+    
+    # The given set of timezone ids should not have any timezone ids in common with
+    # any other (non-expected) timezones in the given timezone list.
+    non_expected_tz_names = [i for i in tz_names if i != expected_tz_name]
+    non_expected_tz_ids = set()
+    for tz_name in non_expected_tz_names:
+        tz_ids_for_name = set(tztrout.tz_ids_for_tz_name(tz_name))
+        non_expected_tz_ids.update(tz_ids_for_name)
+    
+    assert not ids & non_expected_tz_ids
+
 class FakeDateTime(datetime.datetime):
     "A datetime replacement that lets you set utcnow()"
 
@@ -25,17 +55,7 @@ class FakeDateTime(datetime.datetime):
 
 
 class TestTZIdsForPhone:
-    def assert_only_one_tz(self, ids, tz_name, tz_names):
-        """ Assert that a given set of timezone ids only matches one tz name
-         in a given set of tz names
-         """
-        tz_names_copy = tz_names[:]
-        assert tz_name in tz_names_copy
-        tz_names_copy.remove(tz_name)
-        assert set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids)
-        for other_name in tz_names_copy:
-            assert not (set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-            
+    
     @pytest.mark.parametrize(
         'phone, tz_ids',
         [
@@ -139,7 +159,7 @@ class TestTZIdsForPhone:
         (and the right time zone only). """
         for phone in phones:
             ids = tztrout.tz_ids_for_phone(phone)
-            self.assert_only_one_tz(ids, tz_name, us_ca_tz_names)
+            assert_only_one_tz(ids, tz_name, us_ca_tz_names)
     
     @pytest.mark.parametrize(
          'phones, tz_name',
@@ -224,20 +244,9 @@ class TestTZIdsForPhone:
         for phone in phones[1:]:
              ids2 = tztrout.tz_ids_for_phone(phone)
              assert ids == ids2
-        self.assert_only_one_tz(ids, tz_name, au_tz_names)
+        assert_only_one_tz(ids, tz_name, au_tz_names)
     
 class TestTZIdsForAddress:
-    def assert_only_one_tz(self, ids, tz_name, tz_names):
-        """ Assert that a given set of timezone ids only matches one tz name
-         in a given set of tz names
-         """
-        tz_names_copy = tz_names[:]
-        assert tz_name in tz_names_copy
-        tz_names_copy.remove(tz_name)
-        assert set(tztrout.tz_ids_for_tz_name(tz_name)) & set(ids)
-        for other_name in tz_names_copy:
-            assert not (set(tztrout.tz_ids_for_tz_name(other_name)) & set(ids))
-            
     @pytest.mark.parametrize(
         'country, state, city, zipcode, expected_tz_ids, is_exact_match',
         [
@@ -389,7 +398,7 @@ class TestTZIdsForAddress:
         """ Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only)."""
         ids = tztrout.tz_ids_for_address(country, state=state, city=city)
-        self.assert_only_one_tz(ids, tz_name, us_ca_tz_names)
+        assert_only_one_tz(ids, tz_name, us_ca_tz_names)
     
     @pytest.mark.parametrize(
         'state, city, tz_name',
@@ -443,7 +452,7 @@ class TestTZIdsForAddress:
         """ Make sure all the major cities in Australia match the right time zone
         (and the right time zone only). """
         ids = tztrout.tz_ids_for_address('AU', state=state, city=city)
-        self.assert_only_one_tz(ids, tz_name, au_tz_names)
+        assert_only_one_tz(ids, tz_name, au_tz_names)
         
     def test_australia_without_state_info(self):
         ids = tztrout.tz_ids_for_address('AU')
