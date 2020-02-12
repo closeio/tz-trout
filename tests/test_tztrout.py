@@ -4,30 +4,30 @@ import pytest
 import tztrout
 from mock import patch
 
-
 us_ca_tz_names = ['PT', 'MT', 'CT', 'ET', 'AT']
 au_tz_names = ['AWT', 'ACT', 'AET']
+
 
 def assert_only_one_tz(ids, expected_tz_name, tz_names):
     """Assert that a set of timezone identifiers exists in only one expected timezone across
     a given list of timezones.
-    
+
     assert_only_one_tz(['America/New_York', America/Detroit'], 'ET', ['CT', 'ET', 'PT'])
     would pass because both 'America/New_York' and 'America/Detroit' are in the 'ET' timezone.
-    
+
     assert_only_one_tz(['America/New_York', America/Los_Angeles'], 'ET', ['CT', 'ET', 'PT'])
     would fail because 'America/New_York' is in the ET timezone and 'America/Los_Angeles' is
     in the 'PT' timezone.
     """
-    
+
     assert expected_tz_name in tz_names
     expected_tz_ids = set(tztrout.tz_ids_for_tz_name(expected_tz_name))
-    
+
     # The given set of timezone ids should have a least one timezone id in commmon
     # with the expected timezone's timezone ids.
     ids = set(ids)
     assert ids & expected_tz_ids
-    
+
     # The given set of timezone ids should not have any timezone ids in common with
     # any other (non-expected) timezones in the given timezone list.
     non_expected_tz_names = [i for i in tz_names if i != expected_tz_name]
@@ -35,8 +35,9 @@ def assert_only_one_tz(ids, expected_tz_name, tz_names):
     for tz_name in non_expected_tz_names:
         tz_ids_for_name = set(tztrout.tz_ids_for_tz_name(tz_name))
         non_expected_tz_ids.update(tz_ids_for_name)
-    
+
     assert not ids & non_expected_tz_ids
+
 
 class FakeDateTime(datetime.datetime):
     "A datetime replacement that lets you set utcnow()"
@@ -55,7 +56,6 @@ class FakeDateTime(datetime.datetime):
 
 
 class TestTZIdsForPhone:
-    
     @pytest.mark.parametrize(
         'phone, tz_ids',
         [
@@ -66,21 +66,18 @@ class TestTZIdsForPhone:
     def test_ids_for_phone(self, phone, tz_ids):
         ids = tztrout.tz_ids_for_phone(phone)
         assert ids == tz_ids
-    
+
     @pytest.mark.parametrize(
         'phones, tz_name',
         [
             # United States -- Special cases to make sure ET is not counted as part of state timezone
             # Wisconsin
             (['+14143334444'], 'CT'),
-            #Texas
+            # Texas
             (['+12143334444'], 'CT'),
             # United States
             # New York, NY
-            (
-                ['+12123334444', '+16463334444'],
-                'ET'
-            ),
+            (['+12123334444', '+16463334444'], 'ET'),
             # Los Angeles, CA
             (['+18183334444'], 'PT'),
             # Chicago, IL
@@ -123,7 +120,6 @@ class TestTZIdsForPhone:
             (['+13033334444'], 'MT'),
             # Washington, DC
             (['+12023334444'], 'ET'),
-            
             # Canada
             # Toronto, ON
             (['+14163334444'], 'ET'),
@@ -132,10 +128,7 @@ class TestTZIdsForPhone:
             # Calgary, AB
             (['+14033334444'], 'MT'),
             # Ottawa, ON
-            (
-                ['+13433334444', '+16133334444'],
-                'ET'
-            ),
+            (['+13433334444', '+16133334444'], 'ET'),
             # Edmonton, AB
             (['+17803334444'], 'MT'),
             # Mississauga, ON
@@ -151,101 +144,88 @@ class TestTZIdsForPhone:
         ],
     )
     def test_major_cities_us_ca(
-        self,
-        phones,
-        tz_name,
+        self, phones, tz_name,
     ):
         """ Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only). """
         for phone in phones:
             ids = tztrout.tz_ids_for_phone(phone)
             assert_only_one_tz(ids, tz_name, us_ca_tz_names)
-    
+
     @pytest.mark.parametrize(
-         'phones, tz_name',
-         [
-             # NSW - New South Wales
-             # WA - Western Australia
-             # NT - Northern Territory
-             # SA - South Australia
-             # TAS - Tasmania
-             # VIC - Victoria
-             # ACT - Australian Capital Territory
-             # QLD - Queensland
-             
-             # Sydney, NSW
-             (
-                 ['+61 27 333 4444', '+61 28 333 4444', '+61 29 333 4444'],
-                 'AET'
-             ),
-             # Perth, WA
-             (
-                 [
-                     '+61 852 22 4444',
-                     '+61 853 22 4444',
-                     '+61 854 22 4444',
-                     '+61 861 22 4444',
-                     '+61 862 22 4444',
-                     '+61 863 22 4444',
-                     '+61 864 22 4444',
-                     '+61 865 22 4444',
-                 ],
-                 'AWT'
-             ),
-             # Darwin, NT
-             (['+61 879 22 4444', '+61 889 22 4444'], 'ACT'),
-             # Adelaide, SA
-             (
-                 [
-                     '+61 870 22 4444',
-                     '+61 871 22 4444',
-                     '+61 872 22 4444',
-                     '+61 873 22 4444',
-                     '+61 874 22 4444',
-                     '+61 881 22 4444',
-                     '+61 882 22 4444',
-                     '+61 883 22 4444',
-                     '+61 884 22 4444',
-                 ],
-                 'ACT'
-             ),
-             # Hobart, TAS
-             (['+61 361 22 4444', '+61 362 22 4444'], 'AET'),
-             # Melbourne, VIC
-             (
-                 ['+61 37 333 4444', '+61 38 333 4444', '+61 39 333 4444'],
-                 'AET'
-             ),
-             # Canberra, ACT
-             (
-                 [
-                     '+61 251 22 4444',
-                     '+61 252 22 4444',
-                     '+61 261 22 4444',
-                     '+61 262 22 4444',
-                 ],
-                 'AET'
-             ),
-             # Brisbane, QLD
-             (['+61 72 333 4444', '+61 73 333 4444'], 'AET'),
-             # Townsville, QLD
-             (
-                 ['+61 744 22 4444', '+61 745 22 4444', '+61 777 22 4444'],
-                 'AET'
-             ),
-         ],
+        'phones, tz_name',
+        [
+            # NSW - New South Wales
+            # WA - Western Australia
+            # NT - Northern Territory
+            # SA - South Australia
+            # TAS - Tasmania
+            # VIC - Victoria
+            # ACT - Australian Capital Territory
+            # QLD - Queensland
+            # Sydney, NSW
+            (['+61 27 333 4444', '+61 28 333 4444', '+61 29 333 4444'], 'AET'),
+            # Perth, WA
+            (
+                [
+                    '+61 852 22 4444',
+                    '+61 853 22 4444',
+                    '+61 854 22 4444',
+                    '+61 861 22 4444',
+                    '+61 862 22 4444',
+                    '+61 863 22 4444',
+                    '+61 864 22 4444',
+                    '+61 865 22 4444',
+                ],
+                'AWT',
+            ),
+            # Darwin, NT
+            (['+61 879 22 4444', '+61 889 22 4444'], 'ACT'),
+            # Adelaide, SA
+            (
+                [
+                    '+61 870 22 4444',
+                    '+61 871 22 4444',
+                    '+61 872 22 4444',
+                    '+61 873 22 4444',
+                    '+61 874 22 4444',
+                    '+61 881 22 4444',
+                    '+61 882 22 4444',
+                    '+61 883 22 4444',
+                    '+61 884 22 4444',
+                ],
+                'ACT',
+            ),
+            # Hobart, TAS
+            (['+61 361 22 4444', '+61 362 22 4444'], 'AET'),
+            # Melbourne, VIC
+            (['+61 37 333 4444', '+61 38 333 4444', '+61 39 333 4444'], 'AET'),
+            # Canberra, ACT
+            (
+                [
+                    '+61 251 22 4444',
+                    '+61 252 22 4444',
+                    '+61 261 22 4444',
+                    '+61 262 22 4444',
+                ],
+                'AET',
+            ),
+            # Brisbane, QLD
+            (['+61 72 333 4444', '+61 73 333 4444'], 'AET'),
+            # Townsville, QLD
+            (['+61 744 22 4444', '+61 745 22 4444', '+61 777 22 4444'], 'AET'),
+        ],
     )
-    def test_major_cities_australia(
-         self, phones, tz_name
-     ):
+    def test_major_cities_australia(self, phones, tz_name):
         """ Make sure all the major cities in Australia match the right time zone
         (and the right time zone only)."""
         ids = tztrout.tz_ids_for_phone(phones[0])
         for phone in phones[1:]:
-             ids2 = tztrout.tz_ids_for_phone(phone)
-             assert ids == ids2
+            ids2 = tztrout.tz_ids_for_phone(phone)
+            assert ids == ids2
         assert_only_one_tz(ids, tz_name, au_tz_names)
-    
+
+
 class TestTZIdsForAddress:
     @pytest.mark.parametrize(
         'country, state, city, zipcode, expected_tz_ids, is_exact_match',
@@ -334,7 +314,7 @@ class TestTZIdsForAddress:
         else:
             for tz_id in expected_tz_ids:
                 assert tz_id in ids
-    
+
     @pytest.mark.parametrize(
         'country, state, city, tz_name',
         [
@@ -342,12 +322,7 @@ class TestTZIdsForAddress:
             ('US', 'WI', None, 'CT'),
             ('US', 'TX', None, 'CT'),
             # United States
-            (
-                'US',
-                'NY',
-                'New York',
-                'ET'
-            ),
+            ('US', 'NY', 'New York', 'ET'),
             ('US', 'CA', 'Los Angeles', 'PT'),
             ('US', 'IL', 'Chicago', 'CT'),
             ('US', 'TX', 'Houston', 'CT'),
@@ -369,17 +344,11 @@ class TestTZIdsForAddress:
             ('US', 'TN', 'Memphis', 'CT'),
             ('US', 'CO', 'Denver', 'MT'),
             ('US', 'DC', 'Washington', 'ET'),
-            
             # Canada
             ('CA', 'ON', 'Toronto', 'ET'),
             ('CA', 'QC', 'Montreal', 'ET'),
             ('CA', 'AB', 'Calgary', 'MT'),
-            (
-                'CA',
-                'ON',
-                'Ottawa',
-                'ET'
-            ),
+            ('CA', 'ON', 'Ottawa', 'ET'),
             ('CA', 'AB', 'Edmonton', 'MT'),
             ('CA', 'ON', 'Mississauga', 'ET'),
             ('CA', 'MB', 'Winnipeg', 'CT'),
@@ -389,17 +358,13 @@ class TestTZIdsForAddress:
         ],
     )
     def test_major_cities_us_ca(
-        self,
-        country,
-        state,
-        city,
-        tz_name,
+        self, country, state, city, tz_name,
     ):
         """ Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only)."""
         ids = tztrout.tz_ids_for_address(country, state=state, city=city)
         assert_only_one_tz(ids, tz_name, us_ca_tz_names)
-    
+
     @pytest.mark.parametrize(
         'state, city, tz_name',
         [
@@ -411,49 +376,23 @@ class TestTZIdsForAddress:
             # VIC - Victoria
             # ACT - Australian Capital Territory
             # QLD - Queensland
-            (
-                'NSW',
-                'Sydney',
-                'AET'
-            ),
-            (
-                'WA',
-                'Perth',
-                'AWT'
-            ),
+            ('NSW', 'Sydney', 'AET'),
+            ('WA', 'Perth', 'AWT'),
             ('NT', 'Darwin', 'ACT'),
-            (
-                'SA',
-                'Adelaide',
-                'ACT'
-            ),
+            ('SA', 'Adelaide', 'ACT'),
             ('TAS', 'Hobart', 'AET'),
-            (
-                'VIC',
-                'Melbourne',
-                'AET'
-            ),
-            (
-                'ACT',
-                'Canberra',
-                'AET'
-            ),
+            ('VIC', 'Melbourne', 'AET'),
+            ('ACT', 'Canberra', 'AET'),
             ('QLD', 'Brisbane', 'AET'),
-            (
-                'QLD',
-                'Townsville',
-                'AET'
-            ),
+            ('QLD', 'Townsville', 'AET'),
         ],
     )
-    def test_major_cities_australia(
-        self, state, city, tz_name
-    ):
+    def test_major_cities_australia(self, state, city, tz_name):
         """ Make sure all the major cities in Australia match the right time zone
         (and the right time zone only). """
         ids = tztrout.tz_ids_for_address('AU', state=state, city=city)
         assert_only_one_tz(ids, tz_name, au_tz_names)
-        
+
     def test_australia_without_state_info(self):
         ids = tztrout.tz_ids_for_address('AU')
         expected_ids = [
@@ -506,8 +445,8 @@ class TestTZIdsForTZName:
         ]
         ids = tztrout.tz_ids_for_tz_name(tz_name)
         assert ids == pacific_ids
-        
-        
+
+
 class TestLocalTimeForAddress:
     @patch('datetime.datetime', FakeDateTime)
     def test_local_time_in_spain(self):
@@ -542,14 +481,14 @@ class TestOffsetRangesForLocalTime:
                 datetime.time(17),
                 [[5 * 60, 13 * 60], [-14 * 60, -11 * 60]],
             ),
-            (7, datetime.time(9), datetime.time(17), [[2 * 60, 10 * 60], ]),
+            (7, datetime.time(9), datetime.time(17), [[2 * 60, 10 * 60]]),
             (
                 20,
                 datetime.time(17),
                 datetime.time(9),
                 [[-3 * 60, 13 * 60], [-14 * 60, -11 * 60]],
             ),
-            (0, datetime.time(17), datetime.time(9), [[-7 * 60, 9 * 60], ]),
+            (0, datetime.time(17), datetime.time(9), [[-7 * 60, 9 * 60]]),
             (
                 4,
                 datetime.time(17),
@@ -566,7 +505,9 @@ class TestOffsetRangesForLocalTime:
             (20, '9:00', '17:00', [[-11 * 60, -3 * 60], [13 * 60, 14 * 60]]),
         ],
     )
-    def test_offset_ranges(self, hour, local_time_start, local_time_end, expected_offset_results):
+    def test_offset_ranges(
+        self, hour, local_time_start, local_time_end, expected_offset_results
+    ):
         """Make sure that a list of UTC offset ranges where the local time is between local_time_start and
         local_time_end generates correctly for different hours of the same day, using both integers and
         strings.
