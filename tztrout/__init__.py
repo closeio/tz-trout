@@ -223,52 +223,64 @@ def local_time_for_address(country, state=None, city=None, zipcode=None, **kwarg
         return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
 
 def offset_ranges_for_local_time(local_start, local_end):
-    """ Return a list of UTC offset ranges where the local time is between
-    local_start and local_end, e.g.
+    """Return a list of UTC offset ranges matching a given local time range.
+
+    The returned ranges are expressed in minutes.
+
+    `local_start` and `local_end` can be instances of `datetime.time`,
+    integers, (minutes from midnight) or strings (e.g. '10:00', '20:00',
+    '8pm', etc.)
+
+    For example, if we want to find offset ranges for the timezones where the
+    local time is currently between 9am and 5pm, and it's 8pm UTC at the
+    moment, then the expected return value is:
+    * From -660 to -180. That's because:
+        * 20 - 660 / 60 == 9
+        * 20 - 180 / 60 == 17
+    * From 780 to 840. That's because:
+        * 20 + 780 / 60 % 24 == 9
+        * 20 + 840 / 60 % 24 == 10 (it's not 5pm, but 840/60 is 14 and UTC+14
+          is the furthest possible timezone offset).
 
     >>> tztrout.offset_ranges_for_local_time(datetime.time(9), datetime.time(17))  # ran at 8pm UTC
     [[-660, -180], [780, 840]]
-
-    local_start and local_end can be instances of datetime.time, integers
-    (minutes from midnight) or strings (e.g. '10:00', '20:00', '8pm', etc.)
     """
-
-    # validate
     if not isinstance(local_start, (datetime.time, int, str)):
         raise ValueError('local_start is not an instance of datetime.time or int or str')
     if not isinstance(local_end, (datetime.time, int, str)):
         raise ValueError('local_end is not an instance of datetime.time or int or str')
 
-    # convert to datetime.time if strings
+    # Convert to `datetime.time` if `local_start` or `local_end` are strings.
     local_start = parse_date(local_start).time() if isinstance(local_start, str) else local_start
     local_end = parse_date(local_end).time() if isinstance(local_end, str) else local_end
 
-    # convert to ints (minutes)
+    # Convert to ints (minutes).
     to_minutes = lambda t: t.hour * 60 + t.minute
     local_start = local_start if isinstance(local_start, int) else to_minutes(local_start)
     local_end = local_end if isinstance(local_end, int) else to_minutes(local_end)
 
-    # get current UTC time
+    # Get current UTC time.
     current_time = to_minutes(datetime.datetime.utcnow().time())
 
-    # tweak for ranges that pass midnight (e.g. (5pm, 9am))
+    # Tweak for ranges that pass midnight (e.g. (5pm, 9am)).
     if local_end < local_start:
         local_end += 24 * 60
 
-    # calculate offsets
+    # Calculate UTC offsets.
     offset_ranges = [
         [local_start - current_time, local_end - current_time],
         [24 * 60 - current_time + local_start, 24 * 60 - current_time + local_end],
         [-24 * 60 - current_time + local_start, -24 * 60 - current_time + local_end]
     ]
 
-    # cap the offsets at UTC-14:00 and UTC+14:00
+    # Cap the offsets at UTC-14:00 and UTC+14:00 (lowest/highest possible
+    # offset).
     capped = lambda t: 14 * 60 if t > 14 * 60 else -14 * 60 if t < -14 * 60 else t
     for i, range in enumerate(offset_ranges):
         offset_ranges[i][0] = capped(range[0])
         offset_ranges[i][1] = capped(range[1])
 
-    # discard the irrelevant ranges (i.e. where start == end)
+    # Discard the irrelevant ranges (i.e. where start == end).
     offset_ranges = [range for range in offset_ranges if range[0] != range[1]]
     return offset_ranges
 
