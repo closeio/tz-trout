@@ -4,6 +4,7 @@ workflows:
   version: 2
   workflow:
     jobs:
+      - static-code-analysis
       - test-3.5
       - test-3.6
 
@@ -19,6 +20,19 @@ defaults: &defaults
       command: pytest
 
 jobs:
+  static-code-analysis:
+    docker:
+    - image: circleci/python:3.6
+    working_directory: ~/code
+    steps:
+    - checkout
+    - run:
+        name: Prepare Environment
+        command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming
+    - run:
+        name: Flake8
+        command: flake8
+    
   test-3.5:
     <<: *defaults
     docker:

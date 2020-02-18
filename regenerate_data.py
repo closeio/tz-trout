@@ -3,6 +3,7 @@
 Run this script when you upgrade dependencies.
 Commit changes after the run.
 """
+
 import sys
 
 sys.path.append('.')
