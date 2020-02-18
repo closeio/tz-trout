@@ -68,92 +68,93 @@ class TestTZIdsForPhone:
         assert ids == tz_ids
 
     @pytest.mark.parametrize(
-        'phones, tz_name',
+        'phone, tz_name',
         [
             # United States -- Special cases to make sure ET is not counted as part of state timezone
             # Wisconsin
-            (['+14143334444'], 'CT'),
+            ('+14143334444', 'CT'),
             # Texas
-            (['+12143334444'], 'CT'),
+            ('+12143334444', 'CT'),
             # United States
             # New York, NY
-            (['+12123334444', '+16463334444'], 'ET'),
+            ('+12123334444', 'ET'),
+            ('+16463334444', 'ET'),
             # Los Angeles, CA
-            (['+18183334444'], 'PT'),
+            ('+18183334444', 'PT'),
             # Chicago, IL
-            (['+16303334444'], 'CT'),
+            ('+16303334444', 'CT'),
             # Houston, TX
-            (['+17133334444'], 'CT'),
+            ('+17133334444', 'CT'),
             # Philadelphia, PA
-            (['+12153334444'], 'ET'),
+            ('+12153334444', 'ET'),
             # Phoenix, AZ
-            (['+16023334444'], 'MT'),
+            ('+16023334444', 'MT'),
             # San Antonio, TX
-            (['+12103334444'], 'CT'),
+            ('+12103334444', 'CT'),
             # San Diego, CA
-            (['+16193334444'], 'PT'),
+            ('+16193334444', 'PT'),
             # Dallas, TX
-            (['+12143334444'], 'CT'),
+            ('+12143334444', 'CT'),
             # San Jose, CA
-            (['+14083334444'], 'PT'),
+            ('+14083334444', 'PT'),
             # Austin, TX
-            (['+15123334444'], 'CT'),
+            ('+15123334444', 'CT'),
             # Indianapolis, IN
-            (['+13173334444'], 'ET'),
+            ('+13173334444', 'ET'),
             # Jacksonville, FL
-            (['+19043334444'], 'ET'),
+            ('+19043334444', 'ET'),
             # San Francisco, CA
-            (['+14153334444'], 'PT'),
+            ('+14153334444', 'PT'),
             # Columbus, OH
-            (['+16143334444'], 'ET'),
+            ('+16143334444', 'ET'),
             # Charlotte, NC
-            (['+17043334444'], 'ET'),
+            ('+17043334444', 'ET'),
             # Fort Worth, TX
-            (['+16823334444'], 'CT'),
+            ('+16823334444', 'CT'),
             # Detroit, MI
-            (['+13133334444'], 'ET'),
+            ('+13133334444', 'ET'),
             # El Paso, TX
-            (['+19153334444'], 'MT'),
+            ('+19153334444', 'MT'),
             # Memphis, TN
-            (['+19013334444'], 'CT'),
+            ('+19013334444', 'CT'),
             # Denver, CO
-            (['+13033334444'], 'MT'),
+            ('+13033334444', 'MT'),
             # Washington, DC
-            (['+12023334444'], 'ET'),
+            ('+12023334444', 'ET'),
             # Canada
             # Toronto, ON
-            (['+14163334444'], 'ET'),
+            ('+14163334444', 'ET'),
             # Montreal, QC
-            (['+15143334444'], 'ET'),
+            ('+15143334444', 'ET'),
             # Calgary, AB
-            (['+14033334444'], 'MT'),
+            ('+14033334444', 'MT'),
             # Ottawa, ON
-            (['+13433334444', '+16133334444'], 'ET'),
+            ('+13433334444', 'ET'),
+            ('+16133334444', 'ET'),
             # Edmonton, AB
-            (['+17803334444'], 'MT'),
+            ('+17803334444', 'MT'),
             # Mississauga, ON
-            (['+12893334444'], 'ET'),
+            ('+12893334444', 'ET'),
             # Winnipeg, MB
-            (['+14313334444'], 'CT'),
+            ('+14313334444', 'CT'),
             # Vancouver, BC
-            (['+16043334444'], 'PT'),
+            ('+16043334444', 'PT'),
             # Halifax, NS
-            (['+19023334444'], 'AT'),
+            ('+19023334444', 'AT'),
             # Saskatoon, SK
-            (['+13063334444'], 'CT'),
+            ('+13063334444', 'CT'),
         ],
     )
     def test_major_cities_us_ca(
-        self, phones, tz_name,
+        self, phone, tz_name,
     ):
         """ Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only). """
-        for phone in phones:
-            ids = tztrout.tz_ids_for_phone(phone)
-            assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
+        ids = tztrout.tz_ids_for_phone(phone)
+        assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
 
     @pytest.mark.parametrize(
-        'phones, tz_name',
+        'phone, tz_name',
         [
             # NSW - New South Wales
             # WA - Western Australia
@@ -164,65 +165,56 @@ class TestTZIdsForPhone:
             # ACT - Australian Capital Territory
             # QLD - Queensland
             # Sydney, NSW
-            (['+61 27 333 4444', '+61 28 333 4444', '+61 29 333 4444'], 'AET'),
+            ('+61 27 333 4444', 'AET'),
+            ('+61 28 333 4444', 'AET'),
+            ('+61 29 333 4444', 'AET'),
             # Perth, WA
-            (
-                [
-                    '+61 852 22 4444',
-                    '+61 853 22 4444',
-                    '+61 854 22 4444',
-                    '+61 861 22 4444',
-                    '+61 862 22 4444',
-                    '+61 863 22 4444',
-                    '+61 864 22 4444',
-                    '+61 865 22 4444',
-                ],
-                'AWT',
-            ),
+            ('+61 852 22 4444', 'AWT'),
+            ('+61 853 22 4444', 'AWT'),
+            ('+61 854 22 4444', 'AWT'),
+            ('+61 861 22 4444', 'AWT'),
+            ('+61 862 22 4444', 'AWT'),
+            ('+61 863 22 4444', 'AWT'),
+            ('+61 864 22 4444', 'AWT'),
+            ('+61 865 22 4444', 'AWT'),
             # Darwin, NT
-            (['+61 879 22 4444', '+61 889 22 4444'], 'ACT'),
+            ('+61 879 22 4444', 'ACT'),
+            ('+61 889 22 4444', 'ACT'),
             # Adelaide, SA
-            (
-                [
-                    '+61 870 22 4444',
-                    '+61 871 22 4444',
-                    '+61 872 22 4444',
-                    '+61 873 22 4444',
-                    '+61 874 22 4444',
-                    '+61 881 22 4444',
-                    '+61 882 22 4444',
-                    '+61 883 22 4444',
-                    '+61 884 22 4444',
-                ],
-                'ACT',
-            ),
+            ('+61 870 22 4444', 'ACT'),
+            ('+61 871 22 4444', 'ACT'),
+            ('+61 872 22 4444', 'ACT'),
+            ('+61 873 22 4444', 'ACT'),
+            ('+61 874 22 4444', 'ACT'),
+            ('+61 881 22 4444', 'ACT'),
+            ('+61 882 22 4444', 'ACT'),
+            ('+61 883 22 4444', 'ACT'),
+            ('+61 884 22 4444', 'ACT'),
             # Hobart, TAS
-            (['+61 361 22 4444', '+61 362 22 4444'], 'AET'),
+            ('+61 361 22 4444', 'AET'),
+            ('+61 362 22 4444', 'AET'),
             # Melbourne, VIC
-            (['+61 37 333 4444', '+61 38 333 4444', '+61 39 333 4444'], 'AET'),
+            ('+61 37 333 4444', 'AET'),
+            ('+61 38 333 4444', 'AET'),
+            ('+61 39 333 4444', 'AET'),
             # Canberra, ACT
-            (
-                [
-                    '+61 251 22 4444',
-                    '+61 252 22 4444',
-                    '+61 261 22 4444',
-                    '+61 262 22 4444',
-                ],
-                'AET',
-            ),
+            ('+61 251 22 4444', 'AET'),
+            ('+61 252 22 4444', 'AET'),
+            ('+61 261 22 4444', 'AET'),
+            ('+61 262 22 4444', 'AET'),
             # Brisbane, QLD
-            (['+61 72 333 4444', '+61 73 333 4444'], 'AET'),
+            ('+61 72 333 4444', 'AET'),
+            ('+61 73 333 4444', 'AET'),
             # Townsville, QLD
-            (['+61 744 22 4444', '+61 745 22 4444', '+61 777 22 4444'], 'AET'),
+            ('+61 744 22 4444', 'AET'),
+            ('+61 745 22 4444', 'AET'),
+            ('+61 777 22 4444', 'AET'),
         ],
     )
-    def test_major_cities_australia(self, phones, tz_name):
+    def test_major_cities_australia(self, phone, tz_name):
         """ Make sure all the major cities in Australia match the right time zone
         (and the right time zone only)."""
-        ids = tztrout.tz_ids_for_phone(phones[0])
-        for phone in phones[1:]:
-            ids2 = tztrout.tz_ids_for_phone(phone)
-            assert ids == ids2
+        ids = tztrout.tz_ids_for_phone(phone)
         assert_only_one_tz(ids, tz_name, AU_TZ_NAMES)
 
 
