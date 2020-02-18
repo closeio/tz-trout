@@ -502,7 +502,11 @@ class TestOffsetRangesForLocalTime:
         ],
     )
     def test_offset_ranges(
-        self, hour_now, local_time_start, local_time_end, expected_offset_results
+        self,
+        hour_now,
+        local_time_start,
+        local_time_end,
+        expected_offset_results,
     ):
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
         offset_ranges = tztrout.offset_ranges_for_local_time(

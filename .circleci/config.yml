@@ -28,7 +28,10 @@ jobs:
     - checkout
     - run:
         name: Prepare Environment
-        command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort
+        command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort black==19.10b0
+    - run:
+        name: Black
+        command: black --check .
     - run:
         name: Flake8
         command: flake8

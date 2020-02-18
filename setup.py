@@ -19,12 +19,8 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
-    packages=[
-        'tztrout',
-    ],
-    package_data={
-        'tztrout': ['data/*']
-    },
+    packages=['tztrout',],
+    package_data={'tztrout': ['data/*']},
     install_requires=[
         'phonenumbers>=8.3.0',
         'python-dateutil',
