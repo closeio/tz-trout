@@ -1,11 +1,11 @@
 import datetime
 import json
 import os
-import pytz
 from collections import defaultdict
 from sys import stdout
 
-from pyzipcode import ZipCodeDatabase, ZipCode
+import pytz
+from pyzipcode import ZipCode, ZipCodeDatabase
 
 from tztrout.data_exceptions import data_exceptions
 

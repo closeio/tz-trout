@@ -1,14 +1,13 @@
 import datetime
 import operator
-import phonenumbers
-import pytz
-
-from dateutil.parser import parse as parse_date
 from functools import reduce
 
-from tztrout.data import TroutData, ZIP_DATA
-from tztrout.data_exceptions import data_exceptions
+import phonenumbers
+import pytz
+from dateutil.parser import parse as parse_date
 
+from tztrout.data import ZIP_DATA, TroutData
+from tztrout.data_exceptions import data_exceptions
 
 td = TroutData()
 

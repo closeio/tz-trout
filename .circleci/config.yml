@@ -28,10 +28,13 @@ jobs:
     - checkout
     - run:
         name: Prepare Environment
-        command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming
+        command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort
     - run:
         name: Flake8
         command: flake8
+    - run:
+        name: Isort
+        command: isort -rc -c .
     
   test-3.5:
     <<: *defaults

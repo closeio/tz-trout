@@ -1,8 +1,9 @@
 import datetime
 
 import pytest
-import tztrout
 from mock import patch
+
+import tztrout
 
 US_CA_TZ_NAMES = ['PT', 'MT', 'CT', 'ET', 'AT']
 AU_TZ_NAMES = ['AWT', 'ACT', 'AET']
