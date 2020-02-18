@@ -4,8 +4,8 @@ import pytest
 import tztrout
 from mock import patch
 
-us_ca_tz_names = ['PT', 'MT', 'CT', 'ET', 'AT']
-au_tz_names = ['AWT', 'ACT', 'AET']
+US_CA_TZ_NAMES = ['PT', 'MT', 'CT', 'ET', 'AT']
+AU_TZ_NAMES = ['AWT', 'ACT', 'AET']
 
 
 def assert_only_one_tz(ids, expected_tz_name, tz_names):
@@ -150,7 +150,7 @@ class TestTZIdsForPhone:
         (and the right time zone only). """
         for phone in phones:
             ids = tztrout.tz_ids_for_phone(phone)
-            assert_only_one_tz(ids, tz_name, us_ca_tz_names)
+            assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
 
     @pytest.mark.parametrize(
         'phones, tz_name',
@@ -223,7 +223,7 @@ class TestTZIdsForPhone:
         for phone in phones[1:]:
             ids2 = tztrout.tz_ids_for_phone(phone)
             assert ids == ids2
-        assert_only_one_tz(ids, tz_name, au_tz_names)
+        assert_only_one_tz(ids, tz_name, AU_TZ_NAMES)
 
 
 class TestTZIdsForAddress:
@@ -363,7 +363,7 @@ class TestTZIdsForAddress:
         """ Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only)."""
         ids = tztrout.tz_ids_for_address(country, state=state, city=city)
-        assert_only_one_tz(ids, tz_name, us_ca_tz_names)
+        assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
 
     @pytest.mark.parametrize(
         'state, city, tz_name',
@@ -391,7 +391,7 @@ class TestTZIdsForAddress:
         """ Make sure all the major cities in Australia match the right time zone
         (and the right time zone only). """
         ids = tztrout.tz_ids_for_address('AU', state=state, city=city)
-        assert_only_one_tz(ids, tz_name, au_tz_names)
+        assert_only_one_tz(ids, tz_name, AU_TZ_NAMES)
 
     def test_australia_without_state_info(self):
         ids = tztrout.tz_ids_for_address('AU')
@@ -461,7 +461,7 @@ class TestLocalTimeForAddress:
 class TestOffsetRangesForLocalTime:
     @patch('datetime.datetime', FakeDateTime)
     @pytest.mark.parametrize(
-        'hour, local_time_start, local_time_end, expected_offset_results',
+        'hour_now, local_time_start, local_time_end, expected_offset_results',
         [
             (
                 20,
@@ -506,13 +506,9 @@ class TestOffsetRangesForLocalTime:
         ],
     )
     def test_offset_ranges(
-        self, hour, local_time_start, local_time_end, expected_offset_results
+        self, hour_now, local_time_start, local_time_end, expected_offset_results
     ):
-        """Make sure that a list of UTC offset ranges where the local time is between local_time_start and
-        local_time_end generates correctly for different hours of the same day, using both integers and
-        strings.
-        """
-        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour))
+        FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
         offset_ranges = tztrout.offset_ranges_for_local_time(
             local_time_start, local_time_end
         )
