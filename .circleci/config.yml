@@ -5,6 +5,7 @@ workflows:
   workflow:
     jobs:
       - test-3.5
+      - test-3.6
 
 defaults: &defaults
   working_directory: ~/code
@@ -22,3 +23,8 @@ jobs:
     <<: *defaults
     docker:
     - image: circleci/python:3.5
+  
+  test-3.6:
+      <<: *defaults
+      docker:
+      - image: circleci/python:3.6
