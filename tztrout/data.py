@@ -1,26 +1,39 @@
 import datetime
 import json
-import operator
 import os
-import pytz
 from collections import defaultdict
 from sys import stdout
 
-from pyzipcode import ZipCodeDatabase, ZipCode
+import pytz
+from pyzipcode import ZipCode, ZipCodeDatabase
 
 from tztrout.data_exceptions import data_exceptions
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
-US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/us_zips_to_tz_ids.json')
-TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/tz_name_to_tz_ids.json')
-OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(basepath, 'data/offset_to_tz_ids.json')
+US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(
+    basepath, 'data/us_zips_to_tz_ids.json'
+)
+TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(
+    basepath, 'data/tz_name_to_tz_ids.json'
+)
+OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(
+    basepath, 'data/offset_to_tz_ids.json'
+)
 STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
 ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
-CA_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/ca_state_to_tz_ids.json')
-CA_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/ca_area_code_to_state.json')
-AU_STATE_TO_TZ_IDS_MAP_PATH =  os.path.join(basepath, 'data/au_state_to_tz_ids.json')
-AU_AREA_CODE_TO_STATE_MAP_PATH =  os.path.join(basepath, 'data/au_area_code_to_state.json')
+CA_STATE_TO_TZ_IDS_MAP_PATH = os.path.join(
+    basepath, 'data/ca_state_to_tz_ids.json'
+)
+CA_AREA_CODE_TO_STATE_MAP_PATH = os.path.join(
+    basepath, 'data/ca_area_code_to_state.json'
+)
+AU_STATE_TO_TZ_IDS_MAP_PATH = os.path.join(
+    basepath, 'data/au_state_to_tz_ids.json'
+)
+AU_AREA_CODE_TO_STATE_MAP_PATH = os.path.join(
+    basepath, 'data/au_area_code_to_state.json'
+)
 
 # Australian TZ names are resolved as EST, WST, etc., which is ok for local
 # usage, but conflicts with the more common US TZ names if we're thinking
@@ -35,7 +48,7 @@ AU_MAP = {
     'CDT': 'ACDT',
     'EDT': 'AEDT',
     'CWDT': 'AWDT',
-    'LHDT': 'AEDT'
+    'LHDT': 'AEDT',
 }
 
 # Asia/Manila is resolved as PST (Philippine Standard Time), which is ok for
@@ -89,7 +102,10 @@ class InMemoryZipData(object):
         self.by_state_city = {}
         deduplicate = deduplicator()
 
-        for zip in map(ZipCode, ZipCodeDatabase().conn_manager.query("SELECT * FROM ZipCodes", [])):
+        for zip in map(
+            ZipCode,
+            ZipCodeDatabase().conn_manager.query("SELECT * FROM ZipCodes", []),
+        ):
             code = deduplicate(zip.zip)
             state = deduplicate(zip.state)
             city = deduplicate(zip.city)
@@ -115,7 +131,7 @@ ZIP_DATA = InMemoryZipData()
 
 
 class TroutData(object):
-    """ Helper class that generates the JSON data used by TZTrout """
+    """Helper class that generates the JSON data used by TZTrout"""
 
     # We don't care about the historic data - we just want to know the recent
     # state of time zones, zip codes, etc. RECENT_YEARS_START describes how
@@ -125,29 +141,39 @@ class TroutData(object):
     # Sometimes we need to go back a few steps to figure out DSTs, timezone
     # names, etc. This is a kwargs dict that is passed to datetime.timedelta
     # to determine the size of a single step
-    TD_STEP = { 'days': 40 }
+    TD_STEP = {'days': 40}
 
     def __init__(self):
         # load the data files, if they exist
-        self._load_us_zipcode_data('us_zip_to_tz_ids', US_ZIPS_TO_TZ_IDS_MAP_PATH)
+        self._load_us_zipcode_data(
+            'us_zip_to_tz_ids', US_ZIPS_TO_TZ_IDS_MAP_PATH
+        )
         self._load_data('tz_name_to_tz_ids', TZ_NAME_TO_TZ_IDS_MAP_PATH)
         self._load_data('offset_to_tz_ids', OFFSET_TO_TZ_IDS_MAP_PATH)
         self._load_data('normalized_states', STATES_PATH)
         self._load_data('tz_name_aliases', ALIASES_PATH)
         self._load_data('ca_state_to_tz_ids', CA_STATE_TO_TZ_IDS_MAP_PATH)
-        self._load_data('ca_area_code_to_state', CA_AREA_CODE_TO_STATE_MAP_PATH)
+        self._load_data(
+            'ca_area_code_to_state', CA_AREA_CODE_TO_STATE_MAP_PATH
+        )
         self._load_data('au_state_to_tz_ids', AU_STATE_TO_TZ_IDS_MAP_PATH)
-        self._load_data('au_area_code_to_state', AU_AREA_CODE_TO_STATE_MAP_PATH)
+        self._load_data(
+            'au_area_code_to_state', AU_AREA_CODE_TO_STATE_MAP_PATH
+        )
 
         # convert string offsets into integers
-        self.offset_to_tz_ids = dict((int(k), v) for k, v in self.offset_to_tz_ids.items())
+        self.offset_to_tz_ids = dict(
+            (int(k), v) for k, v in self.offset_to_tz_ids.items()
+        )
 
         # flatten the values of all tz name aliases (needed to identify which
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
-        self.aliases = {alias for v in self.tz_name_aliases.values() for alias in v}
+        self.aliases = {
+            alias for v in self.tz_name_aliases.values() for alias in v
+        }
 
     def _load_data(self, name, path):
-        """ Helper method to load a data file. """
+        """Helper method to load a data file"""
         with open(path, 'r') as file:
             data = json.loads(file.read())
             setattr(self, name, data)
@@ -156,10 +182,17 @@ class TroutData(object):
         dedupe = deduplicator()
         with open(path, 'r') as file:
             data = json.load(file)
-            setattr(self, name, {dedupe(k): dedupe(tuple(dedupe(tz) for tz in v)) for k, v in data.items()})
+            setattr(
+                self,
+                name,
+                {
+                    dedupe(k): dedupe(tuple(dedupe(tz) for tz in v))
+                    for k, v in data.items()
+                },
+            )
 
     def _get_latest_non_dst_offset(self, tz):
-        """ Get the UTC offset for a given time zone identifier. Ignore the
+        """Get the UTC offset for a given time zone identifier. Ignore the
         DST offsets.
         """
         dt = datetime.datetime.utcnow()
@@ -173,7 +206,7 @@ class TroutData(object):
             dt -= datetime.timedelta(**self.TD_STEP)
 
     def _get_latest_offsets(self, tz):
-        """ Get all the UTC offsets (in minutes) that a given time zone
+        """Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
         """
         dt = datetime.datetime.utcnow()
@@ -189,7 +222,7 @@ class TroutData(object):
         return offsets
 
     def _experiences_dst(self, tz):
-        """ Check if the time zone identifier has experienced the DST in the
+        """Check if the time zone identifier has experienced the DST in the
         recent years.
         """
         dt = datetime.datetime.utcnow()
@@ -204,8 +237,7 @@ class TroutData(object):
         return False
 
     def _get_latest_tz_names(self, tz):
-        """ Get the recent time zone names for a given time zone identifier.
-        """
+        """Get the recent time zone names for a given time zone identifier."""
         dt = datetime.datetime.utcnow()
         tz_names = []
         while dt.year > self.RECENT_YEARS_START:
@@ -222,7 +254,7 @@ class TroutData(object):
         return tz_names
 
     def _get_tz_identifiers_for_offset(self, country, offset):
-        """ Get all the possible time zone identifiers for a given UTC offset.
+        """Get all the possible time zone identifiers for a given UTC offset.
         Ignore the DST offsets.
         """
         identifiers = pytz.country_timezones.get(country)
@@ -235,8 +267,7 @@ class TroutData(object):
         return ids
 
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
-        """ Get all the possible identifiers for a given US zip code.
-        """
+        """Get all the possible identifiers for a given US zip code."""
         if not isinstance(zipcode, ZipCode):
             zipcode = ZipCodeDatabase().get(zipcode)
             if zipcode:
@@ -245,7 +276,9 @@ class TroutData(object):
                 return
 
         # Find all the TZ identifiers with a non-DST offset of zipcode.timezone
-        tz_ids = self._get_tz_identifiers_for_offset('US', datetime.timedelta(hours=zipcode.timezone))
+        tz_ids = self._get_tz_identifiers_for_offset(
+            'US', datetime.timedelta(hours=zipcode.timezone)
+        )
 
         # For each of the found identifiers, cross-reference the DST data from
         # pytz and pyzipcode and only include the identifier if they match
@@ -258,7 +291,7 @@ class TroutData(object):
         return ret_ids
 
     def generate_zip_to_tz_id_map(self):
-        """ Generate the map of US zip codes to time zone identifiers. The
+        """Generate the map of US zip codes to time zone identifiers. The
         method finds all the possible time zone identifiers for each zip code
         based on a UTC offset stored for that zip in pyzipcode.ZipCodeDatabase.
         """
@@ -269,21 +302,39 @@ class TroutData(object):
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
 
             # apply the data exceptions
-            exceptions = data_exceptions.get('zip:' + zip.zip) or data_exceptions.get('state:' + zip.state) or {}
-            exceptions['include'] = exceptions.get('include', []) + data_exceptions['all'].get('include', []) if 'all' in data_exceptions else []
-            exceptions['exclude'] = exceptions.get('exclude', []) + data_exceptions['all'].get('exclude', []) if 'all' in data_exceptions else []
+            exceptions = (
+                data_exceptions.get('zip:' + zip.zip)
+                or data_exceptions.get('state:' + zip.state)
+                or {}
+            )
+            exceptions['include'] = (
+                exceptions.get('include', [])
+                + data_exceptions['all'].get('include', [])
+                if 'all' in data_exceptions
+                else []
+            )
+            exceptions['exclude'] = (
+                exceptions.get('exclude', [])
+                + data_exceptions['all'].get('exclude', [])
+                if 'all' in data_exceptions
+                else []
+            )
             if exceptions:
-                ids = tuple((set(ids) - set(exceptions['exclude'])) | set(exceptions['include']))
+                ids = tuple(
+                    (set(ids) - set(exceptions['exclude']))
+                    | set(exceptions['include'])
+                )
 
             tz_ids_to_zips[ids].append(zip.zip)
 
-        zips_to_tz_ids = {zip: ids for ids, zips in tz_ids_to_zips.items() for zip in zips}
+        zips_to_tz_ids = {
+            zip: ids for ids, zips in tz_ids_to_zips.items() for zip in zips
+        }
 
         _dump_json_data(US_ZIPS_TO_TZ_IDS_MAP_PATH, zips_to_tz_ids)
 
     def generate_tz_name_to_tz_id_map(self):
-        """ Generate the map of timezone names to time zone identifiers.
-        """
+        """Generate the map of timezone names to time zone identifiers."""
         tz_name_ids = {}
         for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
@@ -310,8 +361,7 @@ class TroutData(object):
         _dump_json_data(TZ_NAME_TO_TZ_IDS_MAP_PATH, tz_name_ids)
 
     def generate_offset_to_tz_id_map(self):
-        """ Generate the map of UTC offsets to time zone identifiers.
-        """
+        """Generate the map of UTC offsets to time zone identifiers."""
         offset_tz_ids = defaultdict(list)
         for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
@@ -323,15 +373,14 @@ class TroutData(object):
 
 
 def _progressbar(lst):
-    l = len(lst)
+    length_of_list = len(lst)
     for cnt, elem in enumerate(lst):
         yield elem
         if cnt % 10 == 9:
-            stdout.write('\r%d/%d' % (cnt + 1, l))
+            stdout.write('\r%d/%d' % (cnt + 1, length_of_list))
             stdout.flush()
 
 
 def _dump_json_data(path, data):
     with open(path, 'w') as f:
         json.dump(data, f, indent=2, sort_keys=True, separators=(',', ': '))
-

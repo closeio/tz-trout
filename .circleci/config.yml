@@ -4,7 +4,9 @@ workflows:
   version: 2
   workflow:
     jobs:
+      - static-code-analysis
       - test-3.5
+      - test-3.6
 
 defaults: &defaults
   working_directory: ~/code
@@ -18,7 +20,31 @@ defaults: &defaults
       command: pytest
 
 jobs:
+  static-code-analysis:
+    docker:
+    - image: circleci/python:3.6
+    working_directory: ~/code
+    steps:
+    - checkout
+    - run:
+        name: Prepare Environment
+        command: pip install flake8 flake8-docstrings flake8-polyfill pep8 pep8-naming isort black==19.10b0
+    - run:
+        name: Black
+        command: black --check .
+    - run:
+        name: Flake8
+        command: flake8
+    - run:
+        name: Isort
+        command: isort -rc -c .
+    
   test-3.5:
     <<: *defaults
     docker:
     - image: circleci/python:3.5
+  
+  test-3.6:
+      <<: *defaults
+      docker:
+      - image: circleci/python:3.6
