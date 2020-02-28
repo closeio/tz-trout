@@ -525,7 +525,6 @@ class TestTZIdsForAddress:
             ('96079', 'PT'),
             ('97470', 'PT'),
             ('98109', 'PT'),
-            ('99950', 'PT'),
         ],
     )
     def test_tz_names_for_zipcode_only_addresses(
