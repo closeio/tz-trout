@@ -250,10 +250,10 @@ class TroutData(object):
             else:
                 return
 
-        # Find all the TZ identifiers for a Zipcode given the latitude and longitude
+        # Find the TZ identifier for a Zipcode given its latitude and longitude
         # using the TimezoneFinder library
-        tz_ids = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
-        return [tz_ids]
+        tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
+        return [tz_id]
 
     def generate_zip_to_tz_id_map(self):
         """Generate the map of US zip codes to time zone identifiers. The
