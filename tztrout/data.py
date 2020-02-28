@@ -224,21 +224,6 @@ class TroutData(object):
             dt -= datetime.timedelta(**self.TD_STEP)
         return offsets
 
-    def _experiences_dst(self, tz):
-        """Check if the time zone identifier has experienced the DST in the
-        recent years.
-        """
-        dt = datetime.datetime.utcnow()
-        while dt.year > self.RECENT_YEARS_START:
-            try:
-                dst = tz.dst(dt).total_seconds()
-                if dst:
-                    return True
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
-            dt -= datetime.timedelta(**self.TD_STEP)
-        return False
-
     def _get_latest_tz_names(self, tz):
         """Get the recent time zone names for a given time zone identifier."""
         dt = datetime.datetime.utcnow()
@@ -255,19 +240,6 @@ class TroutData(object):
                 pass
             dt -= datetime.timedelta(**self.TD_STEP)
         return tz_names
-
-    def _get_tz_identifiers_for_offset(self, country, offset):
-        """Get all the possible time zone identifiers for a given UTC offset.
-        Ignore the DST offsets.
-        """
-        identifiers = pytz.country_timezones.get(country)
-        ids = []
-        for id in identifiers:
-            tz = pytz.timezone(id)
-            tz_offset = self._get_latest_non_dst_offset(tz)
-            if offset == tz_offset:
-                ids.append(id)
-        return ids
 
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
         """Get all the possible identifiers for a given US zip code."""
