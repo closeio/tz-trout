@@ -8,6 +8,7 @@ import pytz
 from pyzipcode import ZipCode, ZipCodeDatabase
 
 from tztrout.data_exceptions import data_exceptions
+from timezonefinder import TimezoneFinder
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
@@ -57,6 +58,8 @@ AU_MAP = {
 ASIA_MAP = {
     'PST': 'PHT',
 }
+
+tf = TimezoneFinder()
 
 
 def deduplicator():
@@ -275,20 +278,10 @@ class TroutData(object):
             else:
                 return
 
-        # Find all the TZ identifiers with a non-DST offset of zipcode.timezone
-        tz_ids = self._get_tz_identifiers_for_offset(
-            'US', datetime.timedelta(hours=zipcode.timezone)
-        )
-
-        # For each of the found identifiers, cross-reference the DST data from
-        # pytz and pyzipcode and only include the identifier if they match
-        ret_ids = []
-        for id in tz_ids:
-            tz = pytz.timezone(id)
-            tz_experiences_dst = self._experiences_dst(tz)
-            if tz_experiences_dst == bool(zipcode.dst):
-                ret_ids.append(id)
-        return ret_ids
+        # Find all the TZ identifiers for a Zipcode given the latitude and longitude
+        # using the TimezoneFinder library
+        tz_ids = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
+        return [tz_ids]
 
     def generate_zip_to_tz_id_map(self):
         """Generate the map of US zip codes to time zone identifiers. The
