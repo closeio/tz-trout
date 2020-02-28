@@ -6,9 +6,9 @@ from sys import stdout
 
 import pytz
 from pyzipcode import ZipCode, ZipCodeDatabase
+from timezonefinder import TimezoneFinder
 
 from tztrout.data_exceptions import data_exceptions
-from timezonefinder import TimezoneFinder
 
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
