@@ -2,8 +2,8 @@
 
 This library tries to solve the common problem of figuring out what time zone
 a specific address or a phone number is in. It does so by using several
-mappings that are generated with the help of pytz (http://pytz.sourceforge.net/)
-and pyzipcode (https://github.com/fdintino/pyzipcode).
+mappings that are generated with the help of [pytz](http://pytz.sourceforge.net/),
+[pyzipcode](https://github.com/fdintino/pyzipcode), and [TimezoneFinder](https://github.com/MrMinimal64/timezonefinder)
 
 Current version is fairly accurate for the United States, Canada, Australia, and
 countries which fit within a single time zone.
@@ -13,6 +13,8 @@ Vocabulary used in this library:
 * America/Los_Angeles - time zone identifier
 * UTC-07:00 or -420 - UTC offset (the latter given in minutes)
 * DST - Daylight Saving Time
+
+Starting in `v1.0.0`, this library requires Python version 3.6 or above.
 
 #### Examples
 

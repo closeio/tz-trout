@@ -6,6 +6,7 @@ from sys import stdout
 
 import pytz
 from pyzipcode import ZipCode, ZipCodeDatabase
+from timezonefinder import TimezoneFinder
 
 from tztrout.data_exceptions import data_exceptions
 
@@ -57,6 +58,8 @@ AU_MAP = {
 ASIA_MAP = {
     'PST': 'PHT',
 }
+
+tf = TimezoneFinder()
 
 
 def deduplicator():
@@ -221,21 +224,6 @@ class TroutData(object):
             dt -= datetime.timedelta(**self.TD_STEP)
         return offsets
 
-    def _experiences_dst(self, tz):
-        """Check if the time zone identifier has experienced the DST in the
-        recent years.
-        """
-        dt = datetime.datetime.utcnow()
-        while dt.year > self.RECENT_YEARS_START:
-            try:
-                dst = tz.dst(dt).total_seconds()
-                if dst:
-                    return True
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
-            dt -= datetime.timedelta(**self.TD_STEP)
-        return False
-
     def _get_latest_tz_names(self, tz):
         """Get the recent time zone names for a given time zone identifier."""
         dt = datetime.datetime.utcnow()
@@ -253,19 +241,6 @@ class TroutData(object):
             dt -= datetime.timedelta(**self.TD_STEP)
         return tz_names
 
-    def _get_tz_identifiers_for_offset(self, country, offset):
-        """Get all the possible time zone identifiers for a given UTC offset.
-        Ignore the DST offsets.
-        """
-        identifiers = pytz.country_timezones.get(country)
-        ids = []
-        for id in identifiers:
-            tz = pytz.timezone(id)
-            tz_offset = self._get_latest_non_dst_offset(tz)
-            if offset == tz_offset:
-                ids.append(id)
-        return ids
-
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
         """Get all the possible identifiers for a given US zip code."""
         if not isinstance(zipcode, ZipCode):
@@ -275,20 +250,10 @@ class TroutData(object):
             else:
                 return
 
-        # Find all the TZ identifiers with a non-DST offset of zipcode.timezone
-        tz_ids = self._get_tz_identifiers_for_offset(
-            'US', datetime.timedelta(hours=zipcode.timezone)
-        )
-
-        # For each of the found identifiers, cross-reference the DST data from
-        # pytz and pyzipcode and only include the identifier if they match
-        ret_ids = []
-        for id in tz_ids:
-            tz = pytz.timezone(id)
-            tz_experiences_dst = self._experiences_dst(tz)
-            if tz_experiences_dst == bool(zipcode.dst):
-                ret_ids.append(id)
-        return ret_ids
+        # Find the TZ identifier for a Zipcode given its latitude and longitude
+        # using the TimezoneFinder library
+        tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
+        return [tz_id]
 
     def generate_zip_to_tz_id_map(self):
         """Generate the map of US zip codes to time zone identifiers. The

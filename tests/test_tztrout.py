@@ -5,7 +5,10 @@ from mock import patch
 
 import tztrout
 
-US_CA_TZ_NAMES = ['PT', 'MT', 'CT', 'ET', 'AT']
+current_alaska_tz_name = (
+    'AKDT' if tztrout.tz_ids_for_tz_name('AKDT') else 'AKST'
+)
+US_CA_TZ_NAMES = ['PT', 'MT', 'CT', 'ET', 'AT', current_alaska_tz_name]
 AU_TZ_NAMES = ['AWT', 'ACT', 'AET']
 
 
@@ -525,7 +528,7 @@ class TestTZIdsForAddress:
             ('96079', 'PT'),
             ('97470', 'PT'),
             ('98109', 'PT'),
-            ('99950', 'PT'),
+            ('99950', current_alaska_tz_name),
         ],
     )
     def test_tz_names_for_zipcode_only_addresses(
