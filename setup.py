@@ -16,7 +16,6 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
     packages=['tztrout',],
@@ -25,7 +24,6 @@ setup(
         'phonenumbers>=8.3.0',
         'python-dateutil',
         'pytz',
-        'pyzipcode',
     ],
     tests_require=['mock', 'pytest'],
 )
