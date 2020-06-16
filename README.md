@@ -15,6 +15,8 @@ Vocabulary used in this library:
 * UTC-07:00 or -420 - UTC offset (the latter given in minutes)
 * DST - Daylight Saving Time
 
+The US Zipcode data is provided by www.geonames.org under the Creative Commons Attribution 3.0 License.
+
 Starting in `v1.0.0`, this library requires Python version 3.6 or above.
 
 #### Examples
