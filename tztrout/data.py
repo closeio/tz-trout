@@ -272,9 +272,14 @@ class TroutData(object):
         using the latitude and longitude of each zipcode to search
         TimezoneFinder.
         """
+        cnt = 0
         tz_ids_to_zips = defaultdict(list)
-        for zip in _progressbar(generate_us_zipcode_namedtuples()):
+        for zip in generate_us_zipcode_namedtuples():
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
+            cnt += 1
+            if cnt % 100 == 99:
+                stdout.write('\r{} zipcodes mapped to tz_ids'.format(cnt))
+                stdout.flush()
 
             # apply the data exceptions
             exceptions = (
