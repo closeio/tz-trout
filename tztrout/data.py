@@ -105,15 +105,10 @@ def generate_us_zipcode_namedtuples():
         raise ValueError(
             'US Zipcode data missing. Run regenerate_data.py first'
         )
-    us_zipcode_tuples = []
     with open(US_ZIPCODE_DATA_PATH, 'r') as file:
-        data = json.loads(file.read())
+        data = json.load(file)
     for zip in data:
-        us_zipcode_tuples.append(Zipcode(**zip))
-    return us_zipcode_tuples
-
-
-ZIPCODE_TUPLES = generate_us_zipcode_namedtuples()
+        yield Zipcode(**zip)
 
 
 class InMemoryZipData(object):
@@ -131,7 +126,7 @@ class InMemoryZipData(object):
         self.by_state_city = {}
         deduplicate = deduplicator()
 
-        for zip in ZIPCODE_TUPLES:
+        for zip in generate_us_zipcode_namedtuples():
             code = deduplicate(zip.zip)
             state = deduplicate(zip.state)
             city = deduplicate(zip.city)
@@ -266,9 +261,6 @@ class TroutData(object):
 
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
         """Get all the possible identifiers for a given US zip code."""
-        if not isinstance(zipcode, Zipcode):
-            return
-
         # Find the TZ identifier for a Zipcode given its latitude and longitude
         # using the TimezoneFinder library
         tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
@@ -281,7 +273,7 @@ class TroutData(object):
         TimezoneFinder.
         """
         tz_ids_to_zips = defaultdict(list)
-        for zip in _progressbar(ZIPCODE_TUPLES):
+        for zip in _progressbar(generate_us_zipcode_namedtuples()):
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
 
             # apply the data exceptions
