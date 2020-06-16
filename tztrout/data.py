@@ -117,7 +117,7 @@ ZIPCODE_TUPLES = generate_us_zipcode_namedtuples()
 
 
 class InMemoryZipData(object):
-    """In-memory copy of ZipCodeDatabase.
+    """In-memory copy of Zipcode mappings by state, city, and state and city.
 
     This enables 20x speedup for city/state zip code lookup
     at a cost of more restricted / use-case-specific API,
@@ -275,9 +275,10 @@ class TroutData(object):
         return [tz_id]
 
     def generate_zip_to_tz_id_map(self):
-        """Generate the map of US zip codes to time zone identifiers. The
-        method finds all the possible time zone identifiers for each zip code
-        based on a UTC offset stored for that zip in pyzipcode.ZipCodeDatabase.
+        """Generate the map of US zipcodes to time zone identifiers. The
+        method finds all the possible time zone identifiers for each zipcode
+        using the latitude and longitude of each zipcode to search
+        TimezoneFinder.
         """
         tz_ids_to_zips = defaultdict(list)
         for zip in _progressbar(ZIPCODE_TUPLES):
