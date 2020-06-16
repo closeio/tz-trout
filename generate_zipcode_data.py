@@ -55,3 +55,7 @@ def generate_us_zipcode_data():
             sort_keys=True,
             separators=(',', ': '),
         )
+
+
+if __name__ == '__main__':
+    generate_us_zipcode_data()
