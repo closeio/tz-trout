@@ -3,7 +3,8 @@
 This library tries to solve the common problem of figuring out what time zone
 a specific address or a phone number is in. It does so by using several
 mappings that are generated with the help of [pytz](http://pytz.sourceforge.net/),
-[pyzipcode](https://github.com/fdintino/pyzipcode), and [TimezoneFinder](https://github.com/MrMinimal64/timezonefinder)
+[Geonames.org](https://www.geonames.org/postal-codes/postal-codes-us.html),
+and [TimezoneFinder](https://github.com/MrMinimal64/timezonefinder)
 
 Current version is fairly accurate for the United States, Canada, Australia, and
 countries which fit within a single time zone.
@@ -13,6 +14,8 @@ Vocabulary used in this library:
 * America/Los_Angeles - time zone identifier
 * UTC-07:00 or -420 - UTC offset (the latter given in minutes)
 * DST - Daylight Saving Time
+
+The US Zipcode data is provided by www.geonames.org under the Creative Commons Attribution 3.0 License.
 
 Starting in `v1.0.0`, this library requires Python version 3.6 or above.
 
@@ -147,8 +150,8 @@ Just run `pytest`
 
 #### Updates
 
-If any data needs updating, your first step should be to upgrade `pytz` and
-`pyzipcode` and then run `python regenerate_data.py`. If this doesn't fix the
+If any data needs updating, your first step should be to upgrade `pytz` and then
+run `python regenerate_data.py`. If this doesn't fix the
 problem, consider opening an issue or adding an exception in `data_exceptions.py`.
 
 #### Known Issues

@@ -1,11 +1,10 @@
 import datetime
 import json
 import os
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 from sys import stdout
 
 import pytz
-from pyzipcode import ZipCode, ZipCodeDatabase
 from timezonefinder import TimezoneFinder
 
 from tztrout.data_exceptions import data_exceptions
@@ -59,6 +58,14 @@ ASIA_MAP = {
     'PST': 'PHT',
 }
 
+# The path of our US Zipcode data generated from Geonames.org
+US_ZIPCODE_DATA_PATH = os.path.join(basepath, 'data/us_zipcode_data.json')
+
+# The namedtuple structure that represents a US Zipcode
+Zipcode = namedtuple(
+    'Zipcode', ['zip', 'city', 'state', 'latitude', 'longitude']
+)
+
 tf = TimezoneFinder()
 
 
@@ -90,8 +97,22 @@ def deduplicator():
     return deduplicate
 
 
+def generate_us_zipcode_namedtuples():
+    """Generate a list of namedtuples for US zipcodes from the list of
+    dictionaries in data/us_zipcode_data.json
+    """
+    if not os.path.exists(US_ZIPCODE_DATA_PATH):
+        raise ValueError(
+            'US Zipcode data missing. Run regenerate_data.py first'
+        )
+    with open(US_ZIPCODE_DATA_PATH, 'r') as file:
+        data = json.load(file)
+    for zip in data:
+        yield Zipcode(**zip)
+
+
 class InMemoryZipData(object):
-    """In-memory copy of ZipCodeDatabase.
+    """In-memory copy of Zipcode mappings by state, city, and state and city.
 
     This enables 20x speedup for city/state zip code lookup
     at a cost of more restricted / use-case-specific API,
@@ -105,10 +126,7 @@ class InMemoryZipData(object):
         self.by_state_city = {}
         deduplicate = deduplicator()
 
-        for zip in map(
-            ZipCode,
-            ZipCodeDatabase().conn_manager.query("SELECT * FROM ZipCodes", []),
-        ):
+        for zip in generate_us_zipcode_namedtuples():
             code = deduplicate(zip.zip)
             state = deduplicate(zip.state)
             city = deduplicate(zip.city)
@@ -243,28 +261,25 @@ class TroutData(object):
 
     def _get_tz_identifiers_for_us_zipcode(self, zipcode):
         """Get all the possible identifiers for a given US zip code."""
-        if not isinstance(zipcode, ZipCode):
-            zipcode = ZipCodeDatabase().get(zipcode)
-            if zipcode:
-                zipcode = zipcode[0]
-            else:
-                return
-
         # Find the TZ identifier for a Zipcode given its latitude and longitude
         # using the TimezoneFinder library
         tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
         return [tz_id]
 
     def generate_zip_to_tz_id_map(self):
-        """Generate the map of US zip codes to time zone identifiers. The
-        method finds all the possible time zone identifiers for each zip code
-        based on a UTC offset stored for that zip in pyzipcode.ZipCodeDatabase.
+        """Generate the map of US zipcodes to time zone identifiers. The
+        method finds all the possible time zone identifiers for each zipcode
+        using the latitude and longitude of each zipcode to search
+        TimezoneFinder.
         """
-        zcdb = ZipCodeDatabase()
-        zips = list(zcdb.find_zip())
+        cnt = 0
         tz_ids_to_zips = defaultdict(list)
-        for zip in _progressbar(zips):
+        for zip in generate_us_zipcode_namedtuples():
             ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
+            cnt += 1
+            if cnt % 100 == 99:
+                stdout.write('\r{} zipcodes mapped to tz_ids'.format(cnt))
+                stdout.flush()
 
             # apply the data exceptions
             exceptions = (
