@@ -20,10 +20,6 @@ setup(
     ],
     packages=['tztrout',],
     package_data={'tztrout': ['data/*']},
-    install_requires=[
-        'phonenumbers>=8.3.0',
-        'python-dateutil',
-        'pytz',
-    ],
+    install_requires=['phonenumbers>=8.3.0', 'python-dateutil', 'pytz',],
     tests_require=['mock', 'pytest'],
 )
