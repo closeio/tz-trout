@@ -42,8 +42,8 @@ def generate_us_zipcode_data():
                 'zip': zip[1],
                 'city': zip[2],
                 'state': zip[4],
-                'latitude': zip[9],
-                'longitude': zip[10],
+                'latitude': float(zip[9]),
+                'longitude': float(zip[10]),
             }
         )
 
