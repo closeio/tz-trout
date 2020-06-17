@@ -5,7 +5,6 @@ from collections import defaultdict, namedtuple
 from sys import stdout
 
 import pytz
-from timezonefinder import TimezoneFinder
 
 from tztrout.data_exceptions import data_exceptions
 
@@ -65,8 +64,6 @@ US_ZIPCODE_DATA_PATH = os.path.join(basepath, 'data/us_zipcode_data.json')
 Zipcode = namedtuple(
     'Zipcode', ['zip', 'city', 'state', 'latitude', 'longitude']
 )
-
-tf = TimezoneFinder()
 
 
 def deduplicator():
@@ -259,23 +256,33 @@ class TroutData(object):
             dt -= datetime.timedelta(**self.TD_STEP)
         return tz_names
 
-    def _get_tz_identifiers_for_us_zipcode(self, zipcode):
-        """Get all the possible identifiers for a given US zip code."""
-        # Find the TZ identifier for a Zipcode given its latitude and longitude
-        # using the TimezoneFinder library
-        tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
-        return [tz_id]
-
     def generate_zip_to_tz_id_map(self):
         """Generate the map of US zipcodes to time zone identifiers. The
         method finds all the possible time zone identifiers for each zipcode
         using the latitude and longitude of each zipcode to search
         TimezoneFinder.
         """
+        try:
+            from timezonefinder import TimezoneFinder
+        except ImportError:
+            raise ImportError(
+                'Dependency "timezonefinder" is missing. '
+                'Install with "tz-trout[dev]" in order to generate timezone data'
+            )
+
+        tf = TimezoneFinder()
+
+        def _get_tz_identifiers_for_us_zipcode(zipcode):
+            """Get all the possible identifiers for a given US zip code."""
+            # Find the TZ identifier for a Zipcode given its latitude and longitude
+            # using the TimezoneFinder library
+            tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
+            return [tz_id]
+
         cnt = 0
         tz_ids_to_zips = defaultdict(list)
         for zip in generate_us_zipcode_namedtuples():
-            ids = tuple(self._get_tz_identifiers_for_us_zipcode(zip))
+            ids = tuple(_get_tz_identifiers_for_us_zipcode(zip))
             cnt += 1
             if cnt % 100 == 99:
                 stdout.write('\r{} zipcodes mapped to tz_ids'.format(cnt))
