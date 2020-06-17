@@ -22,5 +22,6 @@ setup(
     package_data={'tztrout': ['data/*']},
     python_requires='>=3.6',
     install_requires=['phonenumbers>=8.3.0', 'python-dateutil', 'pytz',],
+    extras_require={'dev': ['timezonefinder']},
     tests_require=['mock', 'pytest'],
 )
