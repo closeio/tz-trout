@@ -262,7 +262,13 @@ class TroutData(object):
         using the latitude and longitude of each zipcode to search
         TimezoneFinder.
         """
-        from timezonefinder import TimezoneFinder
+        try:
+            from timezonefinder import TimezoneFinder
+        except ImportError:
+            raise ImportError(
+                'Dependency "timezonefinder" is missing. '
+                'Install with "tz-trout[dev]" in order to generate timezone data'
+            )
 
         tf = TimezoneFinder()
 
