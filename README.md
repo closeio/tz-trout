@@ -20,24 +20,6 @@ The US Zipcode data is provided by www.geonames.org under the Creative Commons A
 Starting in `v1.0.0`, this library requires Python version 3.6 or above.
 
 #### Examples
-
-```
->>> import tztrout
->>> tztrout.tz_ids_for_tz_name('PDT')  # ran during DST
-[
-    u'America/Dawson',
-    u'America/Los_Angeles',
-    u'America/Santa_Isabel',
-    u'America/Tijuana',
-    u'America/Vancouver',
-    u'America/Whitehorse',
-    u'Canada/Pacific',
-    u'US/Pacific'
-]
->>> tztrout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
-[]
-```
-
 ```
 >>> tztrout.tz_ids_for_phone('+16503334444')
 [u'America/Los_Angeles']
@@ -58,6 +40,23 @@ Starting in `v1.0.0`, this library requires Python version 3.6 or above.
     u'Asia/Urumqi',
     u'Asia/Kashgar'
 ]
+```
+
+```
+>>> import tztrout
+>>> tztrout.tz_ids_for_tz_name('PDT')  # ran during DST
+[
+    u'America/Dawson',
+    u'America/Los_Angeles',
+    u'America/Santa_Isabel',
+    u'America/Tijuana',
+    u'America/Vancouver',
+    u'America/Whitehorse',
+    u'Canada/Pacific',
+    u'US/Pacific'
+]
+>>> tztrout.tz_ids_for_tz_name('PDT')  # ran outside of the DST period
+[]
 ```
 
 ```
