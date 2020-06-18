@@ -147,11 +147,14 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
 
 Just run `pytest`
 
-#### Updates
+#### Regenerating the data
 
-If any data needs updating, your first step should be to upgrade `pytz` and then
-run `python regenerate_data.py`. If this doesn't fix the
-problem, consider opening an issue or adding an exception in `data_exceptions.py`.
+Time zones, addresses, and phone numbers are in a constant flux and hence the
+data used by this library needs to be regenerated periodically. To do so,
+upgrade the `pytz` and `timezonefinder` dependencies, and run `python
+regenerate_data.py`. If this doesn't fix the problem, consider opening an issue
+or adding an exception in `data_exceptions.py`.
+
 
 #### Known Issues
 
