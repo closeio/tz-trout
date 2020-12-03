@@ -149,7 +149,9 @@ class TestTZIdsForPhone:
         ],
     )
     def test_major_cities_us_ca(
-        self, phone, tz_name,
+        self,
+        phone,
+        tz_name,
     ):
         """Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
@@ -358,7 +360,11 @@ class TestTZIdsForAddress:
         ],
     )
     def test_major_cities_us_ca(
-        self, country, state, city, tz_name,
+        self,
+        country,
+        state,
+        city,
+        tz_name,
     ):
         """Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
@@ -548,15 +554,15 @@ class TestTZIdsForTZName:
     @pytest.mark.parametrize('tz_name', ['PT', 'PACIFIC'])
     def test_ids_for_tz_name(self, tz_name):
         pacific_ids = [
-            u'America/Dawson',
-            u'America/Fort_Nelson',
-            u'America/Los_Angeles',
-            u'America/Metlakatla',
-            u'America/Tijuana',
-            u'America/Vancouver',
-            u'America/Whitehorse',
-            u'Canada/Pacific',
-            u'US/Pacific',
+            'America/Dawson',
+            'America/Fort_Nelson',
+            'America/Los_Angeles',
+            'America/Metlakatla',
+            'America/Tijuana',
+            'America/Vancouver',
+            'America/Whitehorse',
+            'Canada/Pacific',
+            'US/Pacific',
         ]
         ids = tztrout.tz_ids_for_tz_name(tz_name)
         assert ids == pacific_ids
