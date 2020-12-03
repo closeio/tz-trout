@@ -26,16 +26,16 @@ data_exceptions = {
     },
     'state:NY': {
         'exclude': [
-            u'America/Indiana/Winamac',
-            u'America/Indiana/Petersburg',
-            u'America/Indiana/Vincennes',
+            'America/Indiana/Winamac',
+            'America/Indiana/Petersburg',
+            'America/Indiana/Vincennes',
         ]
     },
     'state:PA': {
         'exclude': [
-            u'America/Indiana/Winamac',
-            u'America/Indiana/Petersburg',
-            u'America/Indiana/Vincennes',
+            'America/Indiana/Winamac',
+            'America/Indiana/Petersburg',
+            'America/Indiana/Vincennes',
         ]
     },
     'state:IN': {'include': ['America/Indiana/Indianapolis']},
