@@ -2,7 +2,6 @@ import datetime
 import operator
 from functools import reduce
 
-import phonenumbers
 import pytz
 from dateutil.parser import parse as parse_date
 
@@ -62,56 +61,33 @@ def tz_ids_for_phone(phone, country='US'):
     >>> tztrout.tz_ids_for_phone('+49 (0)711 400 40990')
     [u'Europe/Berlin', u'Europe/Busingen']
     """
-    from phonenumbers.geocoder import description_for_number
+    from phonenumbers.timezone import (
+        time_zones_for_geographical_number,
+        UNKNOWN_TIMEZONE,
+    )
+    import phonenumbers
 
     try:
         phone = phonenumbers.parse(phone, country)
     except Exception:
-        pass
-    else:
-        country_iso = phonenumbers.region_code_for_number(phone)
-        if not country_iso:
-            country_iso = phonenumbers.region_code_for_country_code(
-                phone.country_code
-            )
+        return []
 
-        if country_iso == 'US':
+    country_iso = phonenumbers.region_code_for_number(phone)
+    if not country_iso:
+        country_iso = phonenumbers.region_code_for_country_code(
+            phone.country_code
+        )
 
-            # check if we have a specific exception for a given area code first
-            exception_key = 'areacode:%s' % str(phone.national_number)[:3]
-            if exception_key in data_exceptions:
-                return data_exceptions[exception_key]['include']
+    if country_iso == 'AU':
+        area_code = str(phone.national_number)[:2]
+        state = td.au_area_code_to_state.get(area_code)
+        if state:
+            return td.au_state_to_tz_ids.get(state)
 
-            state = city = None
-            area = description_for_number(phone, 'en').split(',')
-            if len(area) == 2:
-                city = area[0].strip()
-                state = area[1].strip()
-            elif len(area) == 1 and area[0]:
-                state = area[0].lower().strip()
-                state = td.normalized_states['US'].get(state, None)
-
-            return tz_ids_for_address(country_iso, state=state, city=city)
-
-        elif country_iso == 'CA':
-            area_code = str(phone.national_number)[:3]
-            state = td.ca_area_code_to_state.get(area_code)
-            return td.ca_state_to_tz_ids.get(state)
-
-        elif country_iso == 'AU':
-            area_code = str(phone.national_number)[:2]
-            state = td.au_area_code_to_state.get(area_code)
-
-            # Some Australian number prefixes (e.g. 04) are country-wide - fall
-            # back to all the AU tz ids
-            if state:
-                return td.au_state_to_tz_ids.get(state)
-            return pytz.country_timezones.get(country_iso)
-
-        elif country_iso:
-            return pytz.country_timezones.get(country_iso)
-
-    return []
+    tz_list = list(time_zones_for_geographical_number(phone))
+    if tz_list == [UNKNOWN_TIMEZONE]:
+        return pytz.country_timezones.get(country_iso) or []
+    return tz_list
 
 
 def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):

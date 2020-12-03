@@ -64,6 +64,8 @@ class TestTZIdsForPhone:
         [
             ('+1 (650) 333 4444', ['America/Los_Angeles']),
             ('+48 601 941 311', ['Europe/Warsaw']),
+            ('+73519234567', ['Asia/Yekaterinburg']),
+            ('+888569', []),
         ],
     )
     def test_ids_for_phone(self, phone, tz_ids):
