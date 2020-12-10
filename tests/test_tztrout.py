@@ -71,93 +71,95 @@ class TestTZIdsForPhone:
         assert ids == tz_ids
 
     @pytest.mark.parametrize(
-        'phone, tz_name',
+        'phone, tz_name, tz_id',
         [
             # United States -- Special cases to make sure ET is not counted as part of state timezone
             # Wisconsin
-            ('+14143334444', 'CT'),
+            ('+14143334444', 'CT', 'America/Chicago'),
             # Texas
-            ('+12143334444', 'CT'),
+            ('+12143334444', 'CT', 'America/Chicago'),
             # United States
             # New York, NY
-            ('+12123334444', 'ET'),
-            ('+16463334444', 'ET'),
+            ('+12123334444', 'ET', 'America/New_York'),
+            ('+16463334444', 'ET', 'America/New_York'),
             # Los Angeles, CA
-            ('+18183334444', 'PT'),
+            ('+18183334444', 'PT', 'America/Los_Angeles'),
             # Chicago, IL
-            ('+16303334444', 'CT'),
+            ('+16303334444', 'CT', 'America/Chicago'),
             # Houston, TX
-            ('+17133334444', 'CT'),
+            ('+17133334444', 'CT', 'America/Chicago'),
             # Philadelphia, PA
-            ('+12153334444', 'ET'),
+            ('+12153334444', 'ET', 'America/New_York'),
             # Phoenix, AZ
-            ('+16023334444', 'MT'),
+            ('+16023334444', 'MT', 'America/Phoenix'),
             # San Antonio, TX
-            ('+12103334444', 'CT'),
+            ('+12103334444', 'CT', 'America/Chicago'),
             # San Diego, CA
-            ('+16193334444', 'PT'),
+            ('+16193334444', 'PT', 'America/Los_Angeles'),
             # Dallas, TX
-            ('+12143334444', 'CT'),
+            ('+12143334444', 'CT', 'America/Chicago'),
             # San Jose, CA
-            ('+14083334444', 'PT'),
+            ('+14083334444', 'PT', 'America/Los_Angeles'),
             # Austin, TX
-            ('+15123334444', 'CT'),
+            ('+15123334444', 'CT', 'America/Chicago'),
             # Indianapolis, IN
-            ('+13173334444', 'ET'),
+            ('+13173334444', 'ET', 'America/Indiana/Indianapolis'),
             # Jacksonville, FL
-            ('+19043334444', 'ET'),
+            ('+19043334444', 'ET', 'America/New_York'),
             # San Francisco, CA
-            ('+14153334444', 'PT'),
+            ('+14153334444', 'PT', 'America/Los_Angeles'),
             # Columbus, OH
-            ('+16143334444', 'ET'),
+            ('+16143334444', 'ET', 'America/New_York'),
             # Charlotte, NC
-            ('+17043334444', 'ET'),
+            ('+17043334444', 'ET', 'America/New_York'),
             # Fort Worth, TX
-            ('+16823334444', 'CT'),
+            ('+16823334444', 'CT', 'America/Chicago'),
             # Detroit, MI
-            ('+13133334444', 'ET'),
+            ('+13133334444', 'ET', 'America/Detroit'),
             # El Paso, TX
-            ('+19153334444', 'MT'),
+            ('+19153334444', 'MT', 'America/Denver'),
             # Memphis, TN
-            ('+19013334444', 'CT'),
+            ('+19013334444', 'CT', 'America/Chicago'),
             # Denver, CO
-            ('+13033334444', 'MT'),
+            ('+13033334444', 'MT', 'America/Denver'),
             # Washington, DC
-            ('+12023334444', 'ET'),
+            ('+12023334444', 'ET', 'America/New_York'),
             # Canada
             # Toronto, ON
-            ('+14163334444', 'ET'),
+            ('+14163334444', 'ET', 'America/Toronto'),
             # Montreal, QC
-            ('+15143334444', 'ET'),
+            ('+15143334444', 'ET', 'America/Toronto'),
             # Calgary, AB
-            ('+14033334444', 'MT'),
+            ('+14033334444', 'MT', 'America/Edmonton'),
             # Ottawa, ON
-            ('+13433334444', 'ET'),
-            ('+16133334444', 'ET'),
+            ('+13433334444', 'ET', 'America/Toronto'),
+            ('+16133334444', 'ET', 'America/Toronto'),
             # Edmonton, AB
-            ('+17803334444', 'MT'),
+            ('+17803334444', 'MT', 'America/Edmonton'),
             # Mississauga, ON
-            ('+12893334444', 'ET'),
+            ('+12893334444', 'ET', 'America/Toronto'),
             # Winnipeg, MB
-            ('+14313334444', 'CT'),
+            ('+14313334444', 'CT', 'America/Winnipeg'),
             # Vancouver, BC
-            ('+16043334444', 'PT'),
+            ('+16043334444', 'PT', 'America/Vancouver'),
             # Halifax, NS
-            ('+19023334444', 'AT'),
+            ('+19023334444', 'AT', 'America/Halifax'),
             # Saskatoon, SK
-            ('+13063334444', 'CT'),
+            ('+13063334444', 'CT', 'America/Regina'),
         ],
     )
     def test_major_cities_us_ca(
         self,
         phone,
         tz_name,
+        tz_id,
     ):
         """Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
         """
         ids = tztrout.tz_ids_for_phone(phone)
         assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
+        assert set(ids) == {tz_id}
 
     @pytest.mark.parametrize(
         'phone, tz_name',
