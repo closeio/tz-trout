@@ -1,18 +1,17 @@
 import datetime
+from typing import Collection, List, Optional, Type
 
 import pytest
 from mock import patch
 
 import tztrout
 
-current_alaska_tz_name = (
-    'AKDT' if tztrout.tz_ids_for_tz_name('AKDT') else 'AKST'
-)
+current_alaska_tz_name = 'AKDT' if tztrout.tz_ids_for_tz_name('AKDT') else 'AKST'
 US_CA_TZ_NAMES = ['PT', 'MT', 'CT', 'ET', 'AT', current_alaska_tz_name]
 AU_TZ_NAMES = ['AWT', 'ACT', 'AET']
 
 
-def assert_only_one_tz(ids, expected_tz_name, tz_names):
+def assert_only_one_tz(ids: Collection[str], expected_tz_name: str, tz_names: List[str]) -> None:
     """Assert that a set of timezone identifiers exists in only one expected timezone across
     a given list of timezones.
 
@@ -45,16 +44,16 @@ def assert_only_one_tz(ids, expected_tz_name, tz_names):
 class FakeDateTime(datetime.datetime):
     """A datetime replacement that lets you set utcnow()"""
 
+    dt: datetime.datetime
+
     @classmethod
     def utcnow(cls, *args, **kwargs):
         if hasattr(cls, 'dt'):
             return cls.dt
-        raise NotImplementedError(
-            'use FakeDateTime.set_utcnow(datetime) first'
-        )
+        raise NotImplementedError('use FakeDateTime.set_utcnow(datetime) first')
 
     @classmethod
-    def set_utcnow(cls, dt):
+    def set_utcnow(cls, dt: datetime.datetime) -> None:
         cls.dt = dt
 
 
@@ -66,7 +65,7 @@ class TestTZIdsForPhone:
             ('+48 601 941 311', ['Europe/Warsaw']),
         ],
     )
-    def test_ids_for_phone(self, phone, tz_ids):
+    def test_ids_for_phone(self, phone: str, tz_ids: List[str]) -> None:
         ids = tztrout.tz_ids_for_phone(phone)
         assert ids == tz_ids
 
@@ -150,10 +149,10 @@ class TestTZIdsForPhone:
     )
     def test_major_cities_us_ca(
         self,
-        phone,
-        tz_name,
-        tz_id,
-    ):
+        phone: str,
+        tz_name: str,
+        tz_id: str,
+    ) -> None:
         """Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
         """
@@ -219,7 +218,7 @@ class TestTZIdsForPhone:
             ('+61 777 22 4444', 'AET'),
         ],
     )
-    def test_major_cities_australia(self, phone, tz_name):
+    def test_major_cities_australia(self, phone: str, tz_name: str) -> None:
         """Make sure all the major cities in Australia match the right time zone
         (and the right time zone only).
         """
@@ -308,11 +307,15 @@ class TestTZIdsForAddress:
         ],
     )
     def test_ids_for_address(
-        self, country, state, city, zipcode, expected_tz_ids, is_exact_match
-    ):
-        ids = tztrout.tz_ids_for_address(
-            country, state=state, city=city, zipcode=zipcode
-        )
+        self,
+        country: str,
+        state: Optional[str],
+        city: Optional[str],
+        zipcode: Optional[str],
+        expected_tz_ids: List[str],
+        is_exact_match: bool,
+    ) -> None:
+        ids = tztrout.tz_ids_for_address(country, state=state, city=city, zipcode=zipcode)
         if is_exact_match:
             assert expected_tz_ids == ids
         else:
@@ -363,11 +366,11 @@ class TestTZIdsForAddress:
     )
     def test_major_cities_us_ca(
         self,
-        country,
-        state,
-        city,
-        tz_name,
-    ):
+        country: str,
+        state: str,
+        city: Optional[str],
+        tz_name: str,
+    ) -> None:
         """Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
         """
@@ -396,14 +399,14 @@ class TestTZIdsForAddress:
             ('QLD', 'Townsville', 'AET'),
         ],
     )
-    def test_major_cities_australia(self, state, city, tz_name):
+    def test_major_cities_australia(self, state: str, city: str, tz_name: str) -> None:
         """Make sure all the major cities in Australia match the right time zone
         (and the right time zone only).
         """
         ids = tztrout.tz_ids_for_address('AU', state=state, city=city)
         assert_only_one_tz(ids, tz_name, AU_TZ_NAMES)
 
-    def test_australia_without_state_info(self):
+    def test_australia_without_state_info(self) -> None:
         ids = tztrout.tz_ids_for_address('AU')
         expected_ids = [
             "Australia/Sydney",
@@ -420,7 +423,7 @@ class TestTZIdsForAddress:
         for tz_id in expected_ids:
             assert tz_id in ids
 
-    def test_canada_without_state_info(self):
+    def test_canada_without_state_info(self) -> None:
         ids = tztrout.tz_ids_for_address('CA')
         expected_ids = [
             "America/Whitehorse",
@@ -546,15 +549,15 @@ class TestTZIdsForAddress:
         ],
     )
     def test_tz_names_for_zipcode_only_addresses(
-        self, zipcode, expected_tz_name
-    ):
+        self, zipcode: str, expected_tz_name: str
+    ) -> None:
         ids = tztrout.tz_ids_for_address('US', zipcode=zipcode)
         assert_only_one_tz(ids, expected_tz_name, US_CA_TZ_NAMES)
 
 
 class TestTZIdsForTZName:
     @pytest.mark.parametrize('tz_name', ['PT', 'PACIFIC'])
-    def test_ids_for_tz_name(self, tz_name):
+    def test_ids_for_tz_name(self, tz_name: List[str]) -> None:
         pacific_ids = [
             'America/Dawson',
             'America/Fort_Nelson',
@@ -572,7 +575,7 @@ class TestTZIdsForTZName:
 
 class TestLocalTimeForAddress:
     @patch('datetime.datetime', FakeDateTime)
-    def test_local_time_in_spain(self):
+    def test_local_time_in_spain(self) -> None:
         """Make sure local time is properly calculated for Spain."""
         FakeDateTime.set_utcnow(
             datetime.datetime(2016, 9, 13, 22, 15)
@@ -630,15 +633,13 @@ class TestOffsetRangesForLocalTime:
     )
     def test_offset_ranges(
         self,
-        hour_now,
-        local_time_start,
-        local_time_end,
-        expected_offset_results,
-    ):
+        hour_now: int,
+        local_time_start: datetime.time,
+        local_time_end: datetime.time,
+        expected_offset_results: List[int],
+    ) -> None:
         FakeDateTime.set_utcnow(datetime.datetime(2013, 1, 1, hour_now))
-        offset_ranges = tztrout.offset_ranges_for_local_time(
-            local_time_start, local_time_end
-        )
+        offset_ranges = tztrout.offset_ranges_for_local_time(local_time_start, local_time_end)
         assert offset_ranges == expected_offset_results
 
 
@@ -647,15 +648,13 @@ class TestNonDSTOffsetsForPhone:
         'phone, result',
         [('+1 650 333 4444', [-8 * 60]), ('+1 212 333 4444', [-5 * 60])],
     )
-    def test_non_dst_offsets_for_phone(self, phone, result):
+    def test_non_dst_offsets_for_phone(self, phone: str, result: List[int]) -> None:
         offsets = tztrout.non_dst_offsets_for_phone(phone)
         assert offsets == result
 
 
 class TestNonDSTOffsetsForAddress:
-    @pytest.mark.parametrize(
-        'state, result', [('CA', [-8 * 60]), ('NY', [-5 * 60])]
-    )
-    def test_non_dst_offsets_for_address(self, state, result):
+    @pytest.mark.parametrize('state, result', [('CA', [-8 * 60]), ('NY', [-5 * 60])])
+    def test_non_dst_offsets_for_address(self, state: str, result: List[int]) -> None:
         offsets = tztrout.non_dst_offsets_for_address('US', state=state)
         assert offsets == result
