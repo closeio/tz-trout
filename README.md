@@ -147,6 +147,10 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
 
 Just run `pytest`
 
+### Checking Type Annotation
+
+Run: `mypy .`
+
 #### Regenerating the data
 
 Time zones, addresses, and phone numbers are in a constant flux and hence the
