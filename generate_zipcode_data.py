@@ -2,22 +2,19 @@ import json
 import os
 import urllib.request
 from io import BytesIO
+from typing import List
 from zipfile import ZipFile
 
 # We download our US Zipcode data from Geonames.org and then store that data
 # as an array of dicitionaries in memory
-US_ZIPCODE_DATA_DOWNLOAD_URL = (
-    'https://download.geonames.org/export/zip/US.zip'
-)
+US_ZIPCODE_DATA_DOWNLOAD_URL = 'https://download.geonames.org/export/zip/US.zip'
 US_ZIPCODE_TXT_FILE_NAME = 'US.txt'
 
 basepath = os.path.dirname(os.path.abspath(__file__))
-US_ZIPCODE_DATA_PATH = os.path.join(
-    basepath, 'tztrout/data/us_zipcode_data.json'
-)
+US_ZIPCODE_DATA_PATH = os.path.join(basepath, 'tztrout/data/us_zipcode_data.json')
 
 
-def _get_latest_us_zipcode_data():
+def _get_latest_us_zipcode_data() -> List[bytes]:
     """Download the latest Geonames.org US Zipcode data zip file
     and extract the US zipcode information from a txt file located
     inside the downloaded zip.
@@ -27,7 +24,7 @@ def _get_latest_us_zipcode_data():
         return us_zipcode_zip_file.open(US_ZIPCODE_TXT_FILE_NAME).readlines()
 
 
-def generate_us_zipcode_data():
+def generate_us_zipcode_data() -> None:
     """Generate a list of US zipcode data from the txt file in the latest
     Geonames.org database and save it as a JSON file.
     """
