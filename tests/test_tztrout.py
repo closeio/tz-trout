@@ -64,6 +64,8 @@ class TestTZIdsForPhone:
         [
             ('+1 (650) 333 4444', ['America/Los_Angeles']),
             ('+48 601 941 311', ['Europe/Warsaw']),
+            ('+888569', []),
+            ('+889989', [])
         ],
     )
     def test_ids_for_phone(self, phone, tz_ids):
@@ -231,6 +233,7 @@ class TestTZIdsForAddress:
     @pytest.mark.parametrize(
         'country, state, city, zipcode, expected_tz_ids, is_exact_match',
         [
+            ('XX', '', None, None, [], True),
             ('US', 'California', None, None, ['America/Los_Angeles'], True),
             ('US', 'CA', None, None, ['America/Los_Angeles'], True),
             ('US', 'CA', '', None, ['America/Los_Angeles'], True),
