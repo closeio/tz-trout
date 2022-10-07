@@ -96,20 +96,20 @@ def tz_ids_for_phone(phone, country='US'):
         elif country_iso == 'CA':
             area_code = str(phone.national_number)[:3]
             state = td.ca_area_code_to_state.get(area_code)
-            return td.ca_state_to_tz_ids.get(state)
+            return td.ca_state_to_tz_ids.get(state, [])
 
         elif country_iso == 'AU':
             area_code = str(phone.national_number)[:2]
-            state = td.au_area_code_to_state.get(area_code)
+            state = td.au_area_code_to_state.get(area_code, [])
 
             # Some Australian number prefixes (e.g. 04) are country-wide - fall
             # back to all the AU tz ids
             if state:
                 return td.au_state_to_tz_ids.get(state)
-            return pytz.country_timezones.get(country_iso)
+            return pytz.country_timezones.get(country_iso, [])
 
         elif country_iso:
-            return pytz.country_timezones.get(country_iso)
+            return pytz.country_timezones.get(country_iso, [])
 
     return []
 
@@ -160,9 +160,9 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
     elif country == 'AU' and state:
         if len(state) != 2:
             state = td.normalized_states['AU'].get(state.lower(), state)
-        return td.au_state_to_tz_ids.get(state)
+        return td.au_state_to_tz_ids.get(state, [])
 
-    return pytz.country_timezones.get(country)
+    return pytz.country_timezones.get(country, [])
 
 
 def tz_ids_for_offset(offset_in_minutes):
