@@ -1,9 +1,51 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.black]
 skip-string-normalization = true
 line-length = 79
 exclude = '''
 /(
     \.git
-  | \.venv
+  | venv
 )/
 '''
+
+[tool.ruff]
+target-version = "py38"
+line-length = 79
+exclude = [".git", "venv"]
+ignore = ["E501", "D10", "D400", "D401", "D415", "D205", "B904", "SIM118"]
+select = [
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "N",
+    "SIM",
+    "TID25",
+    "TCH005",
+    "W",
+    "UP",
+    "ISC",
+    "G",
+    "PIE",
+    "PT",
+    "I",
+    "INP",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 14
+
+[tool.mypy]
+python_version = 3.8
+ignore_missing_imports = true
+no_implicit_optional = true
+strict_equality = true
+follow_imports = "skip"
+warn_unreachable = true
+show_error_context = true
+pretty = true
+files = "tztrout"
