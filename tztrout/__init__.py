@@ -69,6 +69,9 @@ def tz_ids_for_phone(phone, country='US'):
     except Exception:
         return []
 
+    if not phonenumbers.is_valid_number(phone):
+        return []
+
     country_iso = phonenumbers.region_code_for_number(phone)
     if not country_iso:
         country_iso = phonenumbers.region_code_for_country_code(
