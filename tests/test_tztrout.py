@@ -226,6 +226,15 @@ class TestTZIdsForPhone:
         ids = tztrout.tz_ids_for_phone(phone)
         assert_only_one_tz(ids, tz_name, AU_TZ_NAMES)
 
+    def test_no_tz_for_invalid_phone(self):
+        """
+        Make sure we return no timezones for invalid phone numbers.
+
+        Valid phone numbers in the US are defined as:
+        https://en.wikipedia.org/wiki/North_American_Numbering_Plan#Modern_plan
+        """
+        assert tztrout.tz_ids_for_phone('+18580462101') == []
+
 
 class TestTZIdsForAddress:
     @pytest.mark.parametrize(
