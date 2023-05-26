@@ -1,7 +1,7 @@
 import datetime
+from unittest.mock import patch
 
 import pytest
-from mock import patch
 
 import tztrout
 
@@ -60,7 +60,7 @@ class FakeDateTime(datetime.datetime):
 
 class TestTZIdsForPhone:
     @pytest.mark.parametrize(
-        'phone, tz_ids',
+        ('phone', 'tz_ids'),
         [
             ('+1 (650) 333 4444', ['America/Los_Angeles']),
             ('+48 601 941 311', ['Europe/Warsaw']),
@@ -71,7 +71,7 @@ class TestTZIdsForPhone:
         assert ids == tz_ids
 
     @pytest.mark.parametrize(
-        'phone, tz_name, tz_id',
+        ('phone', 'tz_name', 'tz_id'),
         [
             # United States -- Special cases to make sure ET is not counted as part of state timezone
             # Wisconsin
@@ -162,7 +162,7 @@ class TestTZIdsForPhone:
         assert set(ids) == {tz_id}
 
     @pytest.mark.parametrize(
-        'phone, tz_name',
+        ('phone', 'tz_name'),
         [
             # NSW - New South Wales
             # WA - Western Australia
@@ -229,7 +229,14 @@ class TestTZIdsForPhone:
 
 class TestTZIdsForAddress:
     @pytest.mark.parametrize(
-        'country, state, city, zipcode, expected_tz_ids, is_exact_match',
+        (
+            'country',
+            'state',
+            'city',
+            'zipcode',
+            'expected_tz_ids',
+            'is_exact_match',
+        ),
         [
             ('US', 'California', None, None, ['America/Los_Angeles'], True),
             ('US', 'CA', None, None, ['America/Los_Angeles'], True),
@@ -320,7 +327,7 @@ class TestTZIdsForAddress:
                 assert tz_id in ids
 
     @pytest.mark.parametrize(
-        'country, state, city, tz_name',
+        ('country', 'state', 'city', 'tz_name'),
         [
             # United States -- Special cases to make sure ET is not counted as part of state timezone
             ('US', 'WI', None, 'CT'),
@@ -375,7 +382,7 @@ class TestTZIdsForAddress:
         assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
 
     @pytest.mark.parametrize(
-        'state, city, tz_name',
+        ('state', 'city', 'tz_name'),
         [
             # NSW - New South Wales
             # WA - Western Australia
@@ -439,7 +446,7 @@ class TestTZIdsForAddress:
             assert tz_id in ids
 
     @pytest.mark.parametrize(
-        'zipcode, expected_tz_name',
+        ('zipcode', 'expected_tz_name'),
         [
             ('00501', 'ET'),
             ('01434', 'ET'),
@@ -584,7 +591,12 @@ class TestLocalTimeForAddress:
 class TestOffsetRangesForLocalTime:
     @patch('datetime.datetime', FakeDateTime)
     @pytest.mark.parametrize(
-        'hour_now, local_time_start, local_time_end, expected_offset_results',
+        (
+            'hour_now',
+            'local_time_start',
+            'local_time_end',
+            'expected_offset_results',
+        ),
         [
             (
                 20,
@@ -644,7 +656,7 @@ class TestOffsetRangesForLocalTime:
 
 class TestNonDSTOffsetsForPhone:
     @pytest.mark.parametrize(
-        'phone, result',
+        ('phone', 'result'),
         [('+1 650 333 4444', [-8 * 60]), ('+1 212 333 4444', [-5 * 60])],
     )
     def test_non_dst_offsets_for_phone(self, phone, result):
@@ -654,7 +666,7 @@ class TestNonDSTOffsetsForPhone:
 
 class TestNonDSTOffsetsForAddress:
     @pytest.mark.parametrize(
-        'state, result', [('CA', [-8 * 60]), ('NY', [-5 * 60])]
+        ('state', 'result'), [('CA', [-8 * 60]), ('NY', [-5 * 60])]
     )
     def test_non_dst_offsets_for_address(self, state, result):
         offsets = tztrout.non_dst_offsets_for_address('US', state=state)

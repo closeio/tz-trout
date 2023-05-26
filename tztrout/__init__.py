@@ -76,7 +76,6 @@ def tz_ids_for_phone(phone, country='US'):
             )
 
         if country_iso == 'US':
-
             # check if we have a specific exception for a given area code first
             exception_key = 'areacode:%s' % str(phone.national_number)[:3]
             if exception_key in data_exceptions:
@@ -273,7 +272,9 @@ def offset_ranges_for_local_time(local_start, local_end):
     )
 
     # Convert to ints (minutes).
-    to_minutes = lambda t: t.hour * 60 + t.minute
+    def to_minutes(t):
+        return t.hour * 60 + t.minute
+
     local_start = (
         local_start
         if isinstance(local_start, int)
@@ -305,9 +306,9 @@ def offset_ranges_for_local_time(local_start, local_end):
 
     # Cap the offsets at UTC-14:00 and UTC+14:00 (lowest/highest possible
     # offset).
-    capped = (
-        lambda t: 14 * 60 if t > 14 * 60 else -14 * 60 if t < -14 * 60 else t
-    )
+    def capped(t):
+        return 14 * 60 if t > 14 * 60 else -14 * 60 if t < -14 * 60 else t
+
     for i, range in enumerate(offset_ranges):
         offset_ranges[i][0] = capped(range[0])
         offset_ranges[i][1] = capped(range[1])
