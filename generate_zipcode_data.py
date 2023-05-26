@@ -47,7 +47,7 @@ def generate_us_zipcode_data():
             }
         )
 
-    print('There are {} zipcodes in the US'.format(len(us_zipcode_data)))
+    print(f'There are {len(us_zipcode_data)} zipcodes in the US')
 
     with open(US_ZIPCODE_DATA_PATH, 'w') as f:
         json.dump(

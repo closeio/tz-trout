@@ -102,13 +102,13 @@ def generate_us_zipcode_namedtuples():
         raise ValueError(
             'US Zipcode data missing. Run regenerate_data.py first'
         )
-    with open(US_ZIPCODE_DATA_PATH, 'r') as file:
+    with open(US_ZIPCODE_DATA_PATH) as file:
         data = json.load(file)
     for zip in data:
         yield Zipcode(**zip)
 
 
-class InMemoryZipData(object):
+class InMemoryZipData:
     """In-memory copy of Zipcode mappings by state, city, and state and city.
 
     This enables 20x speedup for city/state zip code lookup
@@ -148,7 +148,7 @@ class InMemoryZipData(object):
 ZIP_DATA = InMemoryZipData()
 
 
-class TroutData(object):
+class TroutData:
     """Helper class that generates the JSON data used by TZTrout"""
 
     # We don't care about the historic data - we just want to know the recent
@@ -180,9 +180,9 @@ class TroutData(object):
         )
 
         # convert string offsets into integers
-        self.offset_to_tz_ids = dict(
-            (int(k), v) for k, v in self.offset_to_tz_ids.items()
-        )
+        self.offset_to_tz_ids = {
+            int(k): v for k, v in self.offset_to_tz_ids.items()
+        }
 
         # flatten the values of all tz name aliases (needed to identify which
         # filters don't need to be exact in tztrout.tz_ids_for_tz_name
@@ -192,13 +192,13 @@ class TroutData(object):
 
     def _load_data(self, name, path):
         """Helper method to load a data file"""
-        with open(path, 'r') as file:
+        with open(path) as file:
             data = json.loads(file.read())
             setattr(self, name, data)
 
     def _load_us_zipcode_data(self, name, path):
         dedupe = deduplicator()
-        with open(path, 'r') as file:
+        with open(path) as file:
             data = json.load(file)
             setattr(
                 self,
@@ -248,7 +248,7 @@ class TroutData(object):
                 tz_name = tz.tzname(dt)
 
                 # Ignore TZ names that are really UTC offsets like "+01".
-                is_offset = tz_name.startswith('+') or tz_name.startswith('-')
+                is_offset = tz_name.startswith(('+', '-'))
                 if not is_offset and tz_name not in tz_names:
                     tz_names.append(tz_name)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
@@ -285,7 +285,7 @@ class TroutData(object):
             ids = tuple(_get_tz_identifiers_for_us_zipcode(zip))
             cnt += 1
             if cnt % 100 == 99:
-                stdout.write('\r{} zipcodes mapped to tz_ids'.format(cnt))
+                stdout.write(f'\r{cnt} zipcodes mapped to tz_ids')
                 stdout.flush()
 
             # apply the data exceptions
