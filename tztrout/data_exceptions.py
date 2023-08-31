@@ -42,4 +42,7 @@ data_exceptions = {
     'areacode:915': {'include': ['America/Denver']},
     'areacode:901': {'include': ['America/Chicago']},
     'areacode:202': {'include': ['America/New_York']},
+    'areacode:502': {'include': ['America/New_York']},  # eastern Kentucky
+    'areacode:606': {'include': ['America/New_York']},  # eastern Kentucky
+    'areacode:859': {'include': ['America/New_York']},  # eastern Kentucky
 }
