@@ -4,18 +4,18 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - static-code-analysis-3.8
-      - test-3.6
-      - test-3.7
+      - static-code-analysis-3.10
       - test-3.8
+      - test-3.9
+      - test-3.10
 
 defaults:
   working_directory: ~/code
 
 jobs:
-  static-code-analysis-3.8:
+  static-code-analysis-3.10:
       docker:
-      - image: circleci/python:3.8
+      - image: circleci/python:3.10
       steps:
       - checkout
       - run:
@@ -31,9 +31,9 @@ jobs:
           name: Mypy
           command: mypy
 
-  test-3.6: &tests
+  test-3.8: &tests
       docker:
-      - image: circleci/python:3.6
+      - image: circleci/python:3.8
       steps:
       - checkout
       - run:
@@ -43,12 +43,12 @@ jobs:
           name: Test
           command: pytest
 
-  test-3.7:
+  test-3.9:
       <<: *tests
       docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.9
 
-  test-3.8:
+  test-3.10:
       <<: *tests
       docker:
-      - image: circleci/python:3.8
+      - image: circleci/python:3.10
