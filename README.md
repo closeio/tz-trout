@@ -163,3 +163,10 @@ or adding an exception in `data_exceptions.py`.
 * The whole state of British Columbia (Canada) is recognized as Pacific Time, although a small portion of its south-east territory should be recognized as Mountain Time.
 * The whole state of Ontario (Canada) is recognized as Eastern Time, although a small portion of its west territory should be recognized as Central Time.
 * All +1 867 phone numbers are recognized as Mountain Time, although this prefix is shared by three Canadian territories in the Arctic far north, spanning across Pacific, Mountain, and Central Time.
+
+## Releasing a New Version
+
+1. Make sure the code has been thoroughly reviewed and tested in a realistic production environment.
+1. Update ``setup.py`` and ``CHANGELOG.md``. Make sure you include any breaking changes.
+1. Run ``python setup.py sdist`` and ``twine upload dist/<PACKAGE_TO_UPLOAD>``.
+1. Push a new tag pointing to the released commit, format: ``v0.13`` for example.

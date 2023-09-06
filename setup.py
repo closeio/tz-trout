@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tz-trout',
-    version='1.0.2',
+    version='1.0.3',
     url='http://github.com/closeio/tz-trout',
     license='MIT',
     author='Close.io',
@@ -20,7 +20,7 @@ setup(
     ],
     packages=['tztrout'],
     package_data={'tztrout': ['data/*']},
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     install_requires=['phonenumbers>=8.3.0', 'python-dateutil', 'pytz'],
     extras_require={'dev': ['timezonefinder']},
     tests_require=['mock', 'pytest'],
