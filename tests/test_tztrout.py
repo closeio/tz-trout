@@ -432,7 +432,6 @@ class TestTZIdsForAddress:
         expected_ids = [
             "America/Whitehorse",
             "America/Vancouver",
-            "America/Yellowknife",
             "America/Edmonton",
             "America/Regina",
             "America/Winnipeg",
