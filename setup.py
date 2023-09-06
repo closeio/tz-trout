@@ -1,8 +1,11 @@
 from setuptools import setup
 
+with open("README.md", encoding="utf-8") as file:
+    long_description = file.read()
+
 setup(
     name='tz-trout',
-    version='1.0.3',
+    version='1.0.4',
     url='http://github.com/closeio/tz-trout',
     license='MIT',
     author='Close.io',
@@ -10,6 +13,8 @@ setup(
     maintainer='Close.io',
     maintainer_email='engineering@close.io',
     description='Helps you figure out the time zone based on an address or a phone number.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     platforms='any',
     classifiers=[
         'Intended Audience :: Developers',
