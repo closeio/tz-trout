@@ -5,7 +5,7 @@ with open("README.md", encoding="utf-8") as file:
 
 setup(
     name='tz-trout',
-    version='1.0.4',
+    version='1.0.5',
     url='http://github.com/closeio/tz-trout',
     license='MIT',
     author='Close.io',
