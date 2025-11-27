@@ -2,6 +2,7 @@ import datetime
 from unittest.mock import patch
 
 import pytest
+from phonenumbers import PhoneNumber
 
 import tztrout
 
@@ -63,7 +64,11 @@ class TestTZIdsForPhone:
         ('phone', 'tz_ids'),
         [
             ('+1 (650) 333 4444', ['America/Los_Angeles']),
+            # Some european numbers
             ('+48 601 941 311', ['Europe/Warsaw']),
+            ('+34 691 941 311', ['Europe/Madrid']),  # Spain, mobile
+            ('+34 923 941 311', ['Europe/Madrid']),  # Spain, mainland
+            ('+34 928 941 311', ['Atlantic/Canary']),  # Spain, Canary Islands
         ],
     )
     def test_ids_for_phone(self, phone, tz_ids):
@@ -96,8 +101,6 @@ class TestTZIdsForPhone:
             ('+12103334444', 'CT', 'America/Chicago'),
             # San Diego, CA
             ('+16193334444', 'PT', 'America/Los_Angeles'),
-            # Dallas, TX
-            ('+12143334444', 'CT', 'America/Chicago'),
             # San Jose, CA
             ('+14083334444', 'PT', 'America/Los_Angeles'),
             # Austin, TX
@@ -129,13 +132,17 @@ class TestTZIdsForPhone:
             ('+14163334444', 'ET', 'America/Toronto'),
             # Montreal, QC
             ('+15143334444', 'ET', 'America/Toronto'),
-            # Calgary, AB
-            ('+14033334444', 'MT', 'America/Edmonton'),
             # Ottawa, ON
             ('+13433334444', 'ET', 'America/Toronto'),
             ('+16133334444', 'ET', 'America/Toronto'),
             # Edmonton, AB
             ('+17803334444', 'MT', 'America/Edmonton'),
+            # Calgary, AB
+            ('+14033334444', 'MT', 'America/Edmonton'),
+            # AB, all other area codes
+            ('+18253333444', 'MT', 'America/Edmonton'),
+            ('+15873333444', 'MT', 'America/Edmonton'),
+            ('+13683333444', 'MT', 'America/Edmonton'),
             # Mississauga, ON
             ('+12893334444', 'ET', 'America/Toronto'),
             # Winnipeg, MB
@@ -670,3 +677,9 @@ class TestNonDSTOffsetsForAddress:
     def test_non_dst_offsets_for_address(self, state, result):
         offsets = tztrout.non_dst_offsets_for_address('US', state=state)
         assert offsets == result
+
+
+def test_get_tz_ids_from_phone_no_timezone():
+    assert not tztrout._get_tz_ids_from_phone(
+        PhoneNumber(country_code=999, national_number=123456)
+    )
