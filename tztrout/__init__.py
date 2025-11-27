@@ -59,12 +59,12 @@ def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> List[str]:
     """Get a set of timezone IDs for a given phone number."""
     from phonenumbers import timezone
 
-    tzs = timezone.time_zones_for_geographical_number(phone)
+    tzs = list(timezone.time_zones_for_geographical_number(phone))
 
-    if tzs == (timezone.UNKNOWN_TIMEZONE,):
+    if tzs == [timezone.UNKNOWN_TIMEZONE]:
         return []
 
-    return list(tzs)
+    return tzs
 
 
 def _get_tz_ids_from_country_code(country_iso: str) -> List[str]:
