@@ -67,7 +67,7 @@ def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> List[str]:
     return list(tzs)
 
 
-def _get_tz_ids_from_country_code(country_iso: str) -> list[str]:
+def _get_tz_ids_from_country_code(country_iso: str) -> List[str]:
     """Get a set of timezone IDs for a given country ISO code."""
     return pytz.country_timezones.get(country_iso) or []
 
