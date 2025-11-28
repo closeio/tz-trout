@@ -1,5 +1,5 @@
 black==23.3.0
-mypy==1.3.0
+mypy==1.18.2
 ruff==0.0.270
 types-python-dateutil
 types-pytz
