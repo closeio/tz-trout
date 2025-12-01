@@ -1,6 +1,7 @@
 import datetime
 import operator
 from functools import reduce
+from typing import List
 
 import phonenumbers
 import pytz
@@ -54,7 +55,24 @@ def tz_ids_for_tz_name(tz_name):
     return valid_ids
 
 
-def tz_ids_for_phone(phone, country='US'):
+def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> List[str]:
+    """Get a set of timezone IDs for a given phone number."""
+    from phonenumbers import timezone
+
+    tzs = list(timezone.time_zones_for_geographical_number(phone))
+
+    if tzs == [timezone.UNKNOWN_TIMEZONE]:
+        return []
+
+    return tzs
+
+
+def _get_tz_ids_from_country_code(country_iso: str) -> List[str]:
+    """Get a set of timezone IDs for a given country ISO code."""
+    return pytz.country_timezones.get(country_iso) or []
+
+
+def tz_ids_for_phone(raw_number: str, country='US'):
     """Get the TZ identifiers that a phone number might be related to, e.g.
 
     >>> tztrout.tz_ids_for_phone('+16503334444')
@@ -65,7 +83,7 @@ def tz_ids_for_phone(phone, country='US'):
     from phonenumbers.geocoder import description_for_number
 
     try:
-        phone = phonenumbers.parse(phone, country)
+        phone = phonenumbers.parse(raw_number, country)
     except Exception:
         pass
     else:
@@ -93,9 +111,7 @@ def tz_ids_for_phone(phone, country='US'):
             return tz_ids_for_address(country_iso, state=state, city=city)
 
         elif country_iso == 'CA':
-            area_code = str(phone.national_number)[:3]
-            state = td.ca_area_code_to_state.get(area_code)
-            return td.ca_state_to_tz_ids.get(state)
+            return _get_tz_ids_from_phone(phone)
 
         elif country_iso == 'AU':
             area_code = str(phone.national_number)[:2]
@@ -108,7 +124,9 @@ def tz_ids_for_phone(phone, country='US'):
             return pytz.country_timezones.get(country_iso)
 
         elif country_iso:
-            return pytz.country_timezones.get(country_iso)
+            if tz_ids := _get_tz_ids_from_phone(phone):
+                return tz_ids
+            return _get_tz_ids_from_country_code(country_iso)
 
     return []
 

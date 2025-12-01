@@ -163,20 +163,20 @@ class TroutData:
 
     def __init__(self):
         # load the data files, if they exist
-        self._load_us_zipcode_data(
-            'us_zip_to_tz_ids', US_ZIPS_TO_TZ_IDS_MAP_PATH
+        self.us_zip_to_tz_ids = self._load_us_zipcode_data(
+            US_ZIPS_TO_TZ_IDS_MAP_PATH
         )
-        self._load_data('tz_name_to_tz_ids', TZ_NAME_TO_TZ_IDS_MAP_PATH)
-        self._load_data('offset_to_tz_ids', OFFSET_TO_TZ_IDS_MAP_PATH)
-        self._load_data('normalized_states', STATES_PATH)
-        self._load_data('tz_name_aliases', ALIASES_PATH)
-        self._load_data('ca_state_to_tz_ids', CA_STATE_TO_TZ_IDS_MAP_PATH)
-        self._load_data(
-            'ca_area_code_to_state', CA_AREA_CODE_TO_STATE_MAP_PATH
+        self.tz_name_to_tz_ids = self._load_data(TZ_NAME_TO_TZ_IDS_MAP_PATH)
+        self.offset_to_tz_ids = self._load_data(OFFSET_TO_TZ_IDS_MAP_PATH)
+        self.normalized_states = self._load_data(STATES_PATH)
+        self.tz_name_aliases = self._load_data(ALIASES_PATH)
+        self.ca_state_to_tz_ids = self._load_data(CA_STATE_TO_TZ_IDS_MAP_PATH)
+        self.ca_area_code_to_state = self._load_data(
+            CA_AREA_CODE_TO_STATE_MAP_PATH
         )
-        self._load_data('au_state_to_tz_ids', AU_STATE_TO_TZ_IDS_MAP_PATH)
-        self._load_data(
-            'au_area_code_to_state', AU_AREA_CODE_TO_STATE_MAP_PATH
+        self.au_state_to_tz_ids = self._load_data(AU_STATE_TO_TZ_IDS_MAP_PATH)
+        self.au_area_code_to_state = self._load_data(
+            AU_AREA_CODE_TO_STATE_MAP_PATH
         )
 
         # convert string offsets into integers
@@ -190,24 +190,20 @@ class TroutData:
             alias for v in self.tz_name_aliases.values() for alias in v
         }
 
-    def _load_data(self, name, path):
+    def _load_data(self, path):
         """Helper method to load a data file"""
         with open(path) as file:
             data = json.loads(file.read())
-            setattr(self, name, data)
+            return data
 
-    def _load_us_zipcode_data(self, name, path):
+    def _load_us_zipcode_data(self, path):
         dedupe = deduplicator()
         with open(path) as file:
             data = json.load(file)
-            setattr(
-                self,
-                name,
-                {
-                    dedupe(k): dedupe(tuple(dedupe(tz) for tz in v))
-                    for k, v in data.items()
-                },
-            )
+            return {
+                dedupe(k): dedupe(tuple(dedupe(tz) for tz in v))
+                for k, v in data.items()
+            }
 
     def _get_latest_non_dst_offset(self, tz):
         """Get the UTC offset for a given time zone identifier. Ignore the
