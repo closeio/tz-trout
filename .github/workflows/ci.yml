@@ -1,0 +1,70 @@
+
+name: CI
+on:
+  push:
+
+jobs:
+  lint:
+    strategy:
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+
+    name: Lint with Python ${{ matrix.python-version }}
+    runs-on: 'ubuntu-20.04'
+    container: python:${{ matrix.python-version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run:
+          pip install -r requirements_lint.txt
+
+      - name: Check formatting
+        run:
+          black --check .
+
+      - name: Lint code
+        run:
+          ruff check --no-cache .
+
+      - name: Type check
+        run:
+          mypy
+      
+  test:
+    strategy:
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+
+      fail-fast: false
+
+    name: Tests with Python ${{ matrix.python-version }}
+    runs-on: 'ubuntu-20.04'
+    container: python:${{ matrix.python-version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run:
+          pip install -r requirements.txt -r requirements_test.txt
+        
+      - name: Run tests
+        run:
+          pytest
+      
+
+
+
+ 
+
+
+
+
+
+
+      
+
+
+
