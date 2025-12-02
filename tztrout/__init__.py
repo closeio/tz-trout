@@ -1,7 +1,6 @@
 import datetime
 import operator
 from functools import reduce
-from typing import List
 
 import phonenumbers
 import pytz
@@ -55,7 +54,7 @@ def tz_ids_for_tz_name(tz_name):
     return valid_ids
 
 
-def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> List[str]:
+def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> list[str]:
     """Get a set of timezone IDs for a given phone number."""
     from phonenumbers import timezone
 
@@ -67,7 +66,7 @@ def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> List[str]:
     return tzs
 
 
-def _get_tz_ids_from_country_code(country_iso: str) -> List[str]:
+def _get_tz_ids_from_country_code(country_iso: str) -> list[str]:
     """Get a set of timezone IDs for a given country ISO code."""
     return pytz.country_timezones.get(country_iso) or []
 
