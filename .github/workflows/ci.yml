@@ -7,7 +7,9 @@ jobs:
   lint:
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+
+      fail-fast: false
 
     name: Lint with Python ${{ matrix.python-version }}
     runs-on: ubuntu-24.04
@@ -35,7 +37,7 @@ jobs:
   test:
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
 
       fail-fast: false
 
