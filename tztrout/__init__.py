@@ -79,8 +79,6 @@ def tz_ids_for_phone(raw_number: str, country='US'):
     >>> tztrout.tz_ids_for_phone('+49 (0)711 400 40990')
     [u'Europe/Berlin', u'Europe/Busingen']
     """
-    from phonenumbers.geocoder import description_for_number
-
     try:
         phone = phonenumbers.parse(raw_number, country)
     except Exception:
@@ -92,24 +90,7 @@ def tz_ids_for_phone(raw_number: str, country='US'):
                 phone.country_code
             )
 
-        if country_iso == 'US':
-            # check if we have a specific exception for a given area code first
-            exception_key = 'areacode:%s' % str(phone.national_number)[:3]
-            if exception_key in data_exceptions:
-                return data_exceptions[exception_key]['include']
-
-            state = city = None
-            area = description_for_number(phone, 'en').split(',')
-            if len(area) == 2:
-                city = area[0].strip()
-                state = area[1].strip()
-            elif len(area) == 1 and area[0]:
-                state = area[0].lower().strip()
-                state = td.normalized_states['US'].get(state, None)
-
-            return tz_ids_for_address(country_iso, state=state, city=city)
-
-        elif country_iso == 'CA':
+        if country_iso in {'US', 'CA'}:
             return _get_tz_ids_from_phone(phone)
 
         elif country_iso == 'AU':
