@@ -149,6 +149,7 @@ class TestTZIdsForPhone:
             ('+14313334444', 'CT', 'America/Winnipeg'),
             # Vancouver, BC
             ('+16043334444', 'PT', 'America/Vancouver'),
+            ('+16723334444', 'PT', 'America/Vancouver'),
             # Halifax, NS
             ('+19023334444', 'AT', 'America/Halifax'),
             # Saskatoon, SK
