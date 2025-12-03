@@ -95,6 +95,7 @@ class TestTZIdsForPhone:
             ('+17133334444', 'CT', 'America/Chicago'),
             # Philadelphia, PA
             ('+12153334444', 'ET', 'America/New_York'),
+            ("+14455000001", 'ET', 'America/New_York'),
             # Phoenix, AZ
             ('+16023334444', 'MT', 'America/Phoenix'),
             # San Antonio, TX
