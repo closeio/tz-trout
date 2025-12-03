@@ -106,7 +106,9 @@ class TestTZIdsForPhone:
             # Austin, TX
             ('+15123334444', 'CT', 'America/Chicago'),
             # Indianapolis, IN
-            ('+13173334444', 'ET', 'America/Indiana/Indianapolis'),
+            ('+13173334444', 'ET', 'America/New_York'),
+            # Other IN area codes
+            ('+12193334444', 'ET', 'America/New_York'),
             # Jacksonville, FL
             ('+19043334444', 'ET', 'America/New_York'),
             # San Francisco, CA
