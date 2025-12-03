@@ -121,7 +121,7 @@ class TestTZIdsForPhone:
             # Fort Worth, TX
             ('+16823334444', 'CT', 'America/Chicago'),
             # Detroit, MI
-            ('+13133334444', 'ET', 'America/Detroit'),
+            ('+13133334444', 'ET', 'America/New_York'),
             # El Paso, TX
             ('+19153334444', 'MT', 'America/Denver'),
             # Memphis, TN
