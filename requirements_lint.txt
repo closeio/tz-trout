@@ -1,4 +1,4 @@
-black==23.3.0
+black==25.11.0
 mypy==1.19.0
 ruff==0.14.7
 types-python-dateutil
