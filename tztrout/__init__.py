@@ -111,7 +111,9 @@ def tz_ids_for_phone(raw_number: str, country='US'):
     return []
 
 
-def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+def tz_ids_for_address(  # noqa C901
+    country, state=None, city=None, zipcode=None, **kwargs
+):
     """Get the TZ identifiers for a given address, e.g.:
 
     >>> tztrout.tz_ids_for_address('US', state='CA', city='Palo Alto')
@@ -138,8 +140,8 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
 
             return list(td.us_zip_to_tz_ids.get(zipcode, []))
         elif state or city:
-            if city and 'city:%s' % city.lower() in data_exceptions:
-                return data_exceptions['city:%s' % city.lower()]['include']
+            if city and f'city:{city.lower()}' in data_exceptions:
+                return data_exceptions[f'city:{city.lower()}']['include']
             if state and len(state) != 2:
                 state = td.normalized_states['US'].get(state.lower(), state)
             code = ZIP_DATA.find_zip(city=city, state=state)
