@@ -24,7 +24,7 @@ jobs:
 
       - name: Check formatting
         run:
-          black --check .
+          ruff format --check .
 
       - name: Lint code
         run:
