@@ -34,7 +34,7 @@ jobs:
           echo "release_tag=v${release_version}" >> $GITHUB_ENV
       - name: Get the VERSION from setup.py
         run: |
-          echo "package_version=`grep -Po '__version__ = "\K[^"]*' tasktiger/__init__.py`" >> $GITHUB_ENV
+          echo "package_version=$(python setup.py --version)" >> $GITHUB_ENV
       - name: Get the latest version from PyPI
         run: |
           curl https://pypi.org/pypi/tasktiger/json | python -c 'import json, sys; contents=sys.stdin.read(); parsed = json.loads(contents); print("pypi_version=" + parsed["info"]["version"])' >> $GITHUB_ENV
