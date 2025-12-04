@@ -15,7 +15,8 @@ exclude = '''
 target-version = "py39"
 line-length = 79
 exclude = [".git", "venv"]
-ignore = ["E501", "D10", "D400", "D401", "D415", "D205", "B904", "SIM118"]
+[tool.ruff.lint]
+ignore = ["E501", "D10", "D400", "D401", "D415", "D205", "B904", "SIM118", "D203"]
 select = [
     "B",
     "C",
@@ -25,7 +26,7 @@ select = [
     "N",
     "SIM",
     "TID25",
-    "TCH005",
+    "TC005",
     "W",
     "UP",
     "ISC",
@@ -36,7 +37,7 @@ select = [
     "INP",
 ]
 
-[tool.ruff.mccabe]
+[lint.mccabe]
 max-complexity = 14
 
 [tool.mypy]
