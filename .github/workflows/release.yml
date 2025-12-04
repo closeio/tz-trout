@@ -37,7 +37,7 @@ jobs:
           echo "package_version=$(python setup.py --version)" >> $GITHUB_ENV
       - name: Get the latest version from PyPI
         run: |
-          curl https://pypi.org/pypi/tasktiger/json | python -c 'import json, sys; contents=sys.stdin.read(); parsed = json.loads(contents); print("pypi_version=" + parsed["info"]["version"])' >> $GITHUB_ENV
+          curl https://pypi.org/pypi/tz-trout/json | python -c 'import json, sys; contents=sys.stdin.read(); parsed = json.loads(contents); print("pypi_version=" + parsed["info"]["version"])' >> $GITHUB_ENV
       - name: Log all the things
         run: |
           echo 'Requested release tag `${{ github.event.inputs.requested_release_tag }}`'
