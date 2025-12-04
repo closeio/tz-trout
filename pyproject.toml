@@ -16,7 +16,7 @@ target-version = "py39"
 line-length = 79
 exclude = [".git", "venv"]
 [tool.ruff.lint]
-ignore = ["E501", "D10", "D400", "D401", "D415", "D205", "B904", "SIM118", "D203"]
+ignore = ["E501", "D10", "D400", "D401", "D415", "D205", "B904", "SIM118", "D203", "D213"]
 select = [
     "B",
     "C",
