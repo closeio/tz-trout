@@ -71,7 +71,7 @@ def _get_tz_ids_from_country_code(country_iso: str) -> list[str]:
     return pytz.country_timezones.get(country_iso) or []
 
 
-def tz_ids_for_phone(raw_number: str, country='US'):
+def tz_ids_for_phone(raw_number: str, country="US"):
     """Get the TZ identifiers that a phone number might be related to, e.g.
 
     >>> tztrout.tz_ids_for_phone('+16503334444')
@@ -90,10 +90,10 @@ def tz_ids_for_phone(raw_number: str, country='US'):
                 phone.country_code
             )
 
-        if country_iso in {'US', 'CA'}:
+        if country_iso in {"US", "CA"}:
             return _get_tz_ids_from_phone(phone)
 
-        elif country_iso == 'AU':
+        elif country_iso == "AU":
             area_code = str(phone.national_number)[:2]
             state = td.au_area_code_to_state.get(area_code)
 
@@ -129,21 +129,21 @@ def tz_ids_for_address(  # noqa C901
         u'Asia/Kashgar'
     ]
     """
-    if country == 'US':
+    if country == "US":
         if zipcode:
             if isinstance(zipcode, int):
                 zipcode = str(zipcode)
 
             # If an extended zipcode in a form of XXXXX-XXXX is provided,
             # only use the first part
-            zipcode = zipcode.split('-')[0]
+            zipcode = zipcode.split("-")[0]
 
             return list(td.us_zip_to_tz_ids.get(zipcode, []))
         elif state or city:
-            if city and f'city:{city.lower()}' in data_exceptions:
-                return data_exceptions[f'city:{city.lower()}']['include']
+            if city and f"city:{city.lower()}" in data_exceptions:
+                return data_exceptions[f"city:{city.lower()}"]["include"]
             if state and len(state) != 2:
-                state = td.normalized_states['US'].get(state.lower(), state)
+                state = td.normalized_states["US"].get(state.lower(), state)
             code = ZIP_DATA.find_zip(city=city, state=state)
             if code:
                 return list(td.us_zip_to_tz_ids.get(code, []))
@@ -152,13 +152,13 @@ def tz_ids_for_address(  # noqa C901
                 code = ZIP_DATA.find_zip(state=state)
                 if code:
                     return list(td.us_zip_to_tz_ids.get(code, []))
-    elif country == 'CA' and state:
+    elif country == "CA" and state:
         if len(state) != 2:
-            state = td.normalized_states['CA'].get(state.lower(), state)
+            state = td.normalized_states["CA"].get(state.lower(), state)
         return td.ca_state_to_tz_ids.get(state)
-    elif country == 'AU' and state:
+    elif country == "AU" and state:
         if len(state) != 2:
-            state = td.normalized_states['AU'].get(state.lower(), state)
+            state = td.normalized_states["AU"].get(state.lower(), state)
         return td.au_state_to_tz_ids.get(state)
 
     return pytz.country_timezones.get(country)
@@ -199,7 +199,7 @@ def tz_ids_for_offset(offset_in_minutes):
     return valid_ids
 
 
-def local_time_for_phone(phone, country='US'):
+def local_time_for_phone(phone, country="US"):
     """Get the local time for a given phone number, e.g.
 
     >>> datetime.datetime.utcnow()
@@ -252,11 +252,11 @@ def offset_ranges_for_local_time(local_start, local_end):
     """
     if not isinstance(local_start, (datetime.time, int, str)):
         raise ValueError(
-            'local_start is not an instance of datetime.time or int or str'
+            "local_start is not an instance of datetime.time or int or str"
         )
     if not isinstance(local_end, (datetime.time, int, str)):
         raise ValueError(
-            'local_end is not an instance of datetime.time or int or str'
+            "local_end is not an instance of datetime.time or int or str"
         )
 
     # Convert to `datetime.time` if `local_start` or `local_end` are strings.
