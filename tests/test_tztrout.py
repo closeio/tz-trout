@@ -95,6 +95,7 @@ class TestTZIdsForPhone:
             ('+17133334444', 'CT', 'America/Chicago'),
             # Philadelphia, PA
             ('+12153334444', 'ET', 'America/New_York'),
+            ("+14455000001", 'ET', 'America/New_York'),
             # Phoenix, AZ
             ('+16023334444', 'MT', 'America/Phoenix'),
             # San Antonio, TX
@@ -106,7 +107,9 @@ class TestTZIdsForPhone:
             # Austin, TX
             ('+15123334444', 'CT', 'America/Chicago'),
             # Indianapolis, IN
-            ('+13173334444', 'ET', 'America/Indiana/Indianapolis'),
+            ('+13173334444', 'ET', 'America/New_York'),
+            # Other IN area codes
+            ('+12193334444', 'ET', 'America/New_York'),
             # Jacksonville, FL
             ('+19043334444', 'ET', 'America/New_York'),
             # San Francisco, CA
@@ -118,7 +121,7 @@ class TestTZIdsForPhone:
             # Fort Worth, TX
             ('+16823334444', 'CT', 'America/Chicago'),
             # Detroit, MI
-            ('+13133334444', 'ET', 'America/Detroit'),
+            ('+13133334444', 'ET', 'America/New_York'),
             # El Paso, TX
             ('+19153334444', 'MT', 'America/Denver'),
             # Memphis, TN
