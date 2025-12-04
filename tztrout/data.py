@@ -277,9 +277,8 @@ class TroutData:
 
         cnt = 0
         tz_ids_to_zips = defaultdict(list)
-        for zip in generate_us_zipcode_namedtuples():
+        for cnt, zip in enumerate(generate_us_zipcode_namedtuples()):
             ids = tuple(_get_tz_identifiers_for_us_zipcode(zip))
-            cnt += 1
             if cnt % 100 == 99:
                 stdout.write(f'\r{cnt} zipcodes mapped to tz_ids')
                 stdout.flush()
@@ -360,7 +359,7 @@ def _progressbar(lst):
     for cnt, elem in enumerate(lst):
         yield elem
         if cnt % 10 == 9:
-            stdout.write('\r%d/%d' % (cnt + 1, length_of_list))
+            stdout.write(f'\r{cnt + 1}/{length_of_list}')
             stdout.flush()
 
 
