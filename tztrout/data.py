@@ -11,58 +11,58 @@ from tztrout.data_exceptions import data_exceptions
 # paths to the data files
 basepath = os.path.dirname(os.path.abspath(__file__))
 US_ZIPS_TO_TZ_IDS_MAP_PATH = os.path.join(
-    basepath, 'data/us_zips_to_tz_ids.json'
+    basepath, "data/us_zips_to_tz_ids.json"
 )
 TZ_NAME_TO_TZ_IDS_MAP_PATH = os.path.join(
-    basepath, 'data/tz_name_to_tz_ids.json'
+    basepath, "data/tz_name_to_tz_ids.json"
 )
 OFFSET_TO_TZ_IDS_MAP_PATH = os.path.join(
-    basepath, 'data/offset_to_tz_ids.json'
+    basepath, "data/offset_to_tz_ids.json"
 )
-STATES_PATH = os.path.join(basepath, 'data/normalized_states.json')
-ALIASES_PATH = os.path.join(basepath, 'data/tz_name_to_tz_name_aliases.json')
+STATES_PATH = os.path.join(basepath, "data/normalized_states.json")
+ALIASES_PATH = os.path.join(basepath, "data/tz_name_to_tz_name_aliases.json")
 CA_STATE_TO_TZ_IDS_MAP_PATH = os.path.join(
-    basepath, 'data/ca_state_to_tz_ids.json'
+    basepath, "data/ca_state_to_tz_ids.json"
 )
 CA_AREA_CODE_TO_STATE_MAP_PATH = os.path.join(
-    basepath, 'data/ca_area_code_to_state.json'
+    basepath, "data/ca_area_code_to_state.json"
 )
 AU_STATE_TO_TZ_IDS_MAP_PATH = os.path.join(
-    basepath, 'data/au_state_to_tz_ids.json'
+    basepath, "data/au_state_to_tz_ids.json"
 )
 AU_AREA_CODE_TO_STATE_MAP_PATH = os.path.join(
-    basepath, 'data/au_area_code_to_state.json'
+    basepath, "data/au_area_code_to_state.json"
 )
 
 # Australian TZ names are resolved as EST, WST, etc., which is ok for local
 # usage, but conflicts with the more common US TZ names if we're thinking
 # globally. We should use AWST, ACST, AEST, etc. instead.
 AU_MAP = {
-    'WST': 'AWST',
-    'CST': 'ACST',
-    'EST': 'AEST',
-    'CWST': 'AWST',
-    'LHST': 'AEST',
-    'WDT': 'AWDT',
-    'CDT': 'ACDT',
-    'EDT': 'AEDT',
-    'CWDT': 'AWDT',
-    'LHDT': 'AEDT',
+    "WST": "AWST",
+    "CST": "ACST",
+    "EST": "AEST",
+    "CWST": "AWST",
+    "LHST": "AEST",
+    "WDT": "AWDT",
+    "CDT": "ACDT",
+    "EDT": "AEDT",
+    "CWDT": "AWDT",
+    "LHDT": "AEDT",
 }
 
 # Asia/Manila is resolved as PST (Philippine Standard Time), which is ok for
 # local usage, but conflicts with the more common US PST (Pacific Standard
 # Time). We use PHT instead.
 ASIA_MAP = {
-    'PST': 'PHT',
+    "PST": "PHT",
 }
 
 # The path of our US Zipcode data generated from Geonames.org
-US_ZIPCODE_DATA_PATH = os.path.join(basepath, 'data/us_zipcode_data.json')
+US_ZIPCODE_DATA_PATH = os.path.join(basepath, "data/us_zipcode_data.json")
 
 # The namedtuple structure that represents a US Zipcode
 Zipcode = namedtuple(
-    'Zipcode', ['zip', 'city', 'state', 'latitude', 'longitude']
+    "Zipcode", ["zip", "city", "state", "latitude", "longitude"]
 )
 
 
@@ -100,7 +100,7 @@ def generate_us_zipcode_namedtuples():
     """
     if not os.path.exists(US_ZIPCODE_DATA_PATH):
         raise ValueError(
-            'US Zipcode data missing. Run regenerate_data.py first'
+            "US Zipcode data missing. Run regenerate_data.py first"
         )
     with open(US_ZIPCODE_DATA_PATH) as file:
         data = json.load(file)
@@ -142,7 +142,7 @@ class InMemoryZipData:
         elif state:
             return self.by_state.get(state)
 
-        raise ValueError('Specify either city or state')
+        raise ValueError("Specify either city or state")
 
 
 ZIP_DATA = InMemoryZipData()
@@ -159,7 +159,7 @@ class TroutData:
     # Sometimes we need to go back a few steps to figure out DSTs, timezone
     # names, etc. This is a kwargs dict that is passed to datetime.timedelta
     # to determine the size of a single step
-    TD_STEP = {'days': 40}
+    TD_STEP = {"days": 40}
 
     def __init__(self):
         # load the data files, if they exist
@@ -244,7 +244,7 @@ class TroutData:
                 tz_name = tz.tzname(dt)
 
                 # Ignore TZ names that are really UTC offsets like "+01".
-                is_offset = tz_name.startswith(('+', '-'))
+                is_offset = tz_name.startswith(("+", "-"))
                 if not is_offset and tz_name not in tz_names:
                     tz_names.append(tz_name)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
@@ -280,31 +280,31 @@ class TroutData:
         for cnt, zip in enumerate(generate_us_zipcode_namedtuples()):
             ids = tuple(_get_tz_identifiers_for_us_zipcode(zip))
             if cnt % 100 == 99:
-                stdout.write(f'\r{cnt} zipcodes mapped to tz_ids')
+                stdout.write(f"\r{cnt} zipcodes mapped to tz_ids")
                 stdout.flush()
 
             # apply the data exceptions
             exceptions = (
-                data_exceptions.get('zip:' + zip.zip)
-                or data_exceptions.get('state:' + zip.state)
+                data_exceptions.get("zip:" + zip.zip)
+                or data_exceptions.get("state:" + zip.state)
                 or {}
             )
-            exceptions['include'] = (
-                exceptions.get('include', [])
-                + data_exceptions['all'].get('include', [])
-                if 'all' in data_exceptions
+            exceptions["include"] = (
+                exceptions.get("include", [])
+                + data_exceptions["all"].get("include", [])
+                if "all" in data_exceptions
                 else []
             )
-            exceptions['exclude'] = (
-                exceptions.get('exclude', [])
-                + data_exceptions['all'].get('exclude', [])
-                if 'all' in data_exceptions
+            exceptions["exclude"] = (
+                exceptions.get("exclude", [])
+                + data_exceptions["all"].get("exclude", [])
+                if "all" in data_exceptions
                 else []
             )
             if exceptions:
                 ids = tuple(
-                    (set(ids) - set(exceptions['exclude']))
-                    | set(exceptions['include'])
+                    (set(ids) - set(exceptions["exclude"]))
+                    | set(exceptions["include"])
                 )
 
             tz_ids_to_zips[ids].append(zip.zip)
@@ -321,11 +321,11 @@ class TroutData:
         for id in _progressbar(pytz.common_timezones):
             tz = pytz.timezone(id)
             tz_names = self._get_latest_tz_names(tz)
-            if id.startswith('Australia'):
+            if id.startswith("Australia"):
                 tz_names = [
                     AU_MAP.get(tz_name, tz_name) for tz_name in tz_names
                 ]
-            if id.startswith('Asia'):
+            if id.startswith("Asia"):
                 tz_names = [
                     ASIA_MAP.get(tz_name, tz_name) for tz_name in tz_names
                 ]
@@ -359,10 +359,10 @@ def _progressbar(lst):
     for cnt, elem in enumerate(lst):
         yield elem
         if cnt % 10 == 9:
-            stdout.write(f'\r{cnt + 1}/{length_of_list}')
+            stdout.write(f"\r{cnt + 1}/{length_of_list}")
             stdout.flush()
 
 
 def _dump_json_data(path, data):
-    with open(path, 'w') as f:
-        json.dump(data, f, indent=2, sort_keys=True, separators=(',', ': '))
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2, sort_keys=True, separators=(",", ": "))

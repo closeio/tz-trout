@@ -1,16 +1,6 @@
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
-[tool.black]
-skip-string-normalization = true
-line-length = 79
-exclude = '''
-/(
-    \.git
-  | venv
-)/
-'''
-
 [tool.ruff]
 target-version = "py39"
 line-length = 79

@@ -7,13 +7,13 @@ from zipfile import ZipFile
 # We download our US Zipcode data from Geonames.org and then store that data
 # as an array of dicitionaries in memory
 US_ZIPCODE_DATA_DOWNLOAD_URL = (
-    'https://download.geonames.org/export/zip/US.zip'
+    "https://download.geonames.org/export/zip/US.zip"
 )
-US_ZIPCODE_TXT_FILE_NAME = 'US.txt'
+US_ZIPCODE_TXT_FILE_NAME = "US.txt"
 
 basepath = os.path.dirname(os.path.abspath(__file__))
 US_ZIPCODE_DATA_PATH = os.path.join(
-    basepath, 'tztrout/data/us_zipcode_data.json'
+    basepath, "tztrout/data/us_zipcode_data.json"
 )
 
 
@@ -34,30 +34,30 @@ def generate_us_zipcode_data():
     us_zipcode_data = []
     us_zipcode_txt_file_data = _get_latest_us_zipcode_data()
     for line in us_zipcode_txt_file_data:
-        zip = line.decode().split('\t')
+        zip = line.decode().split("\t")
         # The order of fields is documented in the readme file of the
         # geonames download.
         us_zipcode_data.append(
             {
-                'zip': zip[1],
-                'city': zip[2],
-                'state': zip[4],
-                'latitude': float(zip[9]),
-                'longitude': float(zip[10]),
+                "zip": zip[1],
+                "city": zip[2],
+                "state": zip[4],
+                "latitude": float(zip[9]),
+                "longitude": float(zip[10]),
             }
         )
 
-    print(f'There are {len(us_zipcode_data)} zipcodes in the US')
+    print(f"There are {len(us_zipcode_data)} zipcodes in the US")
 
-    with open(US_ZIPCODE_DATA_PATH, 'w') as f:
+    with open(US_ZIPCODE_DATA_PATH, "w") as f:
         json.dump(
             us_zipcode_data,
             f,
             indent=2,
             sort_keys=True,
-            separators=(',', ': '),
+            separators=(",", ": "),
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     generate_us_zipcode_data()

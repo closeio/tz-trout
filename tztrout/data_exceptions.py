@@ -13,35 +13,35 @@ that's *the only* tz id to be returned for tztrout.tz_ids_for_address('US', stat
 """
 
 data_exceptions = {
-    'all': {
-        'exclude': [
-            'America/Indiana/Tell_City',
-            'America/Indiana/Knox',
-            'America/North_Dakota/Beulah',
-            'America/Indiana/Winamac',
-            'America/Indiana/Petersburg',
-            'America/Indiana/Vincennes',
+    "all": {
+        "exclude": [
+            "America/Indiana/Tell_City",
+            "America/Indiana/Knox",
+            "America/North_Dakota/Beulah",
+            "America/Indiana/Winamac",
+            "America/Indiana/Petersburg",
+            "America/Indiana/Vincennes",
         ]
     },
-    'state:NY': {
-        'exclude': [
-            'America/Indiana/Winamac',
-            'America/Indiana/Petersburg',
-            'America/Indiana/Vincennes',
+    "state:NY": {
+        "exclude": [
+            "America/Indiana/Winamac",
+            "America/Indiana/Petersburg",
+            "America/Indiana/Vincennes",
         ]
     },
-    'state:PA': {
-        'exclude': [
-            'America/Indiana/Winamac',
-            'America/Indiana/Petersburg',
-            'America/Indiana/Vincennes',
+    "state:PA": {
+        "exclude": [
+            "America/Indiana/Winamac",
+            "America/Indiana/Petersburg",
+            "America/Indiana/Vincennes",
         ]
     },
-    'state:IN': {'include': ['America/Indiana/Indianapolis']},
-    'city:el paso': {'include': ['America/Denver']},
-    'areacode:915': {'include': ['America/Denver']},
-    'areacode:901': {'include': ['America/Chicago']},
-    'areacode:202': {'include': ['America/New_York']},
-    'areacode:502': {'include': ['America/New_York']},  # eastern Kentucky
-    'areacode:859': {'include': ['America/New_York']},  # eastern Kentucky
+    "state:IN": {"include": ["America/Indiana/Indianapolis"]},
+    "city:el paso": {"include": ["America/Denver"]},
+    "areacode:915": {"include": ["America/Denver"]},
+    "areacode:901": {"include": ["America/Chicago"]},
+    "areacode:202": {"include": ["America/New_York"]},
+    "areacode:502": {"include": ["America/New_York"]},  # eastern Kentucky
+    "areacode:859": {"include": ["America/New_York"]},  # eastern Kentucky
 }
