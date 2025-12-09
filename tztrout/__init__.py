@@ -341,7 +341,7 @@ def tz_ids_for_offset_range(offset_start, offset_end):
     """
     offsets = [
         int(o)
-        for o in td.offset_to_tz_ids.keys()
+        for o in td.offset_to_tz_ids
         if (int(o) >= offset_start and int(o) <= offset_end)
     ]
     ids = [tz_ids_for_offset(o) for o in offsets]
