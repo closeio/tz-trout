@@ -281,7 +281,6 @@ class TroutData:
             tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
             return [tz_id]
 
-        cnt = 0
         tz_ids_to_zips = defaultdict(list)
         for cnt, zip in enumerate(generate_us_zipcode_namedtuples()):
             ids = tuple(_get_tz_identifiers_for_us_zipcode(zip))
