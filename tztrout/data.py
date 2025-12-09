@@ -191,7 +191,7 @@ class TroutData:
         }
 
     def _load_data(self, path):
-        """Helper method to load a data file"""
+        """Load data from a file. Helper method."""
         with open(path) as file:
             data = json.loads(file.read())
             return data
