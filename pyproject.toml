@@ -38,7 +38,7 @@ ignore = [
   # summary line below """ for multi-line docstrings.
   "D212",
 ]
-select = [
+extend-select = [
     "B",
     "C",
     "D",
