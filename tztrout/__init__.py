@@ -88,7 +88,9 @@ def tz_ids_for_phone(raw_number: str, country="US"):
     else:
         country_iso = phonenumbers.region_code_for_number(phone)
         if not country_iso:
-            country_iso = phonenumbers.region_code_for_country_code(phone.country_code)
+            country_iso = phonenumbers.region_code_for_country_code(
+                phone.country_code
+            )
 
         if country_iso in {"US", "CA"}:
             return _get_tz_ids_from_phone(phone)
@@ -213,7 +215,9 @@ def local_time_for_phone(phone, country="US"):
         return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
 
 
-def local_time_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+def local_time_for_address(
+    country, state=None, city=None, zipcode=None, **kwargs
+):
     """
     Get the local time for a given address, e.g.
 
@@ -256,14 +260,20 @@ def offset_ranges_for_local_time(local_start, local_end):
             "local_start is not an instance of datetime.time or int or str"
         )
     if not isinstance(local_end, (datetime.time, int, str)):
-        raise ValueError("local_end is not an instance of datetime.time or int or str")
+        raise ValueError(
+            "local_end is not an instance of datetime.time or int or str"
+        )
 
     # Convert to `datetime.time` if `local_start` or `local_end` are strings.
     local_start = (
-        parse_date(local_start).time() if isinstance(local_start, str) else local_start
+        parse_date(local_start).time()
+        if isinstance(local_start, str)
+        else local_start
     )
     local_end = (
-        parse_date(local_end).time() if isinstance(local_end, str) else local_end
+        parse_date(local_end).time()
+        if isinstance(local_end, str)
+        else local_end
     )
 
     # Convert to ints (minutes).
@@ -271,9 +281,13 @@ def offset_ranges_for_local_time(local_start, local_end):
         return t.hour * 60 + t.minute
 
     local_start = (
-        local_start if isinstance(local_start, int) else to_minutes(local_start)
+        local_start
+        if isinstance(local_start, int)
+        else to_minutes(local_start)
     )
-    local_end = local_end if isinstance(local_end, int) else to_minutes(local_end)
+    local_end = (
+        local_end if isinstance(local_end, int) else to_minutes(local_end)
+    )
 
     # Get current UTC time.
     current_time = to_minutes(datetime.datetime.utcnow().time())
@@ -351,18 +365,30 @@ def non_dst_offsets_for_phone(phone):
     """
     ids = tz_ids_for_phone(phone)
     if ids:
-        offsets = [td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids]
-        return _dedupe_preserve_ord([int(o.total_seconds() / 60) for o in offsets if o])
+        offsets = [
+            td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids
+        ]
+        return _dedupe_preserve_ord(
+            [int(o.total_seconds() / 60) for o in offsets if o]
+        )
 
 
-def non_dst_offsets_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+def non_dst_offsets_for_address(
+    country, state=None, city=None, zipcode=None, **kwargs
+):
     """
     Return the non-DST offsets (in minutes) for a given address, e.g.
 
     >>> tztrout.non_dst_offsets_for_address('US', state='CA')
     [-480]
     """
-    ids = tz_ids_for_address(country, state=state, city=city, zipcode=zipcode, **kwargs)
+    ids = tz_ids_for_address(
+        country, state=state, city=city, zipcode=zipcode, **kwargs
+    )
     if ids:
-        offsets = [td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids]
-        return _dedupe_preserve_ord([int(o.total_seconds() / 60) for o in offsets if o])
+        offsets = [
+            td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids
+        ]
+        return _dedupe_preserve_ord(
+            [int(o.total_seconds() / 60) for o in offsets if o]
+        )
