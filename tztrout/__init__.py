@@ -111,9 +111,7 @@ def tz_ids_for_phone(raw_number: str, country="US"):
     return []
 
 
-def tz_ids_for_address(  # noqa C901
-    country, state=None, city=None, zipcode=None, **kwargs
-):
+def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
     """
     Get the TZ identifiers for a given address, e.g.:
 
