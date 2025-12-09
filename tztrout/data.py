@@ -260,11 +260,11 @@ class TroutData:
         """
         try:
             from timezonefinder import TimezoneFinder
-        except ImportError:
+        except ImportError as exc:
             raise ImportError(
                 'Dependency "timezonefinder" is missing. '
                 'Install with "tz-trout[dev]" in order to generate timezone data'
-            )
+            ) from exc
 
         tf = TimezoneFinder()
 
