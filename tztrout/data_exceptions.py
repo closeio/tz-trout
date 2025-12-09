@@ -1,4 +1,5 @@
-"""Put the exceptions for the auto-generated data here. The format should be:
+"""
+Put the exceptions for the auto-generated data here. The format should be:
 
 'type:value': {
     'include': [list, of, tz, ids],

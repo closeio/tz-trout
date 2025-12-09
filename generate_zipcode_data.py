@@ -18,7 +18,8 @@ US_ZIPCODE_DATA_PATH = os.path.join(
 
 
 def _get_latest_us_zipcode_data():
-    """Download the latest Geonames.org US Zipcode data zip file
+    """
+    Download the latest Geonames.org US Zipcode data zip file
     and extract the US zipcode information from a txt file located
     inside the downloaded zip.
     """
@@ -28,7 +29,8 @@ def _get_latest_us_zipcode_data():
 
 
 def generate_us_zipcode_data():
-    """Generate a list of US zipcode data from the txt file in the latest
+    """
+    Generate a list of US zipcode data from the txt file in the latest
     Geonames.org database and save it as a JSON file.
     """
     us_zipcode_data = []

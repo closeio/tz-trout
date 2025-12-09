@@ -67,7 +67,8 @@ Zipcode = namedtuple(
 
 
 def deduplicator():
-    """Deduplicate strings in memory using a canonical mapping.
+    """
+    Deduplicate strings in memory using a canonical mapping.
 
     Works similarly to intern() but supports unicode as well.
 
@@ -95,7 +96,8 @@ def deduplicator():
 
 
 def generate_us_zipcode_namedtuples():
-    """Generate a list of namedtuples for US zipcodes from the list of
+    """
+    Generate a list of namedtuples for US zipcodes from the list of
     dictionaries in data/us_zipcode_data.json
     """
     if not os.path.exists(US_ZIPCODE_DATA_PATH):
@@ -109,7 +111,8 @@ def generate_us_zipcode_namedtuples():
 
 
 class InMemoryZipData:
-    """In-memory copy of Zipcode mappings by state, city, and state and city.
+    """
+    In-memory copy of Zipcode mappings by state, city, and state and city.
 
     This enables 20x speedup for city/state zip code lookup
     at a cost of more restricted / use-case-specific API,
@@ -206,7 +209,8 @@ class TroutData:
             }
 
     def _get_latest_non_dst_offset(self, tz):
-        """Get the UTC offset for a given time zone identifier. Ignore the
+        """
+        Get the UTC offset for a given time zone identifier. Ignore the
         DST offsets.
         """
         dt = datetime.datetime.utcnow()
@@ -220,7 +224,8 @@ class TroutData:
             dt -= datetime.timedelta(**self.TD_STEP)
 
     def _get_latest_offsets(self, tz):
-        """Get all the UTC offsets (in minutes) that a given time zone
+        """
+        Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
         """
         dt = datetime.datetime.utcnow()
@@ -253,7 +258,8 @@ class TroutData:
         return tz_names
 
     def generate_zip_to_tz_id_map(self):
-        """Generate the map of US zipcodes to time zone identifiers. The
+        """
+        Generate the map of US zipcodes to time zone identifiers. The
         method finds all the possible time zone identifiers for each zipcode
         using the latitude and longitude of each zipcode to search
         TimezoneFinder.
