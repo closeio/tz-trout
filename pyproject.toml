@@ -31,7 +31,7 @@ ignore = [
   # this because we have quite a few docstrings where the summary is
   # multi-line.
   "D205",
-  # No black lines before class, conflicts with D211, incorrect-blank-line-before-class
+  # No blank lines before class, conflicts with D211, incorrect-blank-line-before-class
   "D203",
   # Multi-line docstring summary should start at the first line.
   # We ignore this because we we want to put the
