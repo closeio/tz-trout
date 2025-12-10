@@ -8,10 +8,10 @@ import sys
 
 from generate_zipcode_data import generate_us_zipcode_data
 
-sys.path.append('.')
+sys.path.append(".")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     generate_us_zipcode_data()
     from tztrout import td
 
