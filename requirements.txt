@@ -1,4 +1,4 @@
 pytz==2025.2
 phonenumbers==9.0.19
 python-dateutil==2.8.2
-timezonefinder==7.0.2
+timezonefinder==8.1.0
