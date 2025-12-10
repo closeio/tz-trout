@@ -15,8 +15,30 @@ exclude = '''
 target-version = "py39"
 line-length = 79
 exclude = [".git", "venv"]
-ignore = ["E501", "D10", "D400", "D401", "D415", "D205", "B904", "SIM118"]
-select = [
+[tool.ruff.lint]
+ignore = [
+  # Lines too long, we prefer shorter lines but allow occasional longer lines.
+  "E501", 
+  # Missing docstring in public module, we don't require them in all methods
+  "D10",
+  # First line should end with a period. We ignore this because we have
+  # multi-line summaries.
+  "D400",
+  # First line should end with a period, question mark, or exclamation point.
+  # We ignore this because we have multi-line summaries.
+  "D415",
+  # 1 blank line required between summary line and description. We ignore
+  # this because we have quite a few docstrings where the summary is
+  # multi-line.
+  "D205",
+  # No blank lines before class, conflicts with D211, incorrect-blank-line-before-class
+  "D203",
+  # Multi-line docstring summary should start at the first line.
+  # We ignore this because we we want to put the
+  # summary line below """ for multi-line docstrings.
+  "D212",
+]
+extend-select = [
     "B",
     "C",
     "D",
@@ -25,7 +47,7 @@ select = [
     "N",
     "SIM",
     "TID25",
-    "TCH005",
+    "TC005",
     "W",
     "UP",
     "ISC",
@@ -36,8 +58,8 @@ select = [
     "INP",
 ]
 
-[tool.ruff.mccabe]
-max-complexity = 14
+[tool.ruff.lint.mccabe]
+max-complexity = 20
 
 [tool.mypy]
 python_version = 3.9

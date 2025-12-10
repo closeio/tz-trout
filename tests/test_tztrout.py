@@ -14,7 +14,8 @@ AU_TZ_NAMES = ['AWT', 'ACT', 'AET']
 
 
 def assert_only_one_tz(ids, expected_tz_name, tz_names):
-    """Assert that a set of timezone identifiers exists in only one expected timezone across
+    """
+    Assert that a set of timezone identifiers exists in only one expected timezone across
     a given list of timezones.
 
     assert_only_one_tz(['America/New_York', America/Detroit'], 'ET', ['CT', 'ET', 'PT'])
@@ -165,7 +166,8 @@ class TestTZIdsForPhone:
         tz_name,
         tz_id,
     ):
-        """Make sure all the major cities in the United States and Canada match the right time zone
+        """
+        Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
         """
         ids = tztrout.tz_ids_for_phone(phone)
@@ -231,7 +233,8 @@ class TestTZIdsForPhone:
         ],
     )
     def test_major_cities_australia(self, phone, tz_name):
-        """Make sure all the major cities in Australia match the right time zone
+        """
+        Make sure all the major cities in Australia match the right time zone
         (and the right time zone only).
         """
         ids = tztrout.tz_ids_for_phone(phone)
@@ -386,7 +389,8 @@ class TestTZIdsForAddress:
         city,
         tz_name,
     ):
-        """Make sure all the major cities in the United States and Canada match the right time zone
+        """
+        Make sure all the major cities in the United States and Canada match the right time zone
         (and the right time zone only).
         """
         ids = tztrout.tz_ids_for_address(country, state=state, city=city)
@@ -415,7 +419,8 @@ class TestTZIdsForAddress:
         ],
     )
     def test_major_cities_australia(self, state, city, tz_name):
-        """Make sure all the major cities in Australia match the right time zone
+        """
+        Make sure all the major cities in Australia match the right time zone
         (and the right time zone only).
         """
         ids = tztrout.tz_ids_for_address('AU', state=state, city=city)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""Run this script when you upgrade dependencies.
+"""
+Run this script when you upgrade dependencies.
 Commit changes after the run.
 """
 

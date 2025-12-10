@@ -67,7 +67,8 @@ Zipcode = namedtuple(
 
 
 def deduplicator():
-    """Deduplicate strings in memory using a canonical mapping.
+    """
+    Deduplicate strings in memory using a canonical mapping.
 
     Works similarly to intern() but supports unicode as well.
 
@@ -95,7 +96,8 @@ def deduplicator():
 
 
 def generate_us_zipcode_namedtuples():
-    """Generate a list of namedtuples for US zipcodes from the list of
+    """
+    Generate a list of namedtuples for US zipcodes from the list of
     dictionaries in data/us_zipcode_data.json
     """
     if not os.path.exists(US_ZIPCODE_DATA_PATH):
@@ -109,7 +111,8 @@ def generate_us_zipcode_namedtuples():
 
 
 class InMemoryZipData:
-    """In-memory copy of Zipcode mappings by state, city, and state and city.
+    """
+    In-memory copy of Zipcode mappings by state, city, and state and city.
 
     This enables 20x speedup for city/state zip code lookup
     at a cost of more restricted / use-case-specific API,
@@ -191,7 +194,7 @@ class TroutData:
         }
 
     def _load_data(self, path):
-        """Helper method to load a data file"""
+        """Load data from a file. Helper method."""
         with open(path) as file:
             data = json.loads(file.read())
             return data
@@ -206,7 +209,8 @@ class TroutData:
             }
 
     def _get_latest_non_dst_offset(self, tz):
-        """Get the UTC offset for a given time zone identifier. Ignore the
+        """
+        Get the UTC offset for a given time zone identifier. Ignore the
         DST offsets.
         """
         dt = datetime.datetime.utcnow()
@@ -220,7 +224,8 @@ class TroutData:
             dt -= datetime.timedelta(**self.TD_STEP)
 
     def _get_latest_offsets(self, tz):
-        """Get all the UTC offsets (in minutes) that a given time zone
+        """
+        Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
         """
         dt = datetime.datetime.utcnow()
@@ -253,18 +258,19 @@ class TroutData:
         return tz_names
 
     def generate_zip_to_tz_id_map(self):
-        """Generate the map of US zipcodes to time zone identifiers. The
+        """
+        Generate the map of US zipcodes to time zone identifiers. The
         method finds all the possible time zone identifiers for each zipcode
         using the latitude and longitude of each zipcode to search
         TimezoneFinder.
         """
         try:
             from timezonefinder import TimezoneFinder
-        except ImportError:
+        except ImportError as exc:
             raise ImportError(
                 'Dependency "timezonefinder" is missing. '
                 'Install with "tz-trout[dev]" in order to generate timezone data'
-            )
+            ) from exc
 
         tf = TimezoneFinder()
 
@@ -275,11 +281,9 @@ class TroutData:
             tz_id = tf.timezone_at(lng=zipcode.longitude, lat=zipcode.latitude)
             return [tz_id]
 
-        cnt = 0
         tz_ids_to_zips = defaultdict(list)
-        for zip in generate_us_zipcode_namedtuples():
+        for cnt, zip in enumerate(generate_us_zipcode_namedtuples()):
             ids = tuple(_get_tz_identifiers_for_us_zipcode(zip))
-            cnt += 1
             if cnt % 100 == 99:
                 stdout.write(f'\r{cnt} zipcodes mapped to tz_ids')
                 stdout.flush()
@@ -360,7 +364,7 @@ def _progressbar(lst):
     for cnt, elem in enumerate(lst):
         yield elem
         if cnt % 10 == 9:
-            stdout.write('\r%d/%d' % (cnt + 1, length_of_list))
+            stdout.write(f'\r{cnt + 1}/{length_of_list}')
             stdout.flush()
 
 
