@@ -67,9 +67,34 @@ class TestTZIdsForPhone:
             ("+1 (650) 333 4444", ["America/Los_Angeles"]),
             # Some european numbers
             ("+48 601 941 311", ["Europe/Warsaw"]),
-            ("+34 691 941 311", ["Europe/Madrid"]),  # Spain, mobile
+            (
+                "+34 691 941 311",
+                ["Atlantic/Canary", "Europe/Madrid"],
+            ),  # Spain, mobile
             ("+34 923 941 311", ["Europe/Madrid"]),  # Spain, mainland
             ("+34 928 941 311", ["Atlantic/Canary"]),  # Spain, Canary Islands
+            # Russia, mobile
+            (
+                "+79030000000",
+                [
+                    "Asia/Almaty",
+                    "Asia/Anadyr",
+                    "Asia/Aqtobe",
+                    "Asia/Irkutsk",
+                    "Asia/Kamchatka",
+                    "Asia/Krasnoyarsk",
+                    "Asia/Magadan",
+                    "Asia/Novosibirsk",
+                    "Asia/Omsk",
+                    "Asia/Sakhalin",
+                    "Asia/Vladivostok",
+                    "Asia/Yakutsk",
+                    "Asia/Yekaterinburg",
+                    "Europe/Bucharest",
+                    "Europe/Moscow",
+                    "Europe/Samara",
+                ],
+            ),
         ],
     )
     def test_ids_for_phone(self, phone, tz_ids):
