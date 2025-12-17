@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.1.1
+- Improve TZ detection for non-geographical numbers
+- Use libphonenumbers to get phone's timezone for US numbers
+- Use ruff for formatting
+
 ## Version 1.1.0
 - Drop support for python 3.8
 - Use libphonenumbers to get phone's timezone for Canadian numbers
@@ -8,8 +13,6 @@
 
 - Library CI now runs on GitHub actions
 
-
-
 ## Version 1.0.5
 - Removed America/Yellowknife timezone
 
@@ -17,6 +20,5 @@
 - description added to PyPI
 
 ## Version 1.0.3
-
 - added eastern Kentucky exception
 - updated data
