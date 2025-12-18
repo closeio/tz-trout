@@ -55,3 +55,29 @@ jobs:
       - name: Run tests
         run:
           pytest
+
+  check-data:
+    runs-on: ubuntu-24.04
+    container: python:3.14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run:
+          pip install -r requirements.txt -r requirements_test.txt
+
+      - name: Verify timezone data is up to date
+        run:
+          python regenerate_data.py
+
+      - name: Check for uncommitted changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "Data files are out of date. Please run 'python regenerate_data.py' and commit the changes."
+            git status --porcelain
+            exit 1
+          else
+            echo "Data files are up to date."
+          fi
