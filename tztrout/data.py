@@ -315,7 +315,9 @@ class TroutData:
             tz_ids_to_zips[ids].append(zip.zip)
 
         zips_to_tz_ids = {
-            zip: ids for ids, zips in tz_ids_to_zips.items() for zip in zips
+            zip: sorted(ids)
+            for ids, zips in tz_ids_to_zips.items()
+            for zip in zips
         }
 
         _dump_json_data(US_ZIPS_TO_TZ_IDS_MAP_PATH, zips_to_tz_ids)

@@ -184,6 +184,7 @@
     "America/Boa_Vista",
     "America/Campo_Grande",
     "America/Caracas",
+    "America/Coyhaique",
     "America/Cuiaba",
     "America/Curacao",
     "America/Detroit",
@@ -263,6 +264,7 @@
     "America/Belem",
     "America/Campo_Grande",
     "America/Cayenne",
+    "America/Coyhaique",
     "America/Cuiaba",
     "America/Fortaleza",
     "America/Glace_Bay",
@@ -310,9 +312,11 @@
     "America/Noronha",
     "America/Nuuk",
     "America/Sao_Paulo",
+    "America/Scoresbysund",
     "Atlantic/South_Georgia"
   ],
   "-60": [
+    "America/Nuuk",
     "America/Scoresbysund",
     "Atlantic/Azores",
     "Atlantic/Cape_Verde"
@@ -568,6 +572,8 @@
   "300": [
     "Antarctica/Davis",
     "Antarctica/Mawson",
+    "Antarctica/Vostok",
+    "Asia/Almaty",
     "Asia/Aqtau",
     "Asia/Aqtobe",
     "Asia/Ashgabat",
@@ -576,6 +582,7 @@
     "Asia/Dushanbe",
     "Asia/Karachi",
     "Asia/Oral",
+    "Asia/Qostanay",
     "Asia/Qyzylorda",
     "Asia/Samarkand",
     "Asia/Tashkent",
@@ -595,7 +602,6 @@
   ],
   "360": [
     "Antarctica/Mawson",
-    "Antarctica/Vostok",
     "Asia/Almaty",
     "Asia/Barnaul",
     "Asia/Bishkek",
@@ -619,6 +625,7 @@
   ],
   "420": [
     "Antarctica/Davis",
+    "Antarctica/Vostok",
     "Asia/Bangkok",
     "Asia/Barnaul",
     "Asia/Dhaka",
@@ -639,7 +646,6 @@
     "Antarctica/Casey",
     "Asia/Brunei",
     "Asia/Chita",
-    "Asia/Choibalsan",
     "Asia/Hong_Kong",
     "Asia/Hovd",
     "Asia/Irkutsk",
@@ -664,7 +670,6 @@
   ],
   "540": [
     "Asia/Chita",
-    "Asia/Choibalsan",
     "Asia/Dili",
     "Asia/Irkutsk",
     "Asia/Jayapura",
@@ -689,7 +694,6 @@
     "Antarctica/DumontDUrville",
     "Antarctica/Macquarie",
     "Asia/Chita",
-    "Asia/Choibalsan",
     "Asia/Khandyga",
     "Asia/Magadan",
     "Asia/Sakhalin",
