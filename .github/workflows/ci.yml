@@ -64,6 +64,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Configure Git safe directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Install dependencies
         run:
           pip install -r requirements.txt -r requirements_test.txt
@@ -73,6 +76,7 @@ jobs:
           python regenerate_data.py
 
       - name: Check for uncommitted changes
+        shell: bash
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             echo "Data files are out of date. Please run 'python regenerate_data.py' and commit the changes."
