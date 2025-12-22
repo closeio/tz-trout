@@ -57,6 +57,15 @@ ASIA_MAP = {
     "PST": "PHT",
 }
 
+# Deprecated timezone IDs that are still commonly used and should be included
+# in the timezone name mapping (these are in pytz.all_timezones but not in
+# pytz.common_timezones)
+DEPRECATED_TIMEZONES_WHITELIST = [
+    "Asia/Calcutta",  # Now Asia/Kolkata (India)
+    "Asia/Istanbul",  # Now Europe/Istanbul (Turkey)
+    "America/Montreal",  # Now America/Toronto (Canada)
+]
+
 # The path of our US Zipcode data generated from Geonames.org
 US_ZIPCODE_DATA_PATH = os.path.join(basepath, "data/us_zipcode_data.json")
 
@@ -325,7 +334,13 @@ class TroutData:
     def generate_tz_name_to_tz_id_map(self):
         """Generate the map of timezone names to time zone identifiers."""
         tz_name_ids = {}
-        for id in _progressbar(pytz.common_timezones):
+
+        # Process common timezones plus whitelisted deprecated ones
+        timezones_to_process = (
+            list(pytz.common_timezones) + DEPRECATED_TIMEZONES_WHITELIST
+        )
+
+        for id in _progressbar(timezones_to_process):
             tz = pytz.timezone(id)
             tz_names = self._get_latest_tz_names(tz)
             if id.startswith("Australia"):
