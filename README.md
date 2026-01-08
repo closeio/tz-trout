@@ -168,5 +168,9 @@ or adding an exception in `data_exceptions.py`.
 
 1. Make sure the code has been thoroughly reviewed and tested in a realistic production environment.
 1. Update ``setup.py`` and ``CHANGELOG.md``. Make sure you include any breaking changes.
+1. Run the [release github action](https://github.com/closeio/tz-trout/actions/workflows/release.yml) with the correct version number.
+
+Alternatively, once the changes to setup.py and CHANGELOG.md are complete you can manually:
+
 1. Run ``python setup.py sdist`` and ``twine upload dist/<PACKAGE_TO_UPLOAD>``.
 1. Push a new tag pointing to the released commit, format: ``v0.13`` for example.
