@@ -451,7 +451,8 @@
     "America/Resolute",
     "America/Toronto",
     "Canada/Eastern",
-    "US/Eastern"
+    "US/Eastern",
+    "America/Montreal"
   ],
   "EAT": [
     "Africa/Addis_Ababa",
@@ -484,7 +485,8 @@
     "America/Port-au-Prince",
     "America/Toronto",
     "Canada/Eastern",
-    "US/Eastern"
+    "US/Eastern",
+    "America/Montreal"
   ],
   "EEST": [
     "Africa/Cairo",
@@ -508,7 +510,8 @@
     "Europe/Simferopol",
     "Europe/Sofia",
     "Europe/Tallinn",
-    "Europe/Vilnius"
+    "Europe/Vilnius",
+    "Asia/Istanbul"
   ],
   "EET": [
     "Africa/Cairo",
@@ -533,7 +536,8 @@
     "Europe/Simferopol",
     "Europe/Sofia",
     "Europe/Tallinn",
-    "Europe/Vilnius"
+    "Europe/Vilnius",
+    "Asia/Istanbul"
   ],
   "EST": [
     "America/Atikokan",
@@ -560,7 +564,8 @@
     "America/Resolute",
     "America/Toronto",
     "Canada/Eastern",
-    "US/Eastern"
+    "US/Eastern",
+    "America/Montreal"
   ],
   "ET": [
     "America/Atikokan",
@@ -587,7 +592,8 @@
     "America/Resolute",
     "America/Toronto",
     "Canada/Eastern",
-    "US/Eastern"
+    "US/Eastern",
+    "America/Montreal"
   ],
   "GMT": [
     "Africa/Abidjan",
@@ -630,7 +636,8 @@
   "IST": [
     "Asia/Jerusalem",
     "Asia/Kolkata",
-    "Europe/Dublin"
+    "Europe/Dublin",
+    "Asia/Calcutta"
   ],
   "JST": [
     "Asia/Tokyo"

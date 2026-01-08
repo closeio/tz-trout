@@ -599,22 +599,31 @@ class TestTZIdsForAddress:
         assert_only_one_tz(ids, expected_tz_name, US_CA_TZ_NAMES)
 
 
+PACIFIC_IDS = {
+    "America/Dawson",
+    "America/Fort_Nelson",
+    "America/Los_Angeles",
+    "America/Metlakatla",
+    "America/Tijuana",
+    "America/Vancouver",
+    "America/Whitehorse",
+    "Canada/Pacific",
+    "US/Pacific",
+}
+
+
 class TestTZIdsForTZName:
-    @pytest.mark.parametrize("tz_name", ["PT", "PACIFIC"])
-    def test_ids_for_tz_name(self, tz_name):
-        pacific_ids = [
-            "America/Dawson",
-            "America/Fort_Nelson",
-            "America/Los_Angeles",
-            "America/Metlakatla",
-            "America/Tijuana",
-            "America/Vancouver",
-            "America/Whitehorse",
-            "Canada/Pacific",
-            "US/Pacific",
-        ]
+    @pytest.mark.parametrize(
+        ("tz_name", "tz_ids"),
+        [
+            ("PT", PACIFIC_IDS),
+            ("PACIFIC", PACIFIC_IDS),
+            ("IST", {"Asia/Kolkata", "Asia/Jerusalem", "Asia/Calcutta"}),
+        ],
+    )
+    def test_ids_for_tz_name(self, tz_name, tz_ids):
         ids = tztrout.tz_ids_for_tz_name(tz_name)
-        assert ids == pacific_ids
+        assert set(ids) == tz_ids
 
 
 class TestLocalTimeForAddress:
