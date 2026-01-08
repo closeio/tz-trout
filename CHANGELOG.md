@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 1.1.2
+- Support for a whitelist of deprecated timezones
+- Regenerated data after pytz version update
+- Updated ruff version
+- Updated pytz version
+
 ## Version 1.1.1
 - Improve TZ detection for non-geographical numbers
 - Use libphonenumbers to get phone's timezone for US numbers
