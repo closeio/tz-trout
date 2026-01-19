@@ -52,7 +52,7 @@ extend-select = [
 max-complexity = 20
 
 [tool.mypy]
-python_version = 3.9
+python_version = 3.10
 ignore_missing_imports = true
 no_implicit_optional = true
 strict_equality = true
