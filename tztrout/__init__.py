@@ -67,7 +67,7 @@ def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> list[str]:
     return tzs
 
 
-def tz_ids_for_phone(raw_number: str, country="US"):
+def tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
     """
     Get the TZ identifiers that a phone number might be related to, e.g.
 
@@ -98,7 +98,7 @@ def tz_ids_for_phone(raw_number: str, country="US"):
             # back to all the AU tz ids
             if state:
                 return td.au_state_to_tz_ids.get(state)
-            return pytz.country_timezones.get(country_iso)
+            return pytz.country_timezones.get(country_iso, [])
 
         elif country_iso:
             return _get_tz_ids_from_phone(phone)
@@ -106,7 +106,9 @@ def tz_ids_for_phone(raw_number: str, country="US"):
     return []
 
 
-def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
+def tz_ids_for_address(
+    country, state=None, city=None, zipcode=None, **kwargs
+) -> list[str]:
     """
     Get the TZ identifiers for a given address, e.g.:
 
@@ -155,7 +157,7 @@ def tz_ids_for_address(country, state=None, city=None, zipcode=None, **kwargs):
             state = td.normalized_states["AU"].get(state.lower(), state)
         return td.au_state_to_tz_ids.get(state)
 
-    return pytz.country_timezones.get(country)
+    return pytz.country_timezones.get(country, [])
 
 
 def tz_ids_for_offset(offset_in_minutes):
