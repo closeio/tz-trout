@@ -95,6 +95,8 @@ class TestTZIdsForPhone:
                     "Europe/Samara",
                 ],
             ),
+            ("+888569", []),
+            ("+889989", []),
         ],
     )
     def test_ids_for_phone(self, phone, tz_ids):
@@ -277,6 +279,7 @@ class TestTZIdsForAddress:
             "is_exact_match",
         ),
         [
+            ("XX", "", None, None, [], True),
             ("US", "California", None, None, ["America/Los_Angeles"], True),
             ("US", "CA", None, None, ["America/Los_Angeles"], True),
             ("US", "CA", "", None, ["America/Los_Angeles"], True),
