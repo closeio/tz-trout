@@ -232,22 +232,50 @@ class TroutData:
                 pass
             dt -= datetime.timedelta(**self.TD_STEP)
 
-    def _get_latest_offsets(self, tz):
+    def _get_latest_offsets(self, tz: pytz.BaseTzInfo) -> list[int]:
         """
         Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
         """
-        dt = datetime.datetime.utcnow()
-        offsets = []
-        while dt.year > self.RECENT_YEARS_START:
-            try:
-                offset = int(tz.utcoffset(dt).total_seconds() / 60)
-                if offset not in offsets:
-                    offsets.append(offset)
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
-            dt -= datetime.timedelta(**self.TD_STEP)
-        return offsets
+        tz_data = set()
+        if hasattr(tz, "_utc_transition_times") and hasattr(
+            tz, "_transition_info"
+        ):
+            cutoff = datetime.datetime(self.RECENT_YEARS_START, 1, 1)
+
+            # Find the last transition before cutoff to get the offset active at cutoff
+            # For example if there was a transition in 1970 and the next is in 2015 but our cutoff is
+            # 2005 we want to include the 1970 offset
+            last_before_cutoff_idx = None
+            for i, transition_time in enumerate(tz._utc_transition_times):
+                if transition_time < cutoff:
+                    last_before_cutoff_idx = i
+                else:
+                    break
+
+            # Include the offset that was active at the cutoff date
+            if last_before_cutoff_idx is not None:
+                utc_offset, _, _ = tz._transition_info[last_before_cutoff_idx]
+                tz_data.add(int(utc_offset.total_seconds() / 60))
+            for transition_time, (utc_offset, _, _) in zip(
+                tz._utc_transition_times, tz._transition_info
+            ):
+                if transition_time < cutoff:
+                    continue
+
+                tz_data.add(int(utc_offset.total_seconds() / 60))
+
+        # Fallback for timezones without transition data (e.g., UTC) and current date
+        now = datetime.datetime.utcnow()
+        try:
+            utc_offset = tz.utcoffset(now)
+            assert utc_offset is not None
+            offset = int(utc_offset.total_seconds() / 60)
+            tz_data.add(offset)
+        except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
+            pass
+
+        return list(tz_data)
 
     def _get_latest_tz_names(self, tz):
         """Get the recent time zone names for a given time zone identifier."""
