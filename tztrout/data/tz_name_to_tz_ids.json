@@ -177,9 +177,6 @@
   "AUSTRALIAN WESTERN": [
     "Australia/Perth"
   ],
-  "AWDT": [
-    "Australia/Perth"
-  ],
   "AWST": [
     "Australia/Perth"
   ],
@@ -209,14 +206,9 @@
     "America/Bahia_Banderas",
     "America/Cancun",
     "America/Chicago",
-    "America/Guatemala",
     "America/Havana",
     "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
     "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
-    "America/Managua",
     "America/Matamoros",
     "America/Menominee",
     "America/Merida",
@@ -228,7 +220,6 @@
     "America/Ojinaga",
     "America/Rankin_Inlet",
     "America/Resolute",
-    "America/Tegucigalpa",
     "America/Winnipeg",
     "Canada/Central",
     "US/Central"
@@ -245,10 +236,7 @@
     "America/Guatemala",
     "America/Havana",
     "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
     "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
     "America/Managua",
     "America/Matamoros",
     "America/Menominee",
@@ -274,7 +262,6 @@
   "CEST": [
     "Africa/Ceuta",
     "Africa/Tripoli",
-    "Africa/Tunis",
     "Arctic/Longyearbyen",
     "Europe/Amsterdam",
     "Europe/Andorra",
@@ -358,10 +345,7 @@
     "America/Guatemala",
     "America/Havana",
     "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
     "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
     "America/Managua",
     "America/Matamoros",
     "America/Menominee",
@@ -396,10 +380,7 @@
     "America/Guatemala",
     "America/Havana",
     "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
     "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
     "America/Managua",
     "America/Matamoros",
     "America/Menominee",
@@ -433,10 +414,8 @@
     "America/Detroit",
     "America/Grand_Turk",
     "America/Indiana/Indianapolis",
-    "America/Indiana/Knox",
     "America/Indiana/Marengo",
     "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
     "America/Indiana/Vevay",
     "America/Indiana/Vincennes",
     "America/Indiana/Winamac",
@@ -448,7 +427,6 @@
     "America/New_York",
     "America/Panama",
     "America/Port-au-Prince",
-    "America/Resolute",
     "America/Toronto",
     "Canada/Eastern",
     "US/Eastern",
@@ -502,10 +480,8 @@
     "Europe/Chisinau",
     "Europe/Helsinki",
     "Europe/Istanbul",
-    "Europe/Kaliningrad",
     "Europe/Kyiv",
     "Europe/Mariehamn",
-    "Europe/Minsk",
     "Europe/Riga",
     "Europe/Simferopol",
     "Europe/Sofia",
@@ -546,10 +522,8 @@
     "America/Detroit",
     "America/Grand_Turk",
     "America/Indiana/Indianapolis",
-    "America/Indiana/Knox",
     "America/Indiana/Marengo",
     "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
     "America/Indiana/Vevay",
     "America/Indiana/Vincennes",
     "America/Indiana/Winamac",
@@ -561,7 +535,6 @@
     "America/New_York",
     "America/Panama",
     "America/Port-au-Prince",
-    "America/Resolute",
     "America/Toronto",
     "Canada/Eastern",
     "US/Eastern",
@@ -574,10 +547,8 @@
     "America/Detroit",
     "America/Grand_Turk",
     "America/Indiana/Indianapolis",
-    "America/Indiana/Knox",
     "America/Indiana/Marengo",
     "America/Indiana/Petersburg",
-    "America/Indiana/Tell_City",
     "America/Indiana/Vevay",
     "America/Indiana/Vincennes",
     "America/Indiana/Winamac",
@@ -589,7 +560,6 @@
     "America/New_York",
     "America/Panama",
     "America/Port-au-Prince",
-    "America/Resolute",
     "America/Toronto",
     "Canada/Eastern",
     "US/Eastern",
@@ -647,7 +617,6 @@
     "Asia/Seoul"
   ],
   "MDT": [
-    "America/Bahia_Banderas",
     "America/Boise",
     "America/Cambridge_Bay",
     "America/Chihuahua",
@@ -656,13 +625,11 @@
     "America/Edmonton",
     "America/Inuvik",
     "America/Mazatlan",
-    "America/North_Dakota/Beulah",
     "America/Ojinaga",
     "Canada/Mountain",
     "US/Mountain"
   ],
   "MOUNTAIN": [
-    "America/Bahia_Banderas",
     "America/Boise",
     "America/Cambridge_Bay",
     "America/Chihuahua",
@@ -676,18 +643,12 @@
     "America/Hermosillo",
     "America/Inuvik",
     "America/Mazatlan",
-    "America/North_Dakota/Beulah",
     "America/Ojinaga",
     "America/Phoenix",
     "America/Whitehorse",
     "Canada/Mountain",
     "US/Arizona",
     "US/Mountain"
-  ],
-  "MSD": [
-    "Europe/Kirov",
-    "Europe/Moscow",
-    "Europe/Volgograd"
   ],
   "MSK": [
     "Europe/Kirov",
@@ -696,7 +657,6 @@
     "Europe/Volgograd"
   ],
   "MST": [
-    "America/Bahia_Banderas",
     "America/Boise",
     "America/Cambridge_Bay",
     "America/Chihuahua",
@@ -710,7 +670,6 @@
     "America/Hermosillo",
     "America/Inuvik",
     "America/Mazatlan",
-    "America/North_Dakota/Beulah",
     "America/Ojinaga",
     "America/Phoenix",
     "America/Whitehorse",
@@ -719,7 +678,6 @@
     "US/Mountain"
   ],
   "MT": [
-    "America/Bahia_Banderas",
     "America/Boise",
     "America/Cambridge_Bay",
     "America/Chihuahua",
@@ -733,7 +691,6 @@
     "America/Hermosillo",
     "America/Inuvik",
     "America/Mazatlan",
-    "America/North_Dakota/Beulah",
     "America/Ojinaga",
     "America/Phoenix",
     "America/Whitehorse",
@@ -780,9 +737,6 @@
   ],
   "PHT": [
     "Asia/Manila"
-  ],
-  "PKST": [
-    "Asia/Karachi"
   ],
   "PKT": [
     "Asia/Karachi"

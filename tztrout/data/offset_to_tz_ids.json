@@ -47,7 +47,6 @@
     "US/Pacific"
   ],
   "-420": [
-    "America/Bahia_Banderas",
     "America/Boise",
     "America/Cambridge_Bay",
     "America/Chihuahua",
@@ -62,7 +61,6 @@
     "America/Inuvik",
     "America/Los_Angeles",
     "America/Mazatlan",
-    "America/North_Dakota/Beulah",
     "America/Ojinaga",
     "America/Phoenix",
     "America/Tijuana",
@@ -89,10 +87,7 @@
     "America/El_Salvador",
     "America/Guatemala",
     "America/Indiana/Knox",
-    "America/Indiana/Petersburg",
     "America/Indiana/Tell_City",
-    "America/Indiana/Vincennes",
-    "America/Indiana/Winamac",
     "America/Inuvik",
     "America/Managua",
     "America/Matamoros",
@@ -128,7 +123,6 @@
     "America/Detroit",
     "America/Eirunepe",
     "America/Grand_Turk",
-    "America/Guatemala",
     "America/Guayaquil",
     "America/Havana",
     "America/Indiana/Indianapolis",
@@ -144,7 +138,6 @@
     "America/Kentucky/Louisville",
     "America/Kentucky/Monticello",
     "America/Lima",
-    "America/Managua",
     "America/Matamoros",
     "America/Menominee",
     "America/Merida",
@@ -161,7 +154,6 @@
     "America/Rankin_Inlet",
     "America/Resolute",
     "America/Rio_Branco",
-    "America/Tegucigalpa",
     "America/Toronto",
     "America/Winnipeg",
     "Canada/Central",
@@ -176,7 +168,6 @@
   "-240": [
     "America/Anguilla",
     "America/Antigua",
-    "America/Argentina/San_Luis",
     "America/Aruba",
     "America/Asuncion",
     "America/Barbados",
@@ -223,7 +214,6 @@
     "America/Puerto_Rico",
     "America/Punta_Arenas",
     "America/Rio_Branco",
-    "America/Santarem",
     "America/Santiago",
     "America/Santo_Domingo",
     "America/St_Barthelemy",
@@ -236,7 +226,6 @@
     "America/Tortola",
     "Antarctica/Palmer",
     "Atlantic/Bermuda",
-    "Atlantic/Stanley",
     "Canada/Atlantic",
     "Canada/Eastern",
     "US/Eastern"
@@ -294,17 +283,6 @@
   ],
   "-120": [
     "America/Araguaina",
-    "America/Argentina/Buenos_Aires",
-    "America/Argentina/Catamarca",
-    "America/Argentina/Cordoba",
-    "America/Argentina/Jujuy",
-    "America/Argentina/La_Rioja",
-    "America/Argentina/Mendoza",
-    "America/Argentina/Rio_Gallegos",
-    "America/Argentina/Salta",
-    "America/Argentina/San_Juan",
-    "America/Argentina/Tucuman",
-    "America/Argentina/Ushuaia",
     "America/Bahia",
     "America/Miquelon",
     "America/Montevideo",
@@ -433,7 +411,6 @@
     "Africa/Maseru",
     "Africa/Mbabane",
     "Africa/Tripoli",
-    "Africa/Tunis",
     "Africa/Windhoek",
     "Antarctica/Troll",
     "Arctic/Longyearbyen",
@@ -547,7 +524,6 @@
     "Asia/Tehran"
   ],
   "240": [
-    "Asia/Baghdad",
     "Asia/Baku",
     "Asia/Dubai",
     "Asia/Muscat",
@@ -589,10 +565,8 @@
     "Asia/Tashkent",
     "Asia/Yekaterinburg",
     "Asia/Yerevan",
-    "Europe/Samara",
     "Indian/Kerguelen",
-    "Indian/Maldives",
-    "Indian/Mauritius"
+    "Indian/Maldives"
   ],
   "330": [
     "Asia/Colombo",
@@ -602,13 +576,10 @@
     "Asia/Kathmandu"
   ],
   "360": [
-    "Antarctica/Mawson",
     "Asia/Almaty",
     "Asia/Barnaul",
     "Asia/Bishkek",
-    "Asia/Colombo",
     "Asia/Dhaka",
-    "Asia/Karachi",
     "Asia/Novokuznetsk",
     "Asia/Novosibirsk",
     "Asia/Omsk",
@@ -629,7 +600,6 @@
     "Antarctica/Vostok",
     "Asia/Bangkok",
     "Asia/Barnaul",
-    "Asia/Dhaka",
     "Asia/Ho_Chi_Minh",
     "Asia/Hovd",
     "Asia/Jakarta",
@@ -656,7 +626,6 @@
     "Asia/Macau",
     "Asia/Makassar",
     "Asia/Manila",
-    "Asia/Novokuznetsk",
     "Asia/Shanghai",
     "Asia/Singapore",
     "Asia/Taipei",
@@ -680,16 +649,12 @@
     "Asia/Tokyo",
     "Asia/Ulaanbaatar",
     "Asia/Yakutsk",
-    "Australia/Perth",
     "Pacific/Palau"
   ],
   "570": [
     "Australia/Adelaide",
     "Australia/Broken_Hill",
     "Australia/Darwin"
-  ],
-  "585": [
-    "Australia/Eucla"
   ],
   "600": [
     "Antarctica/DumontDUrville",
@@ -766,8 +731,6 @@
   ],
   "780": [
     "Antarctica/McMurdo",
-    "Asia/Anadyr",
-    "Asia/Kamchatka",
     "Pacific/Apia",
     "Pacific/Auckland",
     "Pacific/Fakaofo",

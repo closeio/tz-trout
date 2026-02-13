@@ -166,7 +166,7 @@ class TroutData:
     # We don't care about the historic data - we just want to know the recent
     # state of time zones, zip codes, etc. RECENT_YEARS_START describes how
     # far back we should go to check for DST changes, timezone names, etc.
-    RECENT_YEARS_START = 2005
+    RECENT_YEARS_START = 2010
 
     # Sometimes we need to go back a few steps to figure out DSTs, timezone
     # names, etc. This is a kwargs dict that is passed to datetime.timedelta
