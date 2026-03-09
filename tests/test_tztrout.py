@@ -706,6 +706,25 @@ class TestOffsetRangesForLocalTime:
         assert offset_ranges == expected_offset_results
 
 
+class TestNonDSTOffsetForTZId:
+    @pytest.mark.parametrize(
+        ("tz_id", "expected"),
+        [
+            ("America/New_York", -300),
+            ("America/Chicago", -360),
+            ("America/Denver", -420),
+            ("America/Los_Angeles", -480),
+            ("Europe/Berlin", 60),
+            ("Asia/Kolkata", 330),
+            ("UTC", 0),
+            ("Invalid/Zone", None),
+            ("", None),
+        ],
+    )
+    def test_non_dst_offset_for_tz_id(self, tz_id, expected):
+        assert tztrout.non_dst_offset_for_tz_id(tz_id) == expected
+
+
 class TestNonDSTOffsetsForPhone:
     @pytest.mark.parametrize(
         ("phone", "result"),

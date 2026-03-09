@@ -351,6 +351,27 @@ def tz_ids_for_offset_range(offset_start, offset_end):
     return ids
 
 
+def non_dst_offset_for_tz_id(tz_id):
+    """
+    Return the non-DST offset (in minutes) for a given IANA timezone ID,
+    or None if invalid.
+
+    >>> tztrout.non_dst_offset_for_tz_id('America/New_York')
+    -300
+    >>> tztrout.non_dst_offset_for_tz_id('Europe/Berlin')
+    60
+    >>> tztrout.non_dst_offset_for_tz_id('Invalid/Zone')
+    """
+    try:
+        tz = pytz.timezone(tz_id)
+    except pytz.exceptions.UnknownTimeZoneError:
+        return None
+    offset = td._get_latest_non_dst_offset(tz)
+    if offset is not None:
+        return int(offset.total_seconds() / 60)
+    return None
+
+
 def non_dst_offsets_for_phone(phone):
     """
     Return the non-DST offsets (in minutes) for a given phone, e.g.

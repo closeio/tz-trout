@@ -75,6 +75,17 @@ datetime.datetime(2013, 9, 17, 2, 45, 43, 0000000, tzinfo=<DstTzInfo 'Europe/War
 ```
 
 ```
+>>> tztrout.non_dst_offset_for_tz_id('America/New_York')
+-300
+>>> tztrout.non_dst_offset_for_tz_id('Europe/Berlin')
+60
+>>> tztrout.non_dst_offset_for_tz_id('UTC')
+0
+>>> tztrout.non_dst_offset_for_tz_id('Invalid/Zone')
+None
+```
+
+```
 >>> tztrout.tz_ids_for_offset(-7 * 60)  # during DST
 [
     u'America/Creston',
