@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 1.2
+## Version 1.2.0
 
 - Add `non_dst_offset_for_tz_id` to the public interface
 
