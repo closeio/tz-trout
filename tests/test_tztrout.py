@@ -279,7 +279,12 @@ class TestTZIdsForAddress:
             "is_exact_match",
         ),
         [
+            # Return empty list for no matches
             ("XX", "", None, None, [], True),
+            ("AU", "NOPE", None, None, [], True),
+            ("AU", "ZA", None, None, [], True),
+            ("CA", "NOPE", None, None, [], True),
+            ("CA", "ZA", None, None, [], True),
             ("US", "California", None, None, ["America/Los_Angeles"], True),
             ("US", "CA", None, None, ["America/Los_Angeles"], True),
             ("US", "CA", "", None, ["America/Los_Angeles"], True),
