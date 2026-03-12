@@ -151,11 +151,11 @@ def tz_ids_for_address(
     elif country == "CA" and state:
         if len(state) != 2:
             state = td.normalized_states["CA"].get(state.lower(), state)
-        return td.ca_state_to_tz_ids.get(state)
+        return td.ca_state_to_tz_ids.get(state, [])
     elif country == "AU" and state:
         if len(state) != 2:
             state = td.normalized_states["AU"].get(state.lower(), state)
-        return td.au_state_to_tz_ids.get(state)
+        return td.au_state_to_tz_ids.get(state, [])
 
     return pytz.country_timezones.get(country, [])
 
