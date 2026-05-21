@@ -16,7 +16,9 @@ sys.path.append(".")
 
 
 if __name__ == "__main__":
-    generate_us_zipcode_data(skip_download="--skip-geonames-download" in sys.argv)
+    generate_us_zipcode_data(
+        skip_download="--skip-geonames-download" in sys.argv
+    )
 
     from tztrout import td
 

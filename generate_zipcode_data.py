@@ -37,7 +37,9 @@ def generate_us_zipcode_data(skip_download=False):
     fresh data from Geonames.org.
     """
     if skip_download:
-        print("Skipping Geonames download, using existing us_zipcode_data.json")
+        print(
+            "Skipping Geonames download, using existing us_zipcode_data.json"
+        )
         return
 
     print("Downloading Geonames data...")
