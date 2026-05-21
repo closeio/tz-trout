@@ -621,6 +621,7 @@ PACIFIC_IDS = {
 
 
 class TestTZIdsForTZName:
+    @patch("datetime.datetime", FakeDateTime)
     @pytest.mark.parametrize(
         ("tz_name", "tz_ids"),
         [
@@ -630,8 +631,16 @@ class TestTZIdsForTZName:
         ],
     )
     def test_ids_for_tz_name(self, tz_name, tz_ids):
+        FakeDateTime.set_utcnow(datetime.datetime(2024, 1, 15))
         ids = tztrout.tz_ids_for_tz_name(tz_name)
         assert set(ids) == tz_ids
+
+    @patch("datetime.datetime", FakeDateTime)
+    def test_ids_for_ist_summer(self):
+        # In summer, Ireland uses IST (DST); Israel uses IDT instead.
+        FakeDateTime.set_utcnow(datetime.datetime(2024, 7, 15))
+        ids = tztrout.tz_ids_for_tz_name("IST")
+        assert set(ids) == {"Asia/Kolkata", "Europe/Dublin", "Asia/Calcutta"}
 
 
 class TestLocalTimeForAddress:
