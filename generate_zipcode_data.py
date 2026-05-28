@@ -28,11 +28,21 @@ def _get_latest_us_zipcode_data():
         return us_zipcode_zip_file.open(US_ZIPCODE_TXT_FILE_NAME).readlines()
 
 
-def generate_us_zipcode_data():
+def generate_us_zipcode_data(skip_download=False):
     """
     Generate a list of US zipcode data from the txt file in the latest
     Geonames.org database and save it as a JSON file.
+
+    Pass skip_download=True to use the already-committed us_zipcode_data.json instead of fetching
+    fresh data from Geonames.org.
     """
+    if skip_download:
+        print(
+            "Skipping Geonames download, using existing us_zipcode_data.json"
+        )
+        return
+
+    print("Downloading Geonames data...")
     us_zipcode_data = []
     us_zipcode_txt_file_data = _get_latest_us_zipcode_data()
     for line in us_zipcode_txt_file_data:

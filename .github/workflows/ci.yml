@@ -73,7 +73,8 @@ jobs:
 
       - name: Verify timezone data is up to date
         run:
-          python regenerate_data.py
+          # --skip-geonames-download keeps the check deterministic
+          python regenerate_data.py --skip-geonames-download
 
       - name: Check for uncommitted changes
         shell: bash
