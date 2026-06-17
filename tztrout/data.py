@@ -169,11 +169,6 @@ class TroutData:
     RECENT_YEARS = 15
     RECENT_YEARS_START = datetime.datetime.now().year - RECENT_YEARS
 
-    # Sometimes we need to go back a few steps to figure out DSTs, timezone
-    # names, etc. This is a kwargs dict that is passed to datetime.timedelta
-    # to determine the size of a single step
-    TD_STEP = {"days": 40}
-
     def __init__(self):
         # load the data files, if they exist
         self.us_zip_to_tz_ids = self._load_us_zipcode_data(
@@ -218,81 +213,79 @@ class TroutData:
                 for k, v in data.items()
             }
 
-    def _get_latest_non_dst_offset(self, tz):
+    def _iter_recent_transitions(self, tz: pytz.BaseTzInfo):
+        """
+        Yield (utc_offset, dst_offset, abbr) tuples for all transitions in
+        the recent window, oldest first.
+
+        Includes the transition active at the cutoff date (so a zone with a
+        single far-past transition isn't missed), all transitions after the
+        cutoff, and a synthetic entry for the current moment as a fallback for
+        zones without transition data (e.g. UTC).
+        """
+        if hasattr(tz, "_utc_transition_times") and hasattr(
+            tz, "_transition_info"
+        ):
+            cutoff = datetime.datetime(self.RECENT_YEARS_START, 1, 1)
+            last_before = None
+            for t, info in zip(tz._utc_transition_times, tz._transition_info):
+                if t < cutoff:
+                    last_before = info
+                else:
+                    if last_before is not None:
+                        yield last_before
+                        last_before = None
+                    yield info
+            # All transitions were before the cutoff — yield the most recent.
+            if last_before is not None:
+                yield last_before
+
+        now = datetime.datetime.utcnow()
+        try:
+            utc_offset = tz.utcoffset(now)
+            dst_offset = tz.dst(now)
+            abbr = tz.tzname(now)
+            if (
+                utc_offset is not None
+                and dst_offset is not None
+                and abbr is not None
+            ):
+                yield utc_offset, dst_offset, abbr
+        except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
+            pass
+
+    def _get_latest_non_dst_offset(
+        self, tz: pytz.BaseTzInfo
+    ) -> datetime.timedelta | None:
         """
         Get the UTC offset for a given time zone identifier. Ignore the
         DST offsets.
         """
-        dt = datetime.datetime.utcnow()
-        while dt.year > self.RECENT_YEARS_START:
-            try:
-                dst = tz.dst(dt).total_seconds()
-                if not dst:
-                    return tz.utcoffset(dt)
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
-            dt -= datetime.timedelta(**self.TD_STEP)
+        result = None
+        for utc_offset, dst_offset, _ in self._iter_recent_transitions(tz):
+            if not dst_offset.total_seconds():
+                result = utc_offset
+        return result
 
     def _get_latest_offsets(self, tz: pytz.BaseTzInfo) -> list[int]:
         """
         Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
         """
-        tz_data = set()
-        if hasattr(tz, "_utc_transition_times") and hasattr(
-            tz, "_transition_info"
-        ):
-            cutoff = datetime.datetime(self.RECENT_YEARS_START, 1, 1)
+        return list(
+            {
+                int(utc_offset.total_seconds() / 60)
+                for utc_offset, _, _ in self._iter_recent_transitions(tz)
+            }
+        )
 
-            # Find the last transition before cutoff to get the offset active at cutoff
-            # For example if there was a transition in 1970 and the next is in 2015 but our cutoff is
-            # 2005 we want to include the 1970 offset
-            last_before_cutoff_idx = None
-            for i, transition_time in enumerate(tz._utc_transition_times):
-                if transition_time < cutoff:
-                    last_before_cutoff_idx = i
-                else:
-                    break
-
-            # Include the offset that was active at the cutoff date
-            if last_before_cutoff_idx is not None:
-                utc_offset, _, _ = tz._transition_info[last_before_cutoff_idx]
-                tz_data.add(int(utc_offset.total_seconds() / 60))
-            for transition_time, (utc_offset, _, _) in zip(
-                tz._utc_transition_times, tz._transition_info
-            ):
-                if transition_time < cutoff:
-                    continue
-
-                tz_data.add(int(utc_offset.total_seconds() / 60))
-
-        # Fallback for timezones without transition data (e.g., UTC) and current date
-        now = datetime.datetime.utcnow()
-        try:
-            utc_offset = tz.utcoffset(now)
-            assert utc_offset is not None
-            offset = int(utc_offset.total_seconds() / 60)
-            tz_data.add(offset)
-        except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-            pass
-
-        return list(tz_data)
-
-    def _get_latest_tz_names(self, tz):
+    def _get_latest_tz_names(self, tz: pytz.BaseTzInfo) -> list[str]:
         """Get the recent time zone names for a given time zone identifier."""
-        dt = datetime.datetime.utcnow()
         tz_names = []
-        while dt.year > self.RECENT_YEARS_START:
-            try:
-                tz_name = tz.tzname(dt)
-
-                # Ignore TZ names that are really UTC offsets like "+01".
-                is_offset = tz_name.startswith(("+", "-"))
-                if not is_offset and tz_name not in tz_names:
-                    tz_names.append(tz_name)
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
-            dt -= datetime.timedelta(**self.TD_STEP)
+        for _, _, abbr in self._iter_recent_transitions(tz):
+            # Ignore TZ names that are really UTC offsets like "+01".
+            if not abbr.startswith(("+", "-")) and abbr not in tz_names:
+                tz_names.append(abbr)
         return tz_names
 
     def generate_zip_to_tz_id_map(self):
