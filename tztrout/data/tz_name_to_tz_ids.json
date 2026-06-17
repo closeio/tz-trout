@@ -204,7 +204,6 @@
   ],
   "CDT": [
     "America/Bahia_Banderas",
-    "America/Cancun",
     "America/Chicago",
     "America/Havana",
     "America/Indiana/Knox",
@@ -227,9 +226,9 @@
   "CENTRAL": [
     "America/Bahia_Banderas",
     "America/Belize",
-    "America/Cancun",
     "America/Chicago",
     "America/Chihuahua",
+    "America/Ciudad_Juarez",
     "America/Costa_Rica",
     "America/El_Salvador",
     "America/Guatemala",
@@ -260,7 +259,6 @@
   ],
   "CEST": [
     "Africa/Ceuta",
-    "Africa/Tripoli",
     "Arctic/Longyearbyen",
     "Europe/Amsterdam",
     "Europe/Andorra",
@@ -297,7 +295,6 @@
   "CET": [
     "Africa/Algiers",
     "Africa/Ceuta",
-    "Africa/Tripoli",
     "Africa/Tunis",
     "Arctic/Longyearbyen",
     "Europe/Amsterdam",
@@ -335,9 +332,9 @@
   "CST": [
     "America/Bahia_Banderas",
     "America/Belize",
-    "America/Cancun",
     "America/Chicago",
     "America/Chihuahua",
+    "America/Ciudad_Juarez",
     "America/Costa_Rica",
     "America/El_Salvador",
     "America/Guatemala",
@@ -369,9 +366,9 @@
   "CT": [
     "America/Bahia_Banderas",
     "America/Belize",
-    "America/Cancun",
     "America/Chicago",
     "America/Chihuahua",
+    "America/Ciudad_Juarez",
     "America/Costa_Rica",
     "America/El_Salvador",
     "America/Guatemala",
@@ -480,7 +477,6 @@
     "Europe/Kyiv",
     "Europe/Mariehamn",
     "Europe/Riga",
-    "Europe/Simferopol",
     "Europe/Sofia",
     "Europe/Tallinn",
     "Europe/Vilnius",
@@ -504,9 +500,7 @@
     "Europe/Kaliningrad",
     "Europe/Kyiv",
     "Europe/Mariehamn",
-    "Europe/Minsk",
     "Europe/Riga",
-    "Europe/Simferopol",
     "Europe/Sofia",
     "Europe/Tallinn",
     "Europe/Vilnius",
@@ -713,7 +707,6 @@
   ],
   "PACIFIC": [
     "America/Dawson",
-    "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
     "America/Tijuana",
@@ -724,7 +717,6 @@
   ],
   "PDT": [
     "America/Dawson",
-    "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Tijuana",
     "America/Vancouver",
@@ -740,7 +732,6 @@
   ],
   "PST": [
     "America/Dawson",
-    "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
     "America/Tijuana",
@@ -751,7 +742,6 @@
   ],
   "PT": [
     "America/Dawson",
-    "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
     "America/Tijuana",

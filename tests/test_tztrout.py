@@ -609,7 +609,6 @@ class TestTZIdsForAddress:
 
 PACIFIC_IDS = {
     "America/Dawson",
-    "America/Fort_Nelson",
     "America/Los_Angeles",
     "America/Metlakatla",
     "America/Tijuana",

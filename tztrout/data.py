@@ -166,7 +166,7 @@ class TroutData:
     # We don't care about the historic data - we just want to know the recent
     # state of time zones, zip codes, etc. RECENT_YEARS_START describes how
     # far back we should go to check for DST changes, timezone names, etc.
-    RECENT_YEARS = 15
+    RECENT_YEARS = 10
     RECENT_YEARS_START = datetime.datetime.now().year - RECENT_YEARS
 
     def __init__(self):
