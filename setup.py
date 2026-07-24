@@ -3,8 +3,8 @@ from setuptools import setup
 # Temporary integration pin; use a released version before publishing.
 NATIVE_PHONENUMBERS = (
     "closeio-phonenumbers @ "
-    "git+https://github.com/closeio/libphonenumber-python"
-    "@a4ad9f9802a7e4305649b46972d8c8152fd06751"
+    "https://github.com/closeio/libphonenumber-python/archive/"
+    "a4ad9f9802a7e4305649b46972d8c8152fd06751.zip"
     ' ; python_version == "3.12"'
     ' and implementation_name == "cpython"'
     ' and platform_system == "Linux"'
