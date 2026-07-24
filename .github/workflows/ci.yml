@@ -48,10 +48,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Install native build dependencies
+        if: matrix.python-version == '3.12'
+        run: |
+          apt-get update
+          apt-get install --no-install-recommends --yes \
+            g++ libicu-dev libprotobuf-dev protobuf-compiler
+          rm -rf /var/lib/apt/lists/*
+
       - name: Install dependencies
         run:
           pip install -r requirements.txt -r requirements_test.txt
         
+      - name: Verify native phone-number distribution
+        if: matrix.python-version == '3.12'
+        run: |
+          pip show closeio-phonenumbers
+          if pip show phonenumbers; then
+            echo "Both phone-number distributions are installed"
+            exit 1
+          fi
+
       - name: Run tests
         run:
           pytest
