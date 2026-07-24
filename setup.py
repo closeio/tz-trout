@@ -1,23 +1,5 @@
 from setuptools import setup
 
-# Temporary integration pin; use a released version before publishing.
-NATIVE_PHONENUMBERS = (
-    "closeio-phonenumbers @ "
-    "https://github.com/closeio/libphonenumber-python/archive/"
-    "a4ad9f9802a7e4305649b46972d8c8152fd06751.zip"
-    ' ; python_version == "3.12"'
-    ' and implementation_name == "cpython"'
-    ' and platform_system == "Linux"'
-    ' and (platform_machine == "x86_64" or platform_machine == "aarch64")'
-)
-PURE_PYTHON_PHONENUMBERS = (
-    "phonenumbers>=8.3.0"
-    ' ; python_version != "3.12"'
-    ' or implementation_name != "cpython"'
-    ' or platform_system != "Linux"'
-    ' or (platform_machine != "x86_64" and platform_machine != "aarch64")'
-)
-
 with open("README.md", encoding="utf-8") as file:
     long_description = file.read()
 
@@ -44,12 +26,7 @@ setup(
     packages=["tztrout"],
     package_data={"tztrout": ["data/*"]},
     python_requires=">=3.10",
-    install_requires=[
-        NATIVE_PHONENUMBERS,
-        PURE_PYTHON_PHONENUMBERS,
-        "python-dateutil",
-        "pytz",
-    ],
+    install_requires=["phonenumbers>=8.3.0", "python-dateutil", "pytz"],
     extras_require={"dev": ["timezonefinder"]},
     tests_require=["mock", "pytest"],
 )
