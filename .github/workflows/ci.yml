@@ -37,8 +37,7 @@ jobs:
   test:
     strategy:
       matrix:
-        # Python 3.12's private native dependency is tested in that package's CI.
-        python-version: ['3.10', '3.11', '3.13', '3.14']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
 
       fail-fast: false
 

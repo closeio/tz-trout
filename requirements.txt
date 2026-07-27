@@ -1,5 +1,5 @@
 pytz==2025.2
-closeio-phonenumbers @ https://github.com/closeio/libphonenumber-python/archive/1555da78168c12c48f4b116e70d5355e090045a7.zip ; python_version == "3.12" and implementation_name == "cpython" and platform_system == "Linux" and (platform_machine == "x86_64" or platform_machine == "aarch64")
-phonenumbers==9.0.19 ; python_version != "3.12" or implementation_name != "cpython" or platform_system != "Linux" or (platform_machine != "x86_64" and platform_machine != "aarch64")
+closeio-phonenumbers==9.0.34.1 ; python_version >= "3.12"
+phonenumbers==9.0.34 ; python_version < "3.12"
 python-dateutil==2.8.2
 timezonefinder==8.1.0
