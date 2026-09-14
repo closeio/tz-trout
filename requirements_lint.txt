@@ -1,4 +1,4 @@
 mypy==2.1.0
-ruff==0.15.21
+ruff==0.16.7
 types-python-dateutil
 types-pytz
