@@ -228,7 +228,9 @@ class TroutData:
         ):
             cutoff = datetime.datetime(self.RECENT_YEARS_START, 1, 1)
             last_before = None
-            for t, info in zip(tz._utc_transition_times, tz._transition_info):
+            for t, info in zip(
+                tz._utc_transition_times, tz._transition_info, strict=False
+            ):
                 if t < cutoff:
                     last_before = info
                 else:

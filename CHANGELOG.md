@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Use `closeio-phonenumbers` for lower memory usage
+- Require CPython 3.12–3.14 on supported Linux and macOS platforms
+
 ## Version 1.2.0
 
 - Add `non_dst_offset_for_tz_id` to the public interface
