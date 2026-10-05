@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 1.3.0
+## Unreleased
 
 - Use `closeio-phonenumbers` for lower memory usage
 - Require CPython 3.12–3.14 on supported Linux and macOS platforms
