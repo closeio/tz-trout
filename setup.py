@@ -33,7 +33,7 @@ setup(
     package_data={"tztrout": ["data/*"]},
     python_requires=">=3.12,<3.15",
     install_requires=[
-        "closeio-phonenumbers>=9.0.34.1",
+        "closeio-phonenumbers>=9.0.34.2",
         "python-dateutil",
         "pytz",
     ],
