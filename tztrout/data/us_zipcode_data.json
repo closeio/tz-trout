@@ -173922,6 +173922,13 @@
     "zip": "89040"
   },
   {
+    "city": "Henderson",
+    "latitude": 35.9025,
+    "longitude": -115.1789,
+    "state": "NV",
+    "zip": "89044"
+  },
+  {
     "city": "Searchlight",
     "latitude": 35.5132,
     "longitude": -114.8866,
@@ -174872,13 +174879,6 @@
     "longitude": -114.3968,
     "state": "NV",
     "zip": "89043"
-  },
-  {
-    "city": "Henderson",
-    "latitude": 35.9025,
-    "longitude": -115.1789,
-    "state": "NV",
-    "zip": "89044"
   },
   {
     "city": "Dayton",

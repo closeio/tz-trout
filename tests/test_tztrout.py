@@ -166,21 +166,10 @@ class TestTZIdsForPhone:
             # Ottawa, ON
             ("+13433334444", "ET", "America/Toronto"),
             ("+16133334444", "ET", "America/Toronto"),
-            # Edmonton, AB
-            ("+17803334444", "MT", "America/Edmonton"),
-            # Calgary, AB
-            ("+14033334444", "MT", "America/Edmonton"),
-            # AB, all other area codes
-            ("+18253333444", "MT", "America/Edmonton"),
-            ("+15873333444", "MT", "America/Edmonton"),
-            ("+13683333444", "MT", "America/Edmonton"),
             # Mississauga, ON
             ("+12893334444", "ET", "America/Toronto"),
             # Winnipeg, MB
             ("+14313334444", "CT", "America/Winnipeg"),
-            # Vancouver, BC
-            ("+16043334444", "PT", "America/Vancouver"),
-            ("+16723334444", "PT", "America/Vancouver"),
             # Halifax, NS
             ("+19023334444", "AT", "America/Halifax"),
             # Saskatoon, SK
@@ -200,6 +189,31 @@ class TestTZIdsForPhone:
         ids = tztrout.tz_ids_for_phone(phone)
         assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
         assert set(ids) == {tz_id}
+
+    @pytest.mark.parametrize(
+        ("phone", "tz_names", "tz_id"),
+        [
+            # Edmonton, AB
+            ("+17803334444", ("MT", "CT"), "America/Edmonton"),
+            # Calgary, AB
+            ("+14033334444", ("MT", "CT"), "America/Edmonton"),
+            # AB, all other area codes
+            ("+18253333444", ("MT", "CT"), "America/Edmonton"),
+            ("+15873333444", ("MT", "CT"), "America/Edmonton"),
+            ("+13683333444", ("MT", "CT"), "America/Edmonton"),
+            # Vancouver, BC
+            ("+16043334444", ("PT", "MT"), "America/Vancouver"),
+            ("+16723334444", ("PT", "MT"), "America/Vancouver"),
+        ],
+    )
+    def test_permanent_dst_cities_ca(self, phone, tz_names, tz_id):
+        """
+        Alberta and British Columbia move to permanent DST in 2026
+        (tzdata 2026d), so their tz ids now belong to two time zone names.
+        """
+        assert set(tztrout.tz_ids_for_phone(phone)) == {tz_id}
+        for tz_name in tz_names:
+            assert tz_id in tztrout.tz_ids_for_tz_name(tz_name)
 
     @pytest.mark.parametrize(
         ("phone", "tz_name"),
@@ -405,12 +419,9 @@ class TestTZIdsForAddress:
             # Canada
             ("CA", "ON", "Toronto", "ET"),
             ("CA", "QC", "Montreal", "ET"),
-            ("CA", "AB", "Calgary", "MT"),
             ("CA", "ON", "Ottawa", "ET"),
-            ("CA", "AB", "Edmonton", "MT"),
             ("CA", "ON", "Mississauga", "ET"),
             ("CA", "MB", "Winnipeg", "CT"),
-            ("CA", "BC", "Vancouver", "PT"),
             ("CA", "NS", "Halifax", "AT"),
             ("CA", "SK", "Saskatoon", "CT"),
         ],
@@ -428,6 +439,24 @@ class TestTZIdsForAddress:
         """
         ids = tztrout.tz_ids_for_address(country, state=state, city=city)
         assert_only_one_tz(ids, tz_name, US_CA_TZ_NAMES)
+
+    @pytest.mark.parametrize(
+        ("state", "city", "tz_names", "tz_id"),
+        [
+            ("AB", "Calgary", ("MT", "CT"), "America/Edmonton"),
+            ("AB", "Edmonton", ("MT", "CT"), "America/Edmonton"),
+            ("BC", "Vancouver", ("PT", "MT"), "America/Vancouver"),
+        ],
+    )
+    def test_permanent_dst_cities_ca(self, state, city, tz_names, tz_id):
+        """
+        Alberta and British Columbia move to permanent DST in 2026
+        (tzdata 2026d), so their tz ids now belong to two time zone names.
+        """
+        ids = tztrout.tz_ids_for_address("CA", state=state, city=city)
+        assert set(ids) == {tz_id}
+        for tz_name in tz_names:
+            assert tz_id in tztrout.tz_ids_for_tz_name(tz_name)
 
     @pytest.mark.parametrize(
         ("state", "city", "tz_name"),
