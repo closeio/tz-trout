@@ -7,7 +7,7 @@
 See: https://github.com/closeio/libphonenumber-python 
 
 - Require CPython 3.12–3.14 on supported Linux and macOS platforms
-- Update pytz to 2026.4 (tzdata 2026d) and timezonefinder to 8.2.0
+- Update pytz to 2026.4 (tzdata 2026d) and timezonefinder to 9.0.0 (timezonefinder-data 3.2026.4)
 - Regenerated data after pytz and timezonefinder updates
 
 ## Version 1.2.0
