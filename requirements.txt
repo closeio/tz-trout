@@ -1,4 +1,4 @@
 pytz==2026.4
 closeio-phonenumbers==9.0.34.2
 python-dateutil==2.8.2
-timezonefinder==8.2.0
+timezonefinder==9.0.0
