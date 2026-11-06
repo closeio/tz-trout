@@ -67,10 +67,9 @@ class TestTZIdsForPhone:
             ("+1 (650) 333 4444", ["America/Los_Angeles"]),
             # Some european numbers
             ("+48 601 941 311", ["Europe/Warsaw"]),
-            (
-                "+34 691 941 311",
-                ["Atlantic/Canary", "Europe/Madrid"],
-            ),  # Spain, mobile
+            # Spain, mobile - not geographic, so both Spanish zones are
+            # returned (raw candidate set).
+            ("+34 691 941 311", ["Atlantic/Canary", "Europe/Madrid"]),
             ("+34 923 941 311", ["Europe/Madrid"]),  # Spain, mainland
             ("+34 928 941 311", ["Atlantic/Canary"]),  # Spain, Canary Islands
             # Russia, mobile
@@ -102,6 +101,21 @@ class TestTZIdsForPhone:
     def test_ids_for_phone(self, phone, tz_ids):
         ids = tztrout.tz_ids_for_phone(phone)
         assert ids == tz_ids
+
+    @pytest.mark.parametrize(
+        ("phone", "tz_ids"),
+        [
+            # Unambiguous numbers are returned exactly as tz_ids_for_phone.
+            ("+1 (650) 333 4444", ["America/Los_Angeles"]),
+            ("+34 928 941 311", ["Atlantic/Canary"]),
+            ("+19073334444", ["America/Juneau"]),
+            # Known biased sets prefer the dominant zone.
+            ("+19077384444", ["America/Anchorage"]),
+            ("+34 691 941 311", ["Europe/Madrid"]),
+        ],
+    )
+    def test_primary_ids_for_phone(self, phone, tz_ids):
+        assert tztrout.primary_tz_ids_for_phone(phone) == tz_ids
 
     @pytest.mark.parametrize(
         ("phone", "tz_name", "tz_id"),
@@ -158,6 +172,8 @@ class TestTZIdsForPhone:
             ("+13033334444", "MT", "America/Denver"),
             # Washington, DC
             ("+12023334444", "ET", "America/New_York"),
+            # Juneau, AK - 907 prefixes that resolve to a single Alaska zone.
+            ("+19073334444", current_alaska_tz_name, "America/Juneau"),
             # Canada
             # Toronto, ON
             ("+14163334444", "ET", "America/Toronto"),

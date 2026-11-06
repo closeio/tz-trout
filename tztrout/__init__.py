@@ -67,6 +67,23 @@ def _get_tz_ids_from_phone(phone: phonenumbers.PhoneNumber) -> list[str]:
     return tzs
 
 
+# For a handful of zone  sets virtually all subscribers live
+# in one zone, so a caller wanting a single best guess can collapse the set to
+# that dominant zone. Keyed on the exact set libphonenumber returns, so
+# unrelated numbers are never affected.
+AMBIGUOUS_PHONE_TZ_PREFERENCE: dict[frozenset[str], list[str]] = {
+    # +1 907: America/Adak  covers the farwestern side, prefer Anchorage
+    frozenset({"America/Adak", "America/Anchorage"}): ["America/Anchorage"],
+    # Spanish mobiles aren't geographic, prefer the mainland
+    frozenset({"Atlantic/Canary", "Europe/Madrid"}): ["Europe/Madrid"],
+}
+
+
+def _prefer_dominant_tz(tz_ids: list[str]) -> list[str]:
+    """Collapse a known ambiguous tz set to its dominant zone."""
+    return AMBIGUOUS_PHONE_TZ_PREFERENCE.get(frozenset(tz_ids), tz_ids)
+
+
 def tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
     """
     Get the TZ identifiers that a phone number might be related to, e.g.
@@ -104,6 +121,21 @@ def tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
             return _get_tz_ids_from_phone(phone)
 
     return []
+
+
+def primary_tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
+    """
+    Return a subset of timezones for a phone number.
+
+    Identical to :func:`tz_ids_for_phone` except for a few known sets where
+    the vast majority of subscribers live in one. Use this when you need to
+    act on one zone (e.g. scheduling); use :func:`tz_ids_for_phone` when you
+    need the full candidate set (e.g. search/filtering).
+
+    >>> tztrout.primary_tz_ids_for_phone('+19077384444')
+    [u'America/Anchorage']
+    """
+    return _prefer_dominant_tz(tz_ids_for_phone(raw_number, country))
 
 
 def tz_ids_for_address(
