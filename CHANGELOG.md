@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- Add `primary_tz_ids_for_phone`
+
+  Returns a subset of timezones for a phone number. Identical to
+  `tz_ids_for_phone` except for a few known sets where the vast majority of
+  subscribers live in one:
+
+  - +1 907 (Alaska): `[America/Adak, America/Anchorage]` -> `America/Anchorage`
+  - Spanish mobiles: `[Atlantic/Canary, Europe/Madrid]` -> `Europe/Madrid`
+
+  `tz_ids_for_phone` is unchanged and still returns the full candidate set, so
+  search/filtering callers keep their current semantics.
+
 ## Version 2.0.0
 
 - Use `closeio-phonenumbers` for lower memory usage
