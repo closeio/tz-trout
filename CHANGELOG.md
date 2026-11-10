@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## Version 2.1.0
 
 - Add `primary_tz_ids_for_phone`
 
@@ -13,6 +13,8 @@
 
   `tz_ids_for_phone` is unchanged and still returns the full candidate set, so
   search/filtering callers keep their current semantics.
+
+- Minor updates of mypy and pytest
 
 ## Version 2.0.0
 
