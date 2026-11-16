@@ -1,4 +1,8 @@
-### Timezone Trout
+<p align="center">
+  <img src="https://raw.githubusercontent.com/closeio/tz-trout/master/docs/tz-trout.png" alt="tz-trout mascot" width="300">
+</p>
+
+# Timezone Trout
 
 This library tries to solve the common problem of figuring out what time zone
 a specific address or a phone number is in. It does so by using several
