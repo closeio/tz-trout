@@ -339,7 +339,7 @@ def offset_ranges_for_local_time(local_start, local_end):
     # Cap the offsets at UTC-14:00 and UTC+14:00 (lowest/highest possible
     # offset).
     def capped(t):
-        return 14 * 60 if t > 14 * 60 else -14 * 60 if t < -14 * 60 else t
+        return max(-14 * 60, min(t, 14 * 60))
 
     for i, range in enumerate(offset_ranges):
         offset_ranges[i][0] = capped(range[0])
