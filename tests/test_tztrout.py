@@ -45,12 +45,12 @@ def assert_only_one_tz(ids, expected_tz_name, tz_names):
 
 
 class FakeDateTime(datetime.datetime):
-    """A datetime replacement that lets you set utcnow()"""
+    """A datetime replacement that lets you set the current UTC time"""
 
     @classmethod
-    def utcnow(cls, *args, **kwargs):
+    def now(cls, tz=None):
         if hasattr(cls, "dt"):
-            return cls.dt
+            return cls.dt.replace(tzinfo=tz)
         raise NotImplementedError(
             "use FakeDateTime.set_utcnow(datetime) first"
         )

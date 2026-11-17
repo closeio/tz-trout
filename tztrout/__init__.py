@@ -6,7 +6,7 @@ import phonenumbers
 import pytz
 from dateutil.parser import parse as parse_date
 
-from tztrout.data import ZIP_DATA, TroutData
+from tztrout.data import ZIP_DATA, TroutData, utcnow
 from tztrout.data_exceptions import data_exceptions
 
 td = TroutData()
@@ -48,7 +48,7 @@ def tz_ids_for_tz_name(tz_name):
         for id in ids:
             tz = pytz.timezone(id)
             try:
-                if tz.tzname(datetime.datetime.utcnow()) == tz_name:
+                if tz.tzname(utcnow()) == tz_name:
                     valid_ids.append(id)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
                 pass
@@ -220,7 +220,7 @@ def tz_ids_for_offset(offset_in_minutes):
         for id in ids:
             tz = pytz.timezone(id)
             try:
-                off = tz.utcoffset(datetime.datetime.utcnow()).total_seconds()
+                off = tz.utcoffset(utcnow()).total_seconds()
                 if off / 60 == offset_in_minutes:
                     valid_ids.append(id)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
@@ -239,7 +239,7 @@ def local_time_for_phone(phone, country="US"):
     """
     ids = tz_ids_for_phone(phone, country)
     if ids:
-        return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
+        return pytz.timezone(ids[0]).fromutc(utcnow())
 
 
 def local_time_for_address(
@@ -255,7 +255,7 @@ def local_time_for_address(
     """
     ids = tz_ids_for_address(country, state, city, zipcode, **kwargs)
     if ids:
-        return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
+        return pytz.timezone(ids[0]).fromutc(utcnow())
 
 
 def offset_ranges_for_local_time(local_start, local_end):
@@ -317,7 +317,7 @@ def offset_ranges_for_local_time(local_start, local_end):
     )
 
     # Get current UTC time.
-    current_time = to_minutes(datetime.datetime.utcnow().time())
+    current_time = to_minutes(utcnow().time())
 
     # Tweak for ranges that pass midnight (e.g. (5pm, 9am)).
     if local_end < local_start:
