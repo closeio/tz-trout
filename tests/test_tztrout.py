@@ -184,8 +184,6 @@ class TestTZIdsForPhone:
             ("+16133334444", "ET", "America/Toronto"),
             # Mississauga, ON
             ("+12893334444", "ET", "America/Toronto"),
-            # Winnipeg, MB
-            ("+14313334444", "CT", "America/Winnipeg"),
             # Halifax, NS
             ("+19023334444", "AT", "America/Halifax"),
             # Saskatoon, SK
@@ -220,12 +218,15 @@ class TestTZIdsForPhone:
             # Vancouver, BC
             ("+16043334444", ("PT", "MT"), "America/Vancouver"),
             ("+16723334444", ("PT", "MT"), "America/Vancouver"),
+            # Winnipeg, MB
+            ("+14313334444", ("CT", "ET"), "America/Winnipeg"),
         ],
     )
     def test_permanent_dst_cities_ca(self, phone, tz_names, tz_id):
         """
-        Alberta and British Columbia move to permanent DST in 2026
-        (tzdata 2026d), so their tz ids now belong to two time zone names.
+        Alberta and British Columbia (tzdata 2026d) and Manitoba (tzdata 2026f)
+        move to permanent DST in 2026, so their tz ids now belong to two time
+        zone names.
         """
         assert set(tztrout.tz_ids_for_phone(phone)) == {tz_id}
         for tz_name in tz_names:
@@ -437,7 +438,6 @@ class TestTZIdsForAddress:
             ("CA", "QC", "Montreal", "ET"),
             ("CA", "ON", "Ottawa", "ET"),
             ("CA", "ON", "Mississauga", "ET"),
-            ("CA", "MB", "Winnipeg", "CT"),
             ("CA", "NS", "Halifax", "AT"),
             ("CA", "SK", "Saskatoon", "CT"),
         ],
@@ -462,12 +462,14 @@ class TestTZIdsForAddress:
             ("AB", "Calgary", ("MT", "CT"), "America/Edmonton"),
             ("AB", "Edmonton", ("MT", "CT"), "America/Edmonton"),
             ("BC", "Vancouver", ("PT", "MT"), "America/Vancouver"),
+            ("MB", "Winnipeg", ("CT", "ET"), "America/Winnipeg"),
         ],
     )
     def test_permanent_dst_cities_ca(self, state, city, tz_names, tz_id):
         """
-        Alberta and British Columbia move to permanent DST in 2026
-        (tzdata 2026d), so their tz ids now belong to two time zone names.
+        Alberta and British Columbia (tzdata 2026d) and Manitoba (tzdata 2026f)
+        move to permanent DST in 2026, so their tz ids now belong to two time
+        zone names.
         """
         ids = tztrout.tz_ids_for_address("CA", state=state, city=city)
         assert set(ids) == {tz_id}
