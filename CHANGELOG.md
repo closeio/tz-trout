@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 2.2.0
+
+- Update pytz to 2026.6 (tzdata 2026f) and timezonefinder to 9.2.0 (timezonefinder-data 4.2026.6)
+- Manitoba moves to permanent DST: `America/Winnipeg` and `Canada/Central` now
+  match both Central (`CT`, `CST`, `CDT`, `CENTRAL`) and Eastern (`ET`, `EST`,
+  `EASTERN`) time zone names
+- Regenerated data after pytz, timezonefinder and Geonames updates
+
 ## Version 2.1.0
 
 - Add `primary_tz_ids_for_phone`
