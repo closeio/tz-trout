@@ -431,6 +431,8 @@
     "America/Panama",
     "America/Port-au-Prince",
     "America/Toronto",
+    "America/Winnipeg",
+    "Canada/Central",
     "Canada/Eastern",
     "US/Eastern",
     "America/Montreal"
@@ -536,6 +538,8 @@
     "America/Panama",
     "America/Port-au-Prince",
     "America/Toronto",
+    "America/Winnipeg",
+    "Canada/Central",
     "Canada/Eastern",
     "US/Eastern",
     "America/Montreal"
@@ -561,6 +565,8 @@
     "America/Panama",
     "America/Port-au-Prince",
     "America/Toronto",
+    "America/Winnipeg",
+    "Canada/Central",
     "Canada/Eastern",
     "US/Eastern",
     "America/Montreal"
