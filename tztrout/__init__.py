@@ -95,7 +95,7 @@ def tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
     """
     try:
         phone = phonenumbers.parse(raw_number, country)
-    except Exception:
+    except Exception:  # noqa: BLE001, S110 - unparseable input yields []
         pass
     else:
         country_iso = phonenumbers.region_code_for_number(phone)
@@ -283,11 +283,11 @@ def offset_ranges_for_local_time(local_start, local_end):
     [[-660, -180], [780, 840]]
     """
     if not isinstance(local_start, (datetime.time, int, str)):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004 - backwards compatibility
             "local_start is not an instance of datetime.time or int or str"
         )
     if not isinstance(local_end, (datetime.time, int, str)):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004 - backwards compatibility
             "local_end is not an instance of datetime.time or int or str"
         )
 
