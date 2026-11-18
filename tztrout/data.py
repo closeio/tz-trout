@@ -75,6 +75,11 @@ Zipcode = namedtuple(
 )
 
 
+def utcnow() -> datetime.datetime:
+    """Return the current UTC time as a naive datetime (non-deprecated utcnow)."""
+    return datetime.datetime.now(datetime.UTC).replace(tzinfo=None)
+
+
 def deduplicator():
     """
     Deduplicate strings in memory using a canonical mapping.
@@ -242,7 +247,7 @@ class TroutData:
             if last_before is not None:
                 yield last_before
 
-        now = datetime.datetime.utcnow()
+        now = utcnow()
         try:
             utc_offset = tz.utcoffset(now)
             dst_offset = tz.dst(now)

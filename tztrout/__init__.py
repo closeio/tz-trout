@@ -6,7 +6,7 @@ import phonenumbers
 import pytz
 from dateutil.parser import parse as parse_date
 
-from tztrout.data import ZIP_DATA, TroutData
+from tztrout.data import ZIP_DATA, TroutData, utcnow
 from tztrout.data_exceptions import data_exceptions
 
 td = TroutData()
@@ -48,7 +48,7 @@ def tz_ids_for_tz_name(tz_name):
         for id in ids:
             tz = pytz.timezone(id)
             try:
-                if tz.tzname(datetime.datetime.utcnow()) == tz_name:
+                if tz.tzname(utcnow()) == tz_name:
                     valid_ids.append(id)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
                 pass
@@ -95,7 +95,7 @@ def tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
     """
     try:
         phone = phonenumbers.parse(raw_number, country)
-    except Exception:
+    except Exception:  # noqa: BLE001, S110 - unparseable input yields []
         pass
     else:
         country_iso = phonenumbers.region_code_for_number(phone)
@@ -220,7 +220,7 @@ def tz_ids_for_offset(offset_in_minutes):
         for id in ids:
             tz = pytz.timezone(id)
             try:
-                off = tz.utcoffset(datetime.datetime.utcnow()).total_seconds()
+                off = tz.utcoffset(utcnow()).total_seconds()
                 if off / 60 == offset_in_minutes:
                     valid_ids.append(id)
             except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
@@ -239,7 +239,7 @@ def local_time_for_phone(phone, country="US"):
     """
     ids = tz_ids_for_phone(phone, country)
     if ids:
-        return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
+        return pytz.timezone(ids[0]).fromutc(utcnow())
 
 
 def local_time_for_address(
@@ -255,7 +255,7 @@ def local_time_for_address(
     """
     ids = tz_ids_for_address(country, state, city, zipcode, **kwargs)
     if ids:
-        return pytz.timezone(ids[0]).fromutc(datetime.datetime.utcnow())
+        return pytz.timezone(ids[0]).fromutc(utcnow())
 
 
 def offset_ranges_for_local_time(local_start, local_end):
@@ -283,11 +283,11 @@ def offset_ranges_for_local_time(local_start, local_end):
     [[-660, -180], [780, 840]]
     """
     if not isinstance(local_start, (datetime.time, int, str)):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004 - backwards compatibility
             "local_start is not an instance of datetime.time or int or str"
         )
     if not isinstance(local_end, (datetime.time, int, str)):
-        raise ValueError(
+        raise ValueError(  # noqa: TRY004 - backwards compatibility
             "local_end is not an instance of datetime.time or int or str"
         )
 
@@ -317,7 +317,7 @@ def offset_ranges_for_local_time(local_start, local_end):
     )
 
     # Get current UTC time.
-    current_time = to_minutes(datetime.datetime.utcnow().time())
+    current_time = to_minutes(utcnow().time())
 
     # Tweak for ranges that pass midnight (e.g. (5pm, 9am)).
     if local_end < local_start:
@@ -339,7 +339,7 @@ def offset_ranges_for_local_time(local_start, local_end):
     # Cap the offsets at UTC-14:00 and UTC+14:00 (lowest/highest possible
     # offset).
     def capped(t):
-        return 14 * 60 if t > 14 * 60 else -14 * 60 if t < -14 * 60 else t
+        return max(-14 * 60, min(t, 14 * 60))
 
     for i, range in enumerate(offset_ranges):
         offset_ranges[i][0] = capped(range[0])
