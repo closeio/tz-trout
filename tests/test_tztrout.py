@@ -1,5 +1,6 @@
 import datetime
 from unittest.mock import patch
+from zoneinfo import ZoneInfo
 
 import pytest
 from phonenumbers import PhoneNumber
@@ -45,15 +46,18 @@ def assert_only_one_tz(ids, expected_tz_name, tz_names):
 
 
 class FakeDateTime(datetime.datetime):
-    """A datetime replacement that lets you set the current UTC time"""
+    """A datetime replacement that lets you set the current (UTC) time"""
 
     @classmethod
     def now(cls, tz=None):
-        if hasattr(cls, "dt"):
-            return cls.dt.replace(tzinfo=tz)
-        raise NotImplementedError(
-            "use FakeDateTime.set_utcnow(datetime) first"
-        )
+        if not hasattr(cls, "dt"):
+            raise NotImplementedError(
+                "use FakeDateTime.set_utcnow(datetime) first"
+            )
+        aware = cls.dt.replace(tzinfo=datetime.UTC)
+        if tz is None:
+            return aware.replace(tzinfo=None)
+        return aware.astimezone(tz)
 
     @classmethod
     def set_utcnow(cls, dt):
@@ -532,7 +536,7 @@ class TestTZIdsForAddress:
             "America/Regina",
             "America/Winnipeg",
             "America/Iqaluit",
-            "America/Toronto",  # "America/Montreal", TODO re-add Montreal when pytz.country_timezones is fixed
+            "America/Toronto",  # America/Montreal is a legacy alias, not in zone.tab
             "America/Moncton",
             "America/Halifax",
             "America/St_Johns",
@@ -698,6 +702,18 @@ class TestLocalTimeForAddress:
         )  # 15:15 PT / 22:15 UTC / 00:15 CEST
         local_time = tztrout.local_time_for_address("ES", city="Barcelona")
         assert str(local_time) == "2016-09-14 00:15:00+02:00"
+        assert local_time.tzinfo == ZoneInfo("Europe/Madrid")
+
+
+class TestLocalTimeForPhone:
+    @patch("datetime.datetime", FakeDateTime)
+    def test_local_time_in_california(self):
+        FakeDateTime.set_utcnow(
+            datetime.datetime(2016, 9, 13, 22, 15)
+        )  # 15:15 PDT / 22:15 UTC
+        local_time = tztrout.local_time_for_phone("+1 (650) 333 4444")
+        assert str(local_time) == "2016-09-13 15:15:00-07:00"
+        assert local_time.tzinfo == ZoneInfo("America/Los_Angeles")
 
 
 class TestOffsetRangesForLocalTime:
@@ -783,6 +799,21 @@ class TestNonDSTOffsetForTZId:
     )
     def test_non_dst_offset_for_tz_id(self, tz_id, expected):
         assert tztrout.non_dst_offset_for_tz_id(tz_id) == expected
+
+    @pytest.mark.parametrize(
+        "tz_id", ["../etc/passwd", "/absolute", "Not A Zone"]
+    )
+    def test_malformed_tz_id(self, tz_id):
+        assert tztrout.non_dst_offset_for_tz_id(tz_id) is None
+
+    @pytest.mark.parametrize(
+        ("tz_id", "expected"),
+        [("America/New_York", -300), ("Asia/Kolkata", 330)],
+    )
+    def test_tz_id_missing_from_data(self, tz_id, expected):
+        """Zones newer than the generated data are calculated on the fly."""
+        with patch.dict(tztrout.td.tz_id_to_non_dst_offset, clear=True):
+            assert tztrout.non_dst_offset_for_tz_id(tz_id) == expected
 
 
 class TestNonDSTOffsetsForPhone:
