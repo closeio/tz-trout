@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- **Breaking:** Replace the deprecated `pytz` with the standard library
+  `zoneinfo` and the `tzdata` package.
+  - `local_time_for_phone` and `local_time_for_address` now return datetimes
+    with a `zoneinfo.ZoneInfo` tzinfo instead of a pytz one, so pytz-specific
+    APIs (`localize`, `normalize`, `.zone`) are no longer available on them.
+  - Data is generated from the pinned `tzdata` package only (`tzdata==2026.6`,
+    IANA 2026f, the same release as the previous `pytz==2026.6`). The existing
+    data files are unchanged.
+  - New generated data files: `country_to_tz_ids.json` (replaces
+    `pytz.country_timezones`) and `tz_id_to_non_dst_offset.json` (non-DST
+    offsets are now looked up instead of calculated on every call).
+
 ## Version 2.2.0
 
 - Update pytz to 2026.6 (tzdata 2026f) and timezonefinder to 9.2.0 (timezonefinder-data 4.2026.6)

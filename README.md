@@ -6,7 +6,7 @@
 
 This library tries to solve the common problem of figuring out what time zone
 a specific address or a phone number is in. It does so by using several
-mappings that are generated with the help of [pytz](http://pytz.sourceforge.net/),
+mappings that are generated with the help of [tzdata](https://pypi.org/project/tzdata/),
 [Geonames.org](https://www.geonames.org/postal-codes/postal-codes-us.html),
 and [TimezoneFinder](https://github.com/MrMinimal64/timezonefinder)
 
@@ -159,6 +159,20 @@ None
 ]
 ```
 
+#### Time zone data
+
+* The generated mappings (time zone names, offsets, countries, non-DST
+  offsets) are built from the IANA time zone database bundled in the pinned
+  `tzdata` package. The OS time zone database is never used when generating
+  them, so the output only depends on the `tzdata` version.
+* Lookups that depend on the current moment (filtering by the current time
+  zone name or offset, `local_time_for_*`) use the standard
+  [`zoneinfo`](https://docs.python.org/3/library/zoneinfo.html) search path:
+  the OS time zone database first, then the `tzdata` package. Applications can
+  control this with `PYTHONTZPATH` or `zoneinfo.reset_tzpath()`.
+* `local_time_for_phone` and `local_time_for_address` return datetimes with a
+  `zoneinfo.ZoneInfo` tzinfo.
+
 #### Testing
 
 Just run `pytest`
@@ -167,7 +181,7 @@ Just run `pytest`
 
 Time zones, addresses, and phone numbers are in a constant flux and hence the
 data used by this library needs to be regenerated periodically. To do so,
-upgrade the `pytz` and `timezonefinder` dependencies, and run `python
+upgrade the `tzdata` and `timezonefinder` dependencies, and run `python
 regenerate_data.py`. If this doesn't fix the problem, consider opening an issue
 or adding an exception in `data_exceptions.py`.
 
