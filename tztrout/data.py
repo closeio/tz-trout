@@ -1,10 +1,12 @@
 import datetime
+import functools
+import importlib.resources
 import json
 import os
 from collections import defaultdict, namedtuple
+from collections.abc import Iterator
 from sys import stdout
-
-import pytz
+from zoneinfo import ZoneInfo
 
 from tztrout.data_exceptions import data_exceptions
 
@@ -33,6 +35,12 @@ AU_STATE_TO_TZ_IDS_MAP_PATH = os.path.join(
 AU_AREA_CODE_TO_STATE_MAP_PATH = os.path.join(
     basepath, "data/au_area_code_to_state.json"
 )
+COUNTRY_TO_TZ_IDS_MAP_PATH = os.path.join(
+    basepath, "data/country_to_tz_ids.json"
+)
+TZ_ID_TO_NON_DST_OFFSET_MAP_PATH = os.path.join(
+    basepath, "data/tz_id_to_non_dst_offset.json"
+)
 
 # Australian TZ names are resolved as EST, WST, etc., which is ok for local
 # usage, but conflicts with the more common US TZ names if we're thinking
@@ -57,9 +65,29 @@ ASIA_MAP = {
     "PST": "PHT",
 }
 
+# Legacy timezone IDs that are part of the "common" timezones on top of the
+# ones listed in zone.tab (this is the same list pytz.common_timezones used).
+COMMON_EXTRA_TIMEZONES = [
+    "Canada/Atlantic",
+    "Canada/Central",
+    "Canada/Eastern",
+    "Canada/Mountain",
+    "Canada/Newfoundland",
+    "Canada/Pacific",
+    "GMT",
+    "US/Alaska",
+    "US/Arizona",
+    "US/Central",
+    "US/Eastern",
+    "US/Hawaii",
+    "US/Mountain",
+    "US/Pacific",
+    "UTC",
+]
+
 # Deprecated timezone IDs that are still commonly used and should be included
-# in the timezone name mapping (these are in pytz.all_timezones but not in
-# pytz.common_timezones)
+# in the timezone name mapping (these are valid timezone IDs but they are not
+# part of the common timezones)
 DEPRECATED_TIMEZONES_WHITELIST = [
     "Asia/Calcutta",  # Now Asia/Kolkata (India)
     "Asia/Istanbul",  # Now Europe/Istanbul (Turkey)
@@ -165,6 +193,59 @@ class InMemoryZipData:
 ZIP_DATA = InMemoryZipData()
 
 
+def _tzdata_resource(name: str):
+    """Return a file from the pinned `tzdata` package."""
+    return importlib.resources.files("tzdata").joinpath(name)
+
+
+@functools.cache
+def _pinned_zone(tz_id: str) -> ZoneInfo:
+    """
+    Load a time zone from the pinned `tzdata` package, ignoring the OS time
+    zone database.
+
+    Used for data generation so that the generated files only depend on the
+    `tzdata` version and not on the machine the generation runs on.
+    """
+    with _tzdata_resource(f"zoneinfo/{tz_id}").open("rb") as f:
+        return ZoneInfo.from_file(f, key=tz_id)
+
+
+def _pinned_available_timezones() -> list[str]:
+    """
+    All the time zone IDs in the pinned `tzdata` package, except for the
+    "Factory" placeholder zone.
+    """
+    return sorted(
+        tz_id
+        for tz_id in _tzdata_resource("zones").read_text().split()
+        if tz_id != "Factory"
+    )
+
+
+def _pinned_zone_tab() -> list[tuple[str, str]]:
+    """(country code, time zone ID) rows of zone.tab from `tzdata`."""
+    rows = []
+    for line in _tzdata_resource("zoneinfo/zone.tab").read_text().splitlines():
+        if not line or line.startswith("#"):
+            continue
+        code, _coordinates, tz_id = line.split(None, 3)[:3]
+        rows.append((code, tz_id))
+    return rows
+
+
+def _pinned_common_timezones() -> list[str]:
+    """Return the common time zone IDs (what pytz.common_timezones was)."""
+    available = set(_pinned_available_timezones())
+    return sorted(
+        (
+            {tz_id for _, tz_id in _pinned_zone_tab()}
+            | set(COMMON_EXTRA_TIMEZONES)
+        )
+        & available
+    )
+
+
 class TroutData:
     """Helper class that generates the JSON data used by TZTrout"""
 
@@ -173,6 +254,15 @@ class TroutData:
     # far back we should go to check for DST changes, timezone names, etc.
     RECENT_YEARS = 10
     RECENT_YEARS_START = datetime.datetime.now().year - RECENT_YEARS
+
+    # How far into the future we look for already scheduled time zone
+    # changes (e.g. a region dropping DST next year).
+    FUTURE_YEARS = 2
+    FUTURE_YEARS_END = datetime.datetime.now().year + FUTURE_YEARS
+
+    # Time zones don't expose their transitions, so we sample them. States
+    # shorter than a step could be missed, which is fine for our purposes.
+    SAMPLING_STEP = datetime.timedelta(days=1)
 
     def __init__(self):
         # load the data files, if they exist
@@ -190,6 +280,10 @@ class TroutData:
         self.au_state_to_tz_ids = self._load_data(AU_STATE_TO_TZ_IDS_MAP_PATH)
         self.au_area_code_to_state = self._load_data(
             AU_AREA_CODE_TO_STATE_MAP_PATH
+        )
+        self.country_to_tz_ids = self._load_data(COUNTRY_TO_TZ_IDS_MAP_PATH)
+        self.tz_id_to_non_dst_offset = self._load_data(
+            TZ_ID_TO_NON_DST_OFFSET_MAP_PATH
         )
 
         # convert string offsets into integers
@@ -218,51 +312,36 @@ class TroutData:
                 for k, v in data.items()
             }
 
-    def _iter_recent_transitions(self, tz: pytz.BaseTzInfo):
+    def _iter_recent_transitions(
+        self, tz: datetime.tzinfo
+    ) -> Iterator[tuple[datetime.timedelta, datetime.timedelta, str]]:
         """
-        Yield (utc_offset, dst_offset, abbr) tuples for all transitions in
-        the recent window, oldest first.
+        Yield (utc_offset, dst_offset, abbr) tuples for all the distinct
+        states of a time zone in the recent window, oldest first.
 
-        Includes the transition active at the cutoff date (so a zone with a
-        single far-past transition isn't missed), all transitions after the
-        cutoff, and a synthetic entry for the current moment as a fallback for
-        zones without transition data (e.g. UTC).
+        The time zone is sampled every SAMPLING_STEP between Jan 1st of
+        RECENT_YEARS_START and Jan 1st of FUTURE_YEARS_END (UTC), and a new
+        tuple is yielded every time the state changes. The first tuple is the
+        state active at the start of the window. Finally, a tuple for the
+        current moment is yielded.
         """
-        if hasattr(tz, "_utc_transition_times") and hasattr(
-            tz, "_transition_info"
-        ):
-            cutoff = datetime.datetime(self.RECENT_YEARS_START, 1, 1)
-            last_before = None
-            for t, info in zip(
-                tz._utc_transition_times, tz._transition_info, strict=False
-            ):
-                if t < cutoff:
-                    last_before = info
-                else:
-                    if last_before is not None:
-                        yield last_before
-                        last_before = None
-                    yield info
-            # All transitions were before the cutoff — yield the most recent.
-            if last_before is not None:
-                yield last_before
+        utc = datetime.UTC
+        sample = datetime.datetime(self.RECENT_YEARS_START, 1, 1, tzinfo=utc)
+        end = datetime.datetime(self.FUTURE_YEARS_END, 1, 1, tzinfo=utc)
+        previous = None
+        while sample < end:
+            state = _tz_state(sample.astimezone(tz))
+            if state is not None and state != previous:
+                yield state
+                previous = state
+            sample += self.SAMPLING_STEP
 
-        now = utcnow()
-        try:
-            utc_offset = tz.utcoffset(now)
-            dst_offset = tz.dst(now)
-            abbr = tz.tzname(now)
-            if (
-                utc_offset is not None
-                and dst_offset is not None
-                and abbr is not None
-            ):
-                yield utc_offset, dst_offset, abbr
-        except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-            pass
+        now_state = _tz_state(datetime.datetime.now(utc).astimezone(tz))
+        if now_state is not None:
+            yield now_state
 
     def _get_latest_non_dst_offset(
-        self, tz: pytz.BaseTzInfo
+        self, tz: datetime.tzinfo
     ) -> datetime.timedelta | None:
         """
         Get the UTC offset for a given time zone identifier. Ignore the
@@ -274,7 +353,7 @@ class TroutData:
                 result = utc_offset
         return result
 
-    def _get_latest_offsets(self, tz: pytz.BaseTzInfo) -> list[int]:
+    def _get_latest_offsets(self, tz: datetime.tzinfo) -> list[int]:
         """
         Get all the UTC offsets (in minutes) that a given time zone
         experienced in the recent years.
@@ -286,7 +365,7 @@ class TroutData:
             }
         )
 
-    def _get_latest_tz_names(self, tz: pytz.BaseTzInfo) -> list[str]:
+    def _get_latest_tz_names(self, tz: datetime.tzinfo) -> list[str]:
         """Get the recent time zone names for a given time zone identifier."""
         tz_names = []
         for _, _, abbr in self._iter_recent_transitions(tz):
@@ -366,11 +445,11 @@ class TroutData:
 
         # Process common timezones plus whitelisted deprecated ones
         timezones_to_process = (
-            list(pytz.common_timezones) + DEPRECATED_TIMEZONES_WHITELIST
+            _pinned_common_timezones() + DEPRECATED_TIMEZONES_WHITELIST
         )
 
         for id in _progressbar(timezones_to_process):
-            tz = pytz.timezone(id)
+            tz = _pinned_zone(id)
             tz_names = self._get_latest_tz_names(tz)
             if id.startswith("Australia"):
                 tz_names = [
@@ -396,13 +475,51 @@ class TroutData:
     def generate_offset_to_tz_id_map(self):
         """Generate the map of UTC offsets to time zone identifiers."""
         offset_tz_ids = defaultdict(list)
-        for id in _progressbar(pytz.common_timezones):
-            tz = pytz.timezone(id)
+        for id in _progressbar(_pinned_common_timezones()):
+            tz = _pinned_zone(id)
             offsets = self._get_latest_offsets(tz)
             for offset in offsets:
                 offset_tz_ids[offset].append(id)
 
         _dump_json_data(OFFSET_TO_TZ_IDS_MAP_PATH, offset_tz_ids)
+
+    def generate_country_to_tz_id_map(self):
+        """
+        Generate the map of ISO country codes to time zone identifiers, in
+        zone.tab order.
+        """
+        available = set(_pinned_available_timezones())
+        country_tz_ids = defaultdict(list)
+        for code, tz_id in _pinned_zone_tab():
+            if tz_id in available:
+                country_tz_ids[code].append(tz_id)
+
+        _dump_json_data(COUNTRY_TO_TZ_IDS_MAP_PATH, country_tz_ids)
+
+    def generate_tz_id_to_non_dst_offset_map(self):
+        """
+        Generate the map of time zone identifiers to their latest non-DST
+        UTC offset (in minutes).
+        """
+        non_dst_offsets = {}
+        for id in _progressbar(_pinned_available_timezones()):
+            offset = self._get_latest_non_dst_offset(_pinned_zone(id))
+            if offset is not None:
+                non_dst_offsets[id] = int(offset.total_seconds() / 60)
+
+        _dump_json_data(TZ_ID_TO_NON_DST_OFFSET_MAP_PATH, non_dst_offsets)
+
+
+def _tz_state(
+    local: datetime.datetime,
+) -> tuple[datetime.timedelta, datetime.timedelta, str] | None:
+    """(utc_offset, dst_offset, abbr) for an aware datetime, if known."""
+    utc_offset = local.utcoffset()
+    dst_offset = local.dst()
+    abbr = local.tzname()
+    if utc_offset is None or dst_offset is None or abbr is None:
+        return None
+    return utc_offset, dst_offset, abbr
 
 
 def _progressbar(lst):
