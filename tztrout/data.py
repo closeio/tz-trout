@@ -103,11 +103,6 @@ Zipcode = namedtuple(
 )
 
 
-def utcnow() -> datetime.datetime:
-    """Return the current UTC time as a naive datetime (non-deprecated utcnow)."""
-    return datetime.datetime.now(datetime.UTC).replace(tzinfo=None)
-
-
 def deduplicator():
     """
     Deduplicate strings in memory using a canonical mapping.

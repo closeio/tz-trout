@@ -35,7 +35,6 @@ setup(
     install_requires=[
         "closeio-phonenumbers>=9.0.34.2",
         "python-dateutil",
-        "pytz",
         "tzdata",
     ],
     extras_require={"dev": ["timezonefinder"]},

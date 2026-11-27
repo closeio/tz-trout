@@ -1,15 +1,52 @@
 import datetime
+import functools
 import operator
 from functools import reduce
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import phonenumbers
-import pytz
 from dateutil.parser import parse as parse_date
 
-from tztrout.data import ZIP_DATA, TroutData, utcnow
+from tztrout.data import ZIP_DATA, TroutData
 from tztrout.data_exceptions import data_exceptions
 
 td = TroutData()
+
+
+def _utcnow() -> datetime.datetime:
+    return datetime.datetime.now(datetime.UTC)
+
+
+def _zone(tz_id: str) -> ZoneInfo | None:
+    """Return the ZoneInfo for a time zone ID, or None if it's invalid."""
+    try:
+        return ZoneInfo(tz_id)
+    except (ZoneInfoNotFoundError, ValueError):
+        return None
+
+
+@functools.lru_cache(maxsize=256)
+def _sampled_non_dst_offset(tz_id: str) -> int | None:
+    """Calculate the non-DST offset of a zone missing from the data files."""
+    tz = _zone(tz_id)
+    if tz is None:
+        return None
+    offset = td._get_latest_non_dst_offset(tz)
+    if offset is None:
+        return None
+    return int(offset.total_seconds() / 60)
+
+
+def _non_dst_offset(tz_id: str) -> int | None:
+    """
+    Return the non-DST offset (in minutes) of a time zone ID.
+
+    Uses the generated data and only falls back to calculating it for valid
+    time zone IDs missing from it (e.g. zones newer than the data).
+    """
+    if tz_id in td.tz_id_to_non_dst_offset:
+        return td.tz_id_to_non_dst_offset[tz_id]
+    return _sampled_non_dst_offset(tz_id)
 
 
 def _dedupe_preserve_ord(lst):
@@ -45,13 +82,11 @@ def tz_ids_for_tz_name(tz_name):
     valid_ids = []
     if ids:
         # only get the tz ids that match the tz name currently
+        now = _utcnow()
         for id in ids:
-            tz = pytz.timezone(id)
-            try:
-                if tz.tzname(utcnow()) == tz_name:
-                    valid_ids.append(id)
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
+            tz = _zone(id)
+            if tz is not None and now.astimezone(tz).tzname() == tz_name:
+                valid_ids.append(id)
     return valid_ids
 
 
@@ -115,7 +150,7 @@ def tz_ids_for_phone(raw_number: str, country="US") -> list[str]:
             # back to all the AU tz ids
             if state:
                 return td.au_state_to_tz_ids.get(state)
-            return pytz.country_timezones.get(country_iso, [])
+            return list(td.country_to_tz_ids.get(country_iso, []))
 
         elif country_iso:
             return _get_tz_ids_from_phone(phone)
@@ -189,7 +224,7 @@ def tz_ids_for_address(
             state = td.normalized_states["AU"].get(state.lower(), state)
         return td.au_state_to_tz_ids.get(state, [])
 
-    return pytz.country_timezones.get(country, [])
+    return list(td.country_to_tz_ids.get(country, []))
 
 
 def tz_ids_for_offset(offset_in_minutes):
@@ -217,14 +252,17 @@ def tz_ids_for_offset(offset_in_minutes):
     valid_ids = []
     if ids:
         # only get the tz ids that match the tz offset currently
+        now = _utcnow()
         for id in ids:
-            tz = pytz.timezone(id)
-            try:
-                off = tz.utcoffset(utcnow()).total_seconds()
-                if off / 60 == offset_in_minutes:
-                    valid_ids.append(id)
-            except (pytz.NonExistentTimeError, pytz.AmbiguousTimeError):
-                pass
+            tz = _zone(id)
+            if tz is None:
+                continue
+            off = now.astimezone(tz).utcoffset()
+            if (
+                off is not None
+                and off.total_seconds() / 60 == offset_in_minutes
+            ):
+                valid_ids.append(id)
     return valid_ids
 
 
@@ -232,14 +270,14 @@ def local_time_for_phone(phone, country="US"):
     """
     Get the local time for a given phone number, e.g.
 
-    >>> datetime.datetime.utcnow()
-    datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
+    >>> datetime.datetime.now(datetime.UTC)
+    datetime.datetime(2013, 9, 17, 19, 44, 0, 966696, tzinfo=datetime.timezone.utc)
     >>> tztrout.local_time_for_phone('+16503334444')
-    datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
+    datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=zoneinfo.ZoneInfo(key='America/Los_Angeles'))
     """
     ids = tz_ids_for_phone(phone, country)
     if ids:
-        return pytz.timezone(ids[0]).fromutc(utcnow())
+        return _utcnow().astimezone(ZoneInfo(ids[0]))
 
 
 def local_time_for_address(
@@ -248,14 +286,14 @@ def local_time_for_address(
     """
     Get the local time for a given address, e.g.
 
-    >>> datetime.datetime.utcnow()
-    datetime.datetime(2013, 9, 17, 19, 44, 0, 966696)
+    >>> datetime.datetime.now(datetime.UTC)
+    datetime.datetime(2013, 9, 17, 19, 44, 0, 966696, tzinfo=datetime.timezone.utc)
     >>> tztrout.local_time_for_address('US', state='California')
-    datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=<DstTzInfo 'America/Los_Angeles' PDT-1 day, 17:00:00 DST>)
+    datetime.datetime(2013, 9, 17, 12, 44, 0, 966696, tzinfo=zoneinfo.ZoneInfo(key='America/Los_Angeles'))
     """
     ids = tz_ids_for_address(country, state, city, zipcode, **kwargs)
     if ids:
-        return pytz.timezone(ids[0]).fromutc(utcnow())
+        return _utcnow().astimezone(ZoneInfo(ids[0]))
 
 
 def offset_ranges_for_local_time(local_start, local_end):
@@ -317,7 +355,7 @@ def offset_ranges_for_local_time(local_start, local_end):
     )
 
     # Get current UTC time.
-    current_time = to_minutes(utcnow().time())
+    current_time = to_minutes(_utcnow().time())
 
     # Tweak for ranges that pass midnight (e.g. (5pm, 9am)).
     if local_end < local_start:
@@ -394,14 +432,7 @@ def non_dst_offset_for_tz_id(tz_id):
     60
     >>> tztrout.non_dst_offset_for_tz_id('Invalid/Zone')
     """
-    try:
-        tz = pytz.timezone(tz_id)
-    except pytz.exceptions.UnknownTimeZoneError:
-        return None
-    offset = td._get_latest_non_dst_offset(tz)
-    if offset is not None:
-        return int(offset.total_seconds() / 60)
-    return None
+    return _non_dst_offset(tz_id)
 
 
 def non_dst_offsets_for_phone(phone):
@@ -413,12 +444,8 @@ def non_dst_offsets_for_phone(phone):
     """
     ids = tz_ids_for_phone(phone)
     if ids:
-        offsets = [
-            td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids
-        ]
-        return _dedupe_preserve_ord(
-            [int(o.total_seconds() / 60) for o in offsets if o]
-        )
+        offsets = [_non_dst_offset(id) for id in ids]
+        return _dedupe_preserve_ord([o for o in offsets if o])
 
 
 def non_dst_offsets_for_address(
@@ -434,9 +461,5 @@ def non_dst_offsets_for_address(
         country, state=state, city=city, zipcode=zipcode, **kwargs
     )
     if ids:
-        offsets = [
-            td._get_latest_non_dst_offset(pytz.timezone(id)) for id in ids
-        ]
-        return _dedupe_preserve_ord(
-            [int(o.total_seconds() / 60) for o in offsets if o]
-        )
+        offsets = [_non_dst_offset(id) for id in ids]
+        return _dedupe_preserve_ord([o for o in offsets if o])
